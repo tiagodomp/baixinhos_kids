@@ -1,0 +1,534 @@
+/*
+Desenvolvido para a LojaHub | Academia do Ecommerce
+Todos os direitos Reservados 2018-2019
+
+Cores Default:
+Laranja logo: #EF9C00
+Azul logo: #10304F
+
+Variacoes de Azul
+Azul Barra Menu #06132A
+Azul SubMenu Nvl-1 #1D2E4E
+Azul SubMenu Nvl-2 #243450
+*/
+
+:root {
+  --main-logo-blue: #10304F; 
+  --main-logo-orange: #EF9C00;
+  --menu-main-color: #06132A;
+  --menu-second-color:#1D2E4E;
+  --menu-third-color: #243450;
+  --color-default-silver: #cccccc;
+}
+
+
+#menuSuperior {
+	position: fixed;
+	z-index: 999;
+}
+
+.espacoMenu {
+	display: block;
+	margin-top: 60px;
+}
+.side-nav.fixed {
+    width: 200px;
+}
+#imgLogo{
+    border: 0;
+    width: 150px;
+    margin-top: 5px;
+}
+#container {
+	padding-left: 200px;
+}
+
+.nav-wrapper {
+	background-color: #103050;
+}
+
+#content {
+	padding: 20px;
+}
+
+.tabs .tab a{
+    color:#000;
+}
+
+.tabs .tab a:hover {
+    background-color:#eee;
+    color:#000;
+}
+
+.tabs .tab a.active {
+    background-color: #cfd8dc;
+    color: #000;
+}
+
+.tabs .indicator {
+    background-color: #2196f3 ;
+}
+
+.tabProduto {
+	position: fixed;
+	width: 100%;
+	background-color: #FFF;
+	z-index: 900;
+	margin-top:  -16px;
+}
+
+#produtoVariacao{
+	display: none;
+}
+
+.upperCase {
+	text-transform: uppercase;
+}
+.noUpperCase {
+	text-transform: none;
+}
+
+.divImagemProduto {
+	width: 150px;
+	float: left;
+	margin-left: 25px;
+	margin-right: 25px;	
+}
+
+
+/*[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+.headVariacao {
+	border: 2px solid #e6ee9c  !important;
+	background-color: #afb42b !important;
+}*/
+
+.ulProdutoVariacao li {
+	float: left;
+    margin-top: 7px;
+	margin-left: 10px;
+}
+
+.cursorPointer {
+	cursor: pointer;
+}
+
+.var_tamanho {
+	display: none;
+}
+.var_cor {
+	display: none;
+}
+.var_voltagem {
+	display: none;
+}
+
+.var_cor_input {
+	display: block;
+	cursor: pointer;
+	width: 25px;
+	height: 25px;
+	border: 1px solid #c8c8c8;
+}
+
+@media only screen and (max-width : 992px) {
+	#container {
+		padding-left: 0px;
+	}
+}
+
+
+.galeriaProduto{
+	list-style-type: none;
+    border: 1px #c8c8c8 dashed;
+    padding: 10px;
+    margin-top: 5px;
+}
+.galeriaProduto li{
+	float: left;
+    background-color: #ffffff;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 15px;
+}
+.galeriaProdutoVar{
+	list-style-type: none;
+    border: 1px #c8c8c8 dashed;
+    padding: 10px;
+    margin-top: 5px;
+}
+.galeriaProdutoVar li{
+	float: left;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 15px;
+}
+.imgProduto {
+    width: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.imgProdutoPequeno {
+    width: 60px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.multiple_upload {
+      position:relative;
+}
+.multiple_upload:hover > #botao {
+	background:#662f00;
+	border-color:#662f00;
+}
+.uploadChange {
+	position:absolute;
+	top:2px;
+	left:0;
+	opacity:0.01;
+	border:none;
+	width:355px;
+	padding:10px;
+	z-index:1;
+	cursor:pointer
+}
+.uploadChangeVar {
+	position:absolute;
+	top:2px;
+	left:0;
+	opacity:0.01;
+	border:none;
+	width:355px;
+	padding:10px;
+	z-index:1;
+	cursor:pointer
+}
+.message {
+      border:2px solid #ccc;
+      background:#FFF;
+      padding:10px;
+      width:250px;
+      float:left;
+      margin:4px;
+      overflow:hidden;
+      color: #333
+}
+a.remove {
+    color: #FFF;
+    background-color: #F00;
+    font-size: 15px;
+    padding: 4px;
+    width: 40%;
+    margin: 0;
+    height: 25px;
+    border-radius: 15px;
+    text-align: center;
+}
+.box-images {
+    background-color: #eee;
+    margin: 0 10px 20px 0;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.divRemove {
+	text-align: center;
+}
+
+
+.coresPaleta {
+	margin-bottom: 30px;
+}
+.coresPaleta li {
+	list-style-type: none;
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin: 5px;
+	border: #c8c8c8 1px solid;
+}
+
+.cores_produto li{
+	list-style-type: none;
+	float: left;
+	margin-right: 15px;
+}
+
+.btnSistema {
+    text-transform: none;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.tamanhodiv {
+	margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0px;
+}
+
+
+/* Efeito em novo elemento */
+.novoElemento {
+    width: 100px;
+    height: 100px;
+    background-color: #FFF;
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+    animation-name: example;
+    animation-duration: 2s;
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+    from {background-color: #FFf;}
+    to {background-color: #b0bec5;}
+}
+
+/* Standard syntax */
+@keyframes example {
+    from {background-color: #FFF;}
+    to {background-color: #b0bec5;}
+}
+
+.white {
+    background-color:#FFF;
+}
+.black {
+    background-color:#000;
+}
+.orange {
+    background-color:#fb8c00;
+}
+.blue {
+    background-color:#2196f3;
+}
+.teal {
+    background-color:#009688;
+}
+.cyan {
+    background-color:#00bcd4;
+}
+.lime {
+    background-color:#cddc39;
+}
+.green {
+    background-color:#4caf50;
+}
+.yellow {
+    background-color:#ffeb3b;
+}
+.brown {
+    background-color:#795548;
+}
+.red {
+    background-color:#F00;
+}
+
+.text-black {
+    color: #000;
+}
+.text-green {
+    color:#4caf50;
+}
+.text-red {
+    color:#F00;
+}
+
+.ti-close {
+    text-align: center;
+    /*vertical-align: sub;*/
+}
+
+.flexcontainer_u {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+}
+
+.font_u-12px{
+  font-size:12px;
+  font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+}
+
+.font_u-13px{
+    font-size: 13px;
+    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+}
+
+.font_u-14px{
+  font-size:14px;
+  font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+}
+
+.font_u-15px{
+    font-size: 15px;
+    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+}
+
+.font_u-16px{
+    font-size: 16px;
+    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+}
+
+.font_u-17px{
+    font-size: 17px;
+    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.loader2{
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.verticalCenterText {
+    vertical-align: middle;
+}
+
+.labelForm {
+    margin-top: .5rem;
+    padding-left: .5rem;
+    margin-bottom: .05rem;
+}
+
+.preencherCampo {
+    border: 1px solid #F00;
+}
+
+.preencherCampoTam {
+    border: 1px solid #F00;
+}
+
+.preencherCampoRequired {
+    border: 1px solid #F00;
+}
+
+
+/* START | Css By Urnau */
+/***menu principal***/
+#menu-fixed{
+margin-bottom: 54px;
+box-shadow: 0px 4px 0px var(--main-logo-orange);
+}
+.menu-space{
+margin-bottom: 54px !important;
+}
+
+/***produtos***/
+.input-spin-off_u::-webkit-inner-spin-button, 
+.input-spin-off_u::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.separa-produtos_u{
+    border-top: 1px groove #ffffff;
+    margin-top: 0.3rem;
+    margin-bottom: 0.3rem;
+
+}
+
+.separa-produtos_bold_u{
+    border-bottom: 3px solid var(--menu-main-color);
+}
+
+.separa-subprodutos_bold_u{
+    border-bottom: 1px solid var(--menu-third-color);
+}
+
+.input-indoor_u:focus{
+  box-shadow: 0px 0px 3px #34495e inset;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+div.lista-produtos-ocultos_u{
+display:none;
+border-top: 3px solid var(--menu-main-color) ;
+box-shadow-bottom:20px #cccccc inset;
+}
+
+div.variacao_hover:hover{
+    background-color: #ffffee;
+}
+div.anuncio_hover:hover{
+    background-color: #ffffee;
+}
+div.grupo_hover:hover{
+    background-color: #ffffee;
+}
+p.hidden_apelido_u{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+span.hidden_text_u{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hidden_text_u{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+p.hidden_max_100_u {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+p.hidden_max_250_u {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+.line_d-14_u{
+      line-height: 14px !important;
+}
+.line_d-16_u{
+      line-height: 16px !important;
+}
+
+.hidden-alt_text_u{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hidden-alt_text_u:hover{
+  white-space: normal;
+}
+
+.text-inverse_u{
+  color: #34495E;
+}
+.hand-pointer_u{
+  cursor: pointer;
+}
+
+.separa-header_u{
+  margin-top: 2rem;
+  height: 2rem;
+}
+
+.font_u-1rem{
+    font-size: 1.2rem !important;
+}
+/* END | Css By Urnau */
+
+/* Maikson | Mensagens | Mercado Livre*/
+#divMensagens{
+    //height: 500px;
+    overflow-scrolling: auto !important;
+}
+/* END Maikson | Mensagens | Mercado Livre*/
