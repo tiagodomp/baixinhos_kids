@@ -23,7 +23,8 @@ class CreateResponsaveisTable extends Migration
 
             $table->string('nome', 120);                    // Nome completo do responsavel
             $table->json('contatos');                       // lista de contatos
-            $table->json('criado_por');                     // informações sobre o funcionário que criou, data, e etc.
+            $table->json('canais_id');                      // Através de qual(is) canal(is) o responsável conheceu o estabelecimento
+            $table->uuid('criado_por');                     // informações sobre o funcionário que criou, data, e etc.
             $table->json('imagens')->nullable();            // lista de imagens do ou com o responsável
             $table->json('infos')->nullable();              // informações adjacentes
 

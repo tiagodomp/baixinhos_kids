@@ -28,8 +28,9 @@ class CreateBaixinhosTable extends Migration
             $table->date('primeiro_corte');             // Data do primeiro corte
             $table->boolean('autorizacao_audiovisual'); // o responsável autorizou o compartilhamento publico de imagens e/ou audio
             $table->json('ficha_cadastro')->nullable(); // scaneamento da ficha de cadastro, para certificar a autorização do responsável
-            $table->json('criado_por');                 // informações sobre o funcionário que criou, data, e etc.
+            $table->uuid('criado_por');                 // informações sobre o funcionário que criou, data, e etc.
             $table->json('imagens')->nullable();        // lista de fotos da criança
+            $table->json('historico')->nullable();      // histórico de visitas do baixinho
             $table->json('infos')->nullable();          // informações adjacentes
 
             $table->foreign('responsavel_uuid')->references('uuid')->on('responsaveis');

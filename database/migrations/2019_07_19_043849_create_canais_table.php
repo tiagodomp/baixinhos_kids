@@ -24,6 +24,7 @@ class CreateCanaisTable extends Migration
             $table->string('titulo', 120)->unique();        // nome do canal que o responsavel conheceu o baixinho kids
             $table->string('descricao');                    // uma breve descricao sobre o canal
             $table->text('tecnicas');                       // observações técnicas, e estratégias para lidar com o público desse canal
+            $table->uuid('criado_por');                     // informações sobre o funcionário que criou, data, e etc.
             $table->json('infos');                          // informações adjacentes
 
             $table->timestamps();
