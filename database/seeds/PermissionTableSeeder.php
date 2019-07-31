@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Permission;
 
 class PermissionTableSeeder extends Seeder
 {
@@ -9,7 +10,7 @@ class PermissionTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(DB $db)
     {
         $permissions = [
 
@@ -18,10 +19,20 @@ class PermissionTableSeeder extends Seeder
             'role-edit',
             'role-delete',
 
-            'user-list',
-            'user-create',
-            'user-edit',
-            'user-delete',
+            'admin-list',
+            'admin-create',
+            'admin-edit',
+            'admin-delete',
+
+            'funcionario-list',
+            'funcionario-create',
+            'funcionario-edit',
+            'funcionario-delete',
+
+            'cabeleireiro-list',
+            'cabeleireiro-create',
+            'cabeleireiro-edit',
+            'cabeleireiro-delete',
 
             'responsavel-list',
             'responsavel-create',
@@ -42,9 +53,7 @@ class PermissionTableSeeder extends Seeder
 
 
          foreach ($permissions as $permission) {
-
               Permission::create(['name' => $permission]);
-
          }
     }
 }

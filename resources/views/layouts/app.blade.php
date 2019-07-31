@@ -58,6 +58,8 @@
    <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
    <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
 
+   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
    <!-- CSRF Token -->
    <meta name="csrf-token" content="{{ csrf_token() }}">
    <script> let URL = "{{url('/')}}"; </script>
@@ -184,7 +186,11 @@
   <!-- scripts -->
   <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script>
   <!-- data-table js -->
-<script src="{{ url('assets/tema_1/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ url('assets/tema_1/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 
 </body>
 </html>

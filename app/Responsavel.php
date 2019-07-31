@@ -34,7 +34,6 @@ class Responsavel extends Model
 
     protected $casts = [
         'contatos' => 'array',
-        'criado_por' => 'array',
         'imagens' => 'array',
         'ficha_cadastro' => 'array',
         'infos' => 'array',

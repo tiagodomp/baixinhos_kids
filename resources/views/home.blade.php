@@ -11,7 +11,7 @@
                         <div class="col-sm-8  card-visitor-button">
                             <button class="btn btn-primary btn-icon"><i class="icofont icofont-baby"></i></button>
                             <div class="card-contain">
-                                <h6> 5 </h6>
+                                <h6>{{$data['totalBaixinhosFrequentes']}}</h6>
                                 <p class="text-muted f-18 m-0">Baixinhos frequentes</p>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                         <div class="col-sm-8 card-visitor-button">
                             <button class="btn btn-warning btn-icon"><i class="icofont icofont-contact-add"></i></button>
                             <div class="card-contain">
-                                <h6> 7 </h6>
+                                <h6>{{$data['totalFichasFaltando']}}</h6>
                                 <p class="text-muted f-18 m-12">Fichas faltando</p>
                             </div>
                         </div>
@@ -116,9 +116,22 @@
                             @csrf
                             <div class="form-row">
                               <div class="form-group col-md-6">
-                                <label for="inputEmail4">Email</label>
-                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                <label for="responsavelUuid">Responsável</label>
+                                <input type="text" id="responsavelUuid" placeholder="Nome do Responsável">
+                                <div class="row-fluid">
+                                        <select class="selectpicker" data-show-subtext="true" data-live-search="true">
+                                          <option data-subtext="Rep California">Tom Foolery</option>
+                                          <option data-subtext="Sen California">Bill Gordon</option>
+                                          <option data-subtext="Sen Massacusetts">Elizabeth Warren</option>
+                                          <option data-subtext="Rep Alabama">Mario Flores</option>
+                                          <option data-subtext="Rep Alaska">Don Young</option>
+                                          <option data-subtext="Rep California" disabled="disabled">Marvin Martinez</option>
+                                        </select>
+                                        <span class="help-inline">With <code>data-show-subtext="true" data-live-search="true"</code>. Try searching for california</span>
+                                      </div>
                               </div>
+                            </div>
+                            <div class="form-row">
                               <div class="form-group col-md-6">
                                 <label for="inputPassword4">Senha</label>
                                 <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
