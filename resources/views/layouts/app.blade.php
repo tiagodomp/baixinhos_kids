@@ -73,6 +73,23 @@
       gtag('config', 'UA-137918628-1');
    </script>
     <script type="text/javascript">
+        function toggleFAB(fab){
+            if(document.querySelector(fab).classList.contains('show')){
+                document.querySelector(fab).classList.remove('show');
+            }else{
+                document.querySelector(fab).classList.add('show');
+            }
+        }
+
+        document.querySelector('.fab .main').addEventListener('click', function(){
+            toggleFAB('.fab');
+        });
+
+        document.querySelectorAll('.fab ul li button').forEach((item)=>{
+            item.addEventListener('click', function(){
+                toggleFAB('.fab');
+            });
+        });
     //Esta função checa se existe imagem e corrige com imagem default se necessario.
 /*    function img_not_found(image){
       image.onerror = "";
@@ -120,10 +137,33 @@
               <div class="">
                   <div class="">
                       <div class="page-body">
-
                           <!-- start conteudo -->
                           @yield('content')
                           <!-- end conteduo -->
+
+                          <div class="fab">
+                                <button class="main"></button>
+                                <ul>
+                                    <li>
+                                        <label for="opcao1">Opção 1</label>
+                                        <button id="opcao1">
+                                        ⎈
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <label for="opcao2">Opção 2</label>
+                                        <button id="opcao2">
+                                        ⎗
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <label for="opcao3">Opção 3</label>
+                                        <button id="opcao3">
+                                        ☏
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
                       </div>
                   </div>
               </div>
@@ -187,10 +227,10 @@
   <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script>
   <!-- data-table js -->
   <script src="{{ url('assets/tema_1/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-
+{{--
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>  --}}
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-<?php
+0<?php
     /**
      * @author  Tiago Pereira
      * @email   tiagodominguespereira@gmail.com

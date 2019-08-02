@@ -8,21 +8,31 @@ use App\Responsavel;
 use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use App\Traits\CrudJsonTrait;
 
 trait FichaCadastroTrait
 {
+    use CrudJsonTrait;
+
     public function novaFichaCadastro(Request $request)
     {
-        if($this->inserirResponsavel($request))
-            if($this->inserirBaixinho($request))
+        $uuidCanal  = ($request->has('uuidCanal'))
+                        ?$request->uuidCanal
+                        :$this->inserirCanal($request)[1];
 
+        $uuidR      = ($request->has('uuidR') && !empty($uuidCanal))
+                        ?$request->uuidR
+                        :$this->inserirResponsavel($request, $uuidCanal)[1];
+
+        return (!empty($uuidR))??$this->inserirBaixinho($request, $uuidR);
     }
 
-    public function inserirBaixinho(Request $request)
+    public function inserirBaixinho(Request $request, string $uuidR = '')
     {
+        $uuid = Str::uuid()->toString();
         $b = Baixinho::create([
-            'uuid'                      => Str::uuid()->toString(),
-            'responsavel_uuid'          => $request->uuidR,
+            'uuid'                      => $uuid,
+            'responsavel_uuid'          => ($request->has('uuidR'))?$request->uuidR:$uuidR,
             'nome'                      => $request->nomeB,
             'nascimento'                => $request->nascimentoB,
             'primeiro_corte'            => $request->primeiroCorteB,
@@ -37,16 +47,17 @@ trait FichaCadastroTrait
             'deleted_at'                => null,
         ]);
 
-        return ($b == 1 || $b == true)?true:false;
+        return ($b == 1 || $b == true)?[true, $uuid]:[false, ''];
     }
 
-    public function inserirResponsavel(Request $request)
+    public function inserirResponsavel(Request $request, string $uuidCanal = '')
     {
+        $uuid = Str::uuid()->toString();
         $r = Responsavel::create([
-            'uuid'                      => Str::uuid()->toString(),
+            'uuid'                      => $uuid,
             'nome'                      => $request->nomeR,
             'contatos'                  => $request->contatosR,
-            'canais_id'                 => $request->canais,
+            'canais_id'                 => ($request->has('UuidCanal'))?$request->UuidCanal:$uuidCanal,
             'criado_por'                => auth()->user()->uuid,
             'imagens'                   => ($request->has('imagensR'))?$this->imagensJson($request->imagensR):null,
             'infos'                     => ($request->has('infosR'))?$this->infosJson($request->infosR):null,
@@ -55,13 +66,14 @@ trait FichaCadastroTrait
             'deleted_at'                => null,
         ]);
 
-        return ($r == 1 || $r == true)?true:false;
+        return ($r == 1 || $r == true)?[true, $uuid]:[false, ''];
     }
 
     public function inserirCanal(Request $request)
     {
+        $uuid = Str::uuid()->toString();
         $c = Canal::create([
-            'uuid'                      => Str::uuid()->toString(),
+            'uuid'                      => $uuid,
             'titulo'                    => $request->tituloCanal,
             'descricao'                 => $request->descricaoCanal,
             'tecnicas'                  => $request->tecnicasCanal,
@@ -71,6 +83,8 @@ trait FichaCadastroTrait
             'updated_at'                => null,
             'deleted_at'                => null,
         ]);
+
+        return ($c == 1 || $c == true)?[true, $uuid]:[false, ''];
     }
 
 
@@ -104,5 +118,4 @@ trait FichaCadastroTrait
                 ]
             ];
     }
-
 }
