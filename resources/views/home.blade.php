@@ -52,10 +52,10 @@
                         <div class="col-sm-8  card-visitor-button">
                             <button class="btn btn-info btn-icon"><i class="icofont icofont-ticket"></i></button>
                             <div class="card-contain">
-                                <!--foreach($pendente as $pd)
-                                <h6>R$ number_format($pd->total,2,'.','.')   </h6>
-                            <p class="text-muted f-18 m-0">  $pd->quantidade   Pendentes</p>
-                                endforeach -->
+                                {{--  @foreach($pendente as $pd)
+                                    <h6>R$ {{number_format($pd->total,2,'.','.') }}</h6>
+                                    <p class="text-muted f-18 m-0"> {{ $pd->quantidade}}   Pendentes</p>
+                                @endforeach  --}}
                             </div>
                         </div>
                         <div class="col-sm-4 text-center">
@@ -76,14 +76,13 @@
                             <table class="table">
                                 <thead>
                                     <tr class="text-uppercase">
-
                                         <th>Quantidade</th>
                                         <th>Total</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--foreach($status as $stts)
+                                    {{--foreach($status as $stts)
                                             <tr>
                                             <td>  $stts->quantidade   </td>
                                                 <td>  $stts->total  </td>
@@ -93,7 +92,7 @@
                                                 <td><button type="button" class="btn btn-primary btn-round">  $stts->nome </button></td>
                                                 endif
                                             </tr>
-                                    endforeach-->
+                                    endforeach--}}
                                 </tbody>
                             </table>
                         </div>
@@ -115,59 +114,69 @@
                         <form action={{route('ficha.cadastro')}} class="col-md-12" method="post">
                             @csrf
                             <div class="form-row">
-                              <div class="form-group col-md-6">
-                                <label for="responsavelUuid">Responsável</label>
-                                <input type="text" id="responsavelUuid" placeholder="Nome do Responsável">
-                                <div class="row-fluid">
-                                        <select class="selectpicker" data-show-subtext="true" data-live-search="true">
-                                          <option data-subtext="Rep California">Tom Foolery</option>
-                                          <option data-subtext="Sen California">Bill Gordon</option>
-                                          <option data-subtext="Sen Massacusetts">Elizabeth Warren</option>
-                                          <option data-subtext="Rep Alabama">Mario Flores</option>
-                                          <option data-subtext="Rep Alaska">Don Young</option>
-                                          <option data-subtext="Rep California" disabled="disabled">Marvin Martinez</option>
+                                <div class="form-group col-md-6">
+                                    <label for="responsavelUuid">Quem é o Responsável?</label>
+                                    <div class="row-fluid">
+                                        <select class="selectpicker show-tick"
+                                                name="responsavelUuid"
+                                                title="Selecione o Responsável..."
+                                                id="responsavelUuid"
+                                                data-show-subtext="true"
+                                                data-live-search="true"
+                                                data-size="5"
+                                                data-width="auto">
+                                            <option value="" >Selecione o Responsável...</option>
+                                            @foreach($responsaveis as $responsavel)
+                                                <option value={{$responsavel['uuid']}}  data-tokens={{implode('-', $responsavel['data'])}} data-subtext={{implode(',', $responsavel['filhos'])}}>
+                                                    {{$responsavel['nome']}}
+                                                </option>
+                                            @endforeach
                                         </select>
-                                        <span class="help-inline">With <code>data-show-subtext="true" data-live-search="true"</code>. Try searching for california</span>
-                                      </div>
+                                    </div>
+                                    <button type="button" class="btn btn-success"> add </button>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="canalUuid">Como nos conheceu?</label>
+                                    <div class="row-fluid">
+                                        <select class="selectpicker show-tick"
+                                                name="canalUuid"
+                                                title="Escolha um Canal..."
+                                                id="canalUuid"
+                                                data-live-search="true"
+                                                data-size="5"
+                                                data-width="auto">
+                                                {{--  <option value="" >Escolha um Canal...</option>  --}}
+                                            @foreach($canais as $canal)
+                                                <option value={{$canal['uuid']}}>{{$canal['titulo']}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <button type="button"
+                                            class="btn btn-success"
+                                            data-toggle="modal"
+                                            data-target="#canalModal">
+                                            add
+                                    </button>
+                                </div>
+                            </div>
+                              <div class="form-group">
+                                <label for="nomeB">Nome completo do Baixinho</label>
+                                <input type="password" class="form-control" id="nomeB" placeholder="Senha">
                               </div>
+                            <div class="form-row"
+                                <div class="form-group">
+                                    <label for="inputAddress">Data de Nascimento</label>
+                                    <input type="text" class="form-control" id="inputAddress" placeholder="Rua dos Bobos, nº 0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputAddress2">Data da primeira visita</label>
+                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartamento, hotel, casa, etc.">
+                                </div>
                             </div>
                             <div class="form-row">
-                              <div class="form-group col-md-6">
-                                <label for="inputPassword4">Senha</label>
-                                <input type="password" class="form-control" id="inputPassword4" placeholder="Senha">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label for="inputAddress">Endereço</label>
-                              <input type="text" class="form-control" id="inputAddress" placeholder="Rua dos Bobos, nº 0">
-                            </div>
-                            <div class="form-group">
-                              <label for="inputAddress2">Endereço 2</label>
-                              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartamento, hotel, casa, etc.">
-                            </div>
-                            <div class="form-row">
-                              <div class="form-group col-md-6">
-                                <label for="inputCity">Cidade</label>
+                              <div class="form-group">
+                                <label for="inputCity">Autorizaçao audio-visual</label>
                                 <input type="text" class="form-control" id="inputCity">
-                              </div>
-                              <div class="form-group col-md-4">
-                                <label for="inputEstado">Estado</label>
-                                <select id="inputEstado" class="form-control">
-                                  <option selected>Escolher...</option>
-                                  <option>...</option>
-                                </select>
-                              </div>
-                              <div class="form-group col-md-2">
-                                <label for="inputCEP">CEP</label>
-                                <input type="text" class="form-control" id="inputCEP">
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gridCheck">
-                                <label class="form-check-label" for="gridCheck">
-                                  Clique em mim
-                                </label>
                               </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Salvar</button>
@@ -187,4 +196,7 @@
       self.location = urlSelecionada;
     }
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 @endsection

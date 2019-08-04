@@ -69,9 +69,16 @@ trait FichaCadastroTrait
         return ($r == 1 || $r == true)?[true, $uuid]:[false, ''];
     }
 
-    public function inserirCanal(Request $request)
+    public function inserirCanal(Request $request, string $uuidCanal = '')
     {
-        $uuid = Str::uuid()->toString();
+        if($request->has('uuidCanal')){
+            $uuid = $request->uuidCanal;
+        }elseif(!empty($uuidCanal)){
+            $uuid = $uuidCanal;
+        }else{
+            $uuid = Str::uuid()->toString();
+        }
+
         $c = Canal::create([
             'uuid'                      => $uuid,
             'titulo'                    => $request->tituloCanal,

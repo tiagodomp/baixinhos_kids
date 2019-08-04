@@ -73,23 +73,6 @@
       gtag('config', 'UA-137918628-1');
    </script>
     <script type="text/javascript">
-        function toggleFAB(fab){
-            if(document.querySelector(fab).classList.contains('show')){
-                document.querySelector(fab).classList.remove('show');
-            }else{
-                document.querySelector(fab).classList.add('show');
-            }
-        }
-
-        document.querySelector('.fab .main').addEventListener('click', function(){
-            toggleFAB('.fab');
-        });
-
-        document.querySelectorAll('.fab ul li button').forEach((item)=>{
-            item.addEventListener('click', function(){
-                toggleFAB('.fab');
-            });
-        });
     //Esta função checa se existe imagem e corrige com imagem default se necessario.
 /*    function img_not_found(image){
       image.onerror = "";
@@ -145,21 +128,21 @@
                                 <button class="main"></button>
                                 <ul>
                                     <li>
-                                        <label for="opcao1">Opção 1</label>
+                                        <label for="opcao1">Novo B</label>
                                         <button id="opcao1">
-                                        ⎈
+                                            <i class="icofont icofont-baby"></i>
                                         </button>
                                     </li>
                                     <li>
-                                        <label for="opcao2">Opção 2</label>
+                                        <label for="opcao2">Novo R</label>
                                         <button id="opcao2">
-                                        ⎗
+                                            <i class="icofont-users-alt-4"></i>
                                         </button>
                                     </li>
                                     <li>
-                                        <label for="opcao3">Opção 3</label>
+                                        <label for="opcao3">Novo C</label>
                                         <button id="opcao3">
-                                        ☏
+                                            <i class="icofont-map-pins"></i>
                                         </button>
                                     </li>
                                 </ul>
@@ -225,6 +208,25 @@
   <script type="text/javascript" src="{{ url('assets/plugins/notify.min.js') }}"></script>
   <!-- scripts -->
   <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script>
+  <script type="text/javascript">
+    function toggleFAB(fab){
+        if(document.querySelector(fab).classList.contains('show')){
+            document.querySelector(fab).classList.remove('show');
+        }else{
+            document.querySelector(fab).classList.add('show');
+        }
+    }
+
+    document.querySelector('.fab .main').addEventListener('click', function(){
+        toggleFAB('.fab');
+    });
+
+    document.querySelectorAll('.fab ul li button').forEach((item)=>{
+        item.addEventListener('click', function(){
+            toggleFAB('.fab');
+        });
+    });
+  </script>
   <!-- data-table js -->
   <script src="{{ url('assets/tema_1/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 {{--

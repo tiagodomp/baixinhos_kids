@@ -1,7 +1,4 @@
 /*
-Desenvolvido para a LojaHub | Academia do Ecommerce
-Todos os direitos Reservados 2018-2019
-
 Cores Default:
 Laranja logo: #EF9C00
 Azul logo: #10304F
@@ -13,7 +10,7 @@ Azul SubMenu Nvl-2 #243450
 */
 
 :root {
-  --main-logo-blue: #10304F; 
+  --main-logo-blue: #10304F;
   --main-logo-orange: #EF9C00;
   --menu-main-color: #06132A;
   --menu-second-color:#1D2E4E;
@@ -92,7 +89,7 @@ Azul SubMenu Nvl-2 #243450
 	width: 150px;
 	float: left;
 	margin-left: 25px;
-	margin-right: 25px;	
+	margin-right: 25px;
 }
 
 
@@ -347,32 +344,32 @@ a.remove {
 
 .font_u-12px{
   font-size:12px;
-  font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+  font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif;
 }
 
 .font_u-13px{
     font-size: 13px;
-    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif;
 }
 
 .font_u-14px{
   font-size:14px;
-  font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+  font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif;
 }
 
 .font_u-15px{
     font-size: 15px;
-    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif;
 }
 
 .font_u-16px{
     font-size: 16px;
-    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif;
 }
 
 .font_u-17px{
     font-size: 17px;
-    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif; 
+    font-family: Arial, Helvetica,"Nimbus Sans L",sans-serif;
 }
 
 .bold {
@@ -406,8 +403,6 @@ a.remove {
     border: 1px solid #F00;
 }
 
-
-/* START | Css By Urnau */
 /***menu principal***/
 #menu-fixed{
 margin-bottom: 54px;
@@ -418,10 +413,10 @@ margin-bottom: 54px !important;
 }
 
 /***produtos***/
-.input-spin-off_u::-webkit-inner-spin-button, 
-.input-spin-off_u::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+.input-spin-off_u::-webkit-inner-spin-button,
+.input-spin-off_u::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .separa-produtos_u{
@@ -524,11 +519,129 @@ p.hidden_max_250_u {
 .font_u-1rem{
     font-size: 1.2rem !important;
 }
-/* END | Css By Urnau */
 
-/* Maikson | Mensagens | Mercado Livre*/
 #divMensagens{
-    //height: 500px;
+    height: 500px;
     overflow-scrolling: auto !important;
 }
-/* END Maikson | Mensagens | Mercado Livre*/
+
+
+
+.fab{
+    position: fixed;
+    bottom:10px;
+    right:10px;
+  }
+
+  .fab button{
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    border-radius: 30px;
+    background-color: #cb60b3;
+    border: none;
+    box-shadow: 0 1px 5px rgba(0,0,0,.4);
+    font-size: 24px;
+    color: white;
+
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    transition: .2s ease-out;
+  }
+
+  .fab button:focus{
+    outline: none;
+  }
+
+  .fab button.main{
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    background-color: #5b19b7;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+  }
+
+  /* '⏚'  */
+  .fab button.main:before{
+    content: '+';
+  }
+
+  .fab ul{
+    position:absolute;
+    bottom: 0;
+    right: 0;
+    padding:0;
+    padding-right:5px;
+    margin:0;
+    list-style:none;
+    z-index:10;
+
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    transition: .2s ease-out;
+  }
+
+  .fab ul li{
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    margin-bottom: -10%;
+    opacity: 0;
+
+    -webkit-transition: .3s ease-out;
+    -moz-transition: .3s ease-out;
+    transition: .3s ease-out;
+  }
+
+  .fab ul li label{
+    margin-right:10px;
+    white-space: nowrap;
+    display: block;
+    margin-top: 10px;
+    padding: 5px 8px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    border-radius:3px;
+    height: 18px;
+    font-size: 16px;
+    pointer-events: none;
+    opacity:0;
+
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    transition: .2s ease-out;
+  }
+
+  .fab.show button.main,
+  .fab.show button.main{
+    outline: none;
+    background-color: #7716ff;
+    box-shadow: 0 3px 8px rgba(0,0,0,.5);
+   }
+
+   /* '↑'*/
+  .fab.show button.main:before,
+  .fab.show button.main:before{
+    content: 'x' ;
+  }
+
+  .fab.show button.main + ul,
+  .fab.show button.main + ul{
+    bottom: 70px;
+  }
+
+  .fab.show button.main + ul li,
+  .fab.show button.main + ul li{
+    margin-bottom: 10px;
+    opacity: 1;
+  }
+
+  .fab.show button.main + ul li:hover label,
+  .fab.show button.main + ul li:hover label{
+    opacity: 1;
+  }
+
+

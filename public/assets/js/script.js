@@ -118,7 +118,7 @@ $(document).ready(function() {
 		produtoTamanhoSeq++;
 	});
 
-	
+
 	let imagensSeq = 0;
 	$('.uploadChange').on('change',function() {
         var id = $(this).attr('id');
@@ -129,7 +129,7 @@ $(document).ready(function() {
 
 			if(arquivo.size >= 1048576) { //1MB
 				alert('Imagem: '+arquivo.name+' \n Verifique se o tamanho da imagem é menor que 1MB'); //Acima do limite
-				upload.value = ""; //Limpa o campo          
+				upload.value = ""; //Limpa o campo
 			}
 
 	        var reader = new FileReader();
@@ -180,7 +180,7 @@ $(document).ready(function() {
 
 			if(arquivo.size >= 1048576) { //1MB
 				alert('Imagem: '+arquivo.name+' \n Verifique se o tamanho da imagem é menor que 1MB'); //Acima do limite
-				upload.value = ""; //Limpa o campo          
+				upload.value = ""; //Limpa o campo
 			}
 
 	        var reader = new FileReader();
@@ -239,3 +239,4 @@ $(document).ready(function() {
     });
 
 });
+
