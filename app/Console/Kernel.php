@@ -5,11 +5,6 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-// use App\Jobs\CrunchReports;
-// use App\Jobs\BaixaEstoque;
-// use App\Jobs\SyncPedidoML;
-use App\Jobs\SyncPedidoS7;
-
 class Kernel extends ConsoleKernel
 {
     /**
@@ -17,9 +12,9 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    // protected $commands = [
-    //     Commands\RedisSubscribe::class
-    // ];
+    protected $commands = [
+        //
+    ];
 
     /**
      * Define the application's command schedule.
@@ -29,23 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('php artisan route:list');
-        // $schedule->call(function(){
-        //     dispatch(new BaixaEstoque);
-        // })->everyFiveMinutes();
-
-        // $schedule->call(function(){
-        //     dispatch(new SyncPedidoML);
-        // })->everyFiveMinutes();
-
-        $schedule->call(function(){
-            dispatch(new SyncPedidoS7);
-        });
-        // ->everyFiveMinutes();
-
-        // $schedule->call(function(){
-        //     dispatch(new SyncPedidoB2W);
-        // })->everyFiveMinutes();
+        // $schedule->command('inspire')
+        //          ->hourly();
     }
 
     /**

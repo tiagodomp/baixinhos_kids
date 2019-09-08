@@ -21,19 +21,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/canais','HomeController@index')         ->name('canais');
 
     Route::post('/ficha/cadastrar','HomeController@index')         ->name('ficha.cadastro');
-
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-	// Route::get('dashboard','HomeController@index')->name('home');
-
-
 });
 
 Auth::routes();
