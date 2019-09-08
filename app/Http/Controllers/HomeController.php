@@ -44,7 +44,7 @@ class HomeController extends Controller
             ],
             [
                 'uuid'      => Str::uuid()->toString(),
-                'nome'      => 'teste3',
+                'nome'      => 'Mano Felps',
                 'filhos'    => ['filho31', 'filho32', 'filho33'],
                 'data'      => ['numerotell3', 'email3', 'numeroCell3'],
             ],

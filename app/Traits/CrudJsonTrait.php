@@ -38,7 +38,8 @@ trait CrudJsonTrait
         $whereString = $this->geradorWhereString($where);
 
         if($this->salvarRotaJson($Tb, $collumn, $where, $path)){
-            $sql     = (string) "JSON_UNQUOTE(JSON_SET(".$collumn.", '".$path."', CAST('".$this->utf8_ansi(json_encode($data))."' AS JSON)))";
+            $data    = (is_string($data) || is_int($data) || is_bool($data))? $this->utf8_ansi($data): "CAST('".$this->utf8_ansi(json_encode($data))."' AS JSON)";
+            $sql     = (string) "JSON_UNQUOTE(JSON_SET(".$collumn.", '".$path."', ".$data." ))";
             $data[0] = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.' where '.$whereString);
             $data[1] = DB::table($Tb)->whereRaw($whereString)->update(["updated_at" => now()->toDateTimeString()]);
 
@@ -139,7 +140,11 @@ trait CrudJsonTrait
         $where = array_divide($where);
         $whereString = '';
         foreach($where[0] as $key=>$value){
-            $whereString = ($valueInArray)?$value. ' = ' .$where[1][$key]: $value. ' = ?';
+            if(is_int($value)){
+				$whereString .= $where[1][$key];
+			}else{
+				$whereString .= ($valueInArray)?$value." = '".$where[1][$key]. "'": $value. ' = ?';
+			}
         }
         return [$whereString, $where[1]];
     }
