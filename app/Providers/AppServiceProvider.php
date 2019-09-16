@@ -39,20 +39,20 @@ class AppServiceProvider extends ServiceProvider
             $user->uuid = Str::uuid()->toString();
         });
 
-        // Baixinho::creating(function (Baixinho $baixinho) {
-        //     $baixinho->incrementing = false;
-        //     $baixinho->uuid = Str::uuid()->toString();
-        // });
+        Baixinho::creating(function (Baixinho $baixinho) {
+            $baixinho->incrementing = false;
+            $baixinho->uuid = Str::uuid()->toString();
+        });
 
-        // Responsavel::creating(function (Responsavel $responsavel) {
-        //     $responsavel->incrementing = false;
-        //     $responsavel->uuid = Str::uuid()->toString();
-        // });
+        Responsavel::creating(function (Responsavel $responsavel) {
+            $responsavel->incrementing = false;
+            $responsavel->uuid = Str::uuid()->toString();
+        });
 
-        // Canal::creating(function (Canal $canal) {
-        //     $canal->incrementing = false;
-        //     $canal->uuid = Str::uuid()->toString();
-        // });
+        Canal::creating(function (Canal $canal) {
+            $canal->incrementing = false;
+            $canal->uuid = Str::uuid()->toString();
+        });
 
 
         //Recuperando UUID

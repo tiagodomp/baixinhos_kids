@@ -35,8 +35,8 @@ class HomeController extends Controller
         if(!empty($request->responsavelUuid)){
             $uuidR = $request->responsavelUuid;
         }else{
-           $responsavel = (!empty($uuidCanal))?$this->inserirResponsavel($request, $uuidCanal):[false, ''];
-           $uuidR = ($responsavel[0])?$responsavel[1]:'';
+            $responsavel = (!empty($uuidCanal))?$this->inserirResponsavel($request, $uuidCanal):[false, ''];
+            $uuidR = ($responsavel[0])?$responsavel[1]:'';
         }
 
         $data = (!empty($uuidR))?$this->inserirBaixinho($request, $uuidR):[false, ''];
@@ -44,7 +44,7 @@ class HomeController extends Controller
         // if(!$data[0])
         //     return redirect()->back()->withErrors($request)->withInput();
 
-        return $this->index();
+        return redirect()->route('home');
     }
 
     public function searchResponsaveis(Request $request)
@@ -64,7 +64,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $responsaveis = $this->getResponsaveis(10);
+        $responsaveis = $this->getResponsaveis(50);
 
         foreach($responsaveis as $key => &$value){
             $responsaveis[$key]['contatos'] = [
@@ -72,7 +72,7 @@ class HomeController extends Controller
                 $value['contatos']['tell'],
                 $value['contatos']['email']
             ];
-            $responsaveis[$key]['filhos'] = $this->getFilhosResponsaveis($value['uuid']);
+            $responsaveis[$key]['filhos'] = $this->getFilhosResponsaveis($value['uuid'])['nomes'];
         }
 
         $data = [
@@ -101,20 +101,22 @@ class HomeController extends Controller
         //     ],
         // ];
 
-        $canais = [
-            [
-            'uuid'      => Str::uuid()->toString(),
-            'titulo'    => Str::random(10),
-            ],
-            [
-            'uuid'      => Str::uuid()->toString(),
-            'titulo'    => Str::random(10),
-            ],
-            [
-            'uuid'      => Str::uuid()->toString(),
-            'titulo'    => Str::random(10),
-            ],
-        ];
+        $canais = $this->getCanais(50);
+
+        // $canais = [
+        //     [
+        //     'uuid'      => Str::uuid()->toString(),
+        //     'titulo'    => Str::random(10),
+        //     ],
+        //     [
+        //     'uuid'      => Str::uuid()->toString(),
+        //     'titulo'    => Str::random(10),
+        //     ],
+        //     [
+        //     'uuid'      => Str::uuid()->toString(),
+        //     'titulo'    => Str::random(10),
+        //     ],
+        // ];
 
         return view('home', compact('data', 'responsaveis', 'canais'));
     }

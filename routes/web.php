@@ -13,7 +13,7 @@ Route::get('teste3',	'HomeController@teste3');
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
 	Route::get('/dashboard','HomeController@index')      ->name('home');
-	Route::get('/responsaveis','HomeController@index')   ->name('responsaveis');
+	Route::get('/responsaveis','ResponsavelController@index')   ->name('responsaveis');
 	Route::get('/baixinhos','HomeController@index')      ->name('baixinhos');
 	Route::get('/funcionarios','HomeController@index')   ->name('funcionarios');
     Route::get('/canais','HomeController@index')         ->name('canais');

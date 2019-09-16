@@ -35,77 +35,94 @@ trait FichaCadastroTrait
 
     public function inserirBaixinho(Request $request, string $uuidR = '')
     {
-        $uuid = Str::uuid()->toString();
-        $b = Baixinho::create([
-            'uuid'                      => $uuid,
-            'responsavel_uuid'          => (!empty($request->responsavelUuid))?$request->responsavelUuid:$uuidR,
-            'nome'                      => $request->nomeB,
-            'nascimento'                => $request->nascimentoB,
-            'primeiro_corte'            => $request->primeiroCorteB,
-            'autorizacao_audiovisual'   => $request->has('autorizacaoR'),
-            'ficha_cadastro'            => ($request->has('fichaCadastro'))?$this->imagensJson($request->fichaCadastro):null,
-            'criado_por'                => auth()->user()->uuid,
-            'imagens'                   => ($request->has('imagensB'))?$this->imagensJson($request->imagensB):null,
-            'historico'                 => $request->historico,
-            'infos'                     => ($request->has('infosB'))?$this->infosJson($request->infosB):null,
-            'created_at'                => now()->toDateTimeString(),
-            'updated_at'                => null,
-            'deleted_at'                => null,
-        ]);
+        $b = new Baixinho();
+        $uuidR = (!empty($request->responsavelUuid))?$request->responsavelUuid:$uuidR;
+        $data = $b->where('nome', 'LIKE', $request->nomeR)
+                    ->where('responsavel_uuid', $uuidR)
+                    ->select('uuid as uuid, nome as nome, responsavel_uuid as responsavel_uuid')
+                    ->first();
 
-        $path = '$.familia.'.$b->nome;
-        return ($b->exists)
+        if(empty($data)){
+            $data = $b->create([
+                'responsavel_uuid'          => $uuidR,
+                'nome'                      => $request->nomeB,
+                'nascimento'                => $request->nascimentoB,
+                'primeiro_corte'            => $request->primeiroCorteB,
+                'autorizacao_audiovisual'   => $request->has('autorizacaoR'),
+                'ficha_cadastro'            => ($request->has('fichaCadastro'))?$this->imagensJson($request->fichaCadastro):null,
+                'criado_por'                => auth()->user()->uuid,
+                'imagens'                   => ($request->has('imagensB'))?$this->imagensJson($request->imagensB):null,
+                'historico'                 => $request->historico,
+                'infos'                     => ($request->has('infosB'))?$this->infosJson($request->infosB):null,
+                'created_at'                => now()->toDateTimeString(),
+                'updated_at'                => null,
+                'deleted_at'                => null,
+            ]);
+        }
+
+        $path = '$.familia.'.$data->nome;
+        return ($data->exists)
                     ?[
-                        true, //$this->atualizarJsonTb('responsaveis', 'infos', ['uuid' => $b->responsavel_uuid], $path, [$b->uuid]),
-                        $b->uuid
+                        true, //$this->atualizarJsonTb('responsaveis', 'infos', ['uuid' => $data->responsavel_uuid], $path, [$data->uuid]),
+                        $data->uuid
                     ]
                     :[false, ''];
     }
 
     public function inserirResponsavel(Request $request, string $uuidCanal = '')
     {
-        $uuid = Str::uuid()->toString();
 
-        $r = Responsavel::create([
-            'uuid'                      => $uuid,
-            'nome'                      => $request->nomeR,
-            'contatos'                  => $request->contatosR,
-            'canal_id'                  => (!empty($request->canalUuid))?$request->canalUuid:$uuidCanal,
-            'criado_por'                => auth()->user()->uuid,
-            'imagens'                   => ($request->has('imagensR'))?$this->imagensJson($request->imagensR):null,
-            'infos'                     => ($request->has('infosR'))?$this->infosJson($request->infosR):null,
-            'created_at'                => now()->toDateTimeString(),
-            'updated_at'                => null,
-            'deleted_at'                => null,
-        ]);
+        $r = new Responsavel();
 
-        return ($r->exists)?[true, $r->uuid]:[false, ''];
+        $data = $r->where('nome', 'LIKE', $request->nomeR)
+                    ->select('uuid as uuid')
+                    ->first();
+
+        if(empty($data)){
+            $data = $r->create([
+                'nome'                      => $request->nomeR,
+                'contatos'                  => $request->contatosR,
+                'canal_id'                  => (!empty($request->canalUuid))?$request->canalUuid:$uuidCanal,
+                'criado_por'                => auth()->user()->uuid,
+                'imagens'                   => ($request->has('imagensR'))?$this->imagensJson($request->imagensR):null,
+                'infos'                     => ($request->has('infosR'))?$this->infosJson($request->infosR):null,
+                'created_at'                => now()->toDateTimeString(),
+                'updated_at'                => null,
+                'deleted_at'                => null,
+            ]);
+        }
+
+        return ($data->exists)?[true, $data->uuid]:[false, ''];
     }
 
     public function inserirCanal(Request $request, string $uuidCanal = '')
     {
-        if(!empty($request->canalUuid)){
-            $uuid = $request->canalUuid;
-        }elseif(!empty($uuidCanal)){
-            $uuid = $uuidCanal;
-        }else{
-            $uuid = Str::uuid()->toString();
-        }
+        // if(!empty($request->canalUuid)){
+        //     $uuid = $request->canalUuid;
+        // }elseif(!empty($uuidCanal)){
+        //     $uuid = $uuidCanal;
+        // }else{
+        //     $uuid = Str::uuid()->toString();
+        // }
+            $c = new Canal();
 
-        $c = Canal::create([
-            'uuid'                      => $uuid,
-            'titulo'                    => $request->tituloCanal,
-            'descricao'                 => $request->descricaoCanal,
-            'tecnicas'                  => $request->tecnicasCanal,
-            'criado_por'                => auth()->user()->uuid,
-            'infos'                     => ($request->has('infosCanal'))?$this->infosJson($request->infosCanal):null,
-            'created_at'                => now()->toDateTimeString(),
-            'updated_at'                => null,
-            'deleted_at'                => null,
-        ]);
-        dd($c);
+            $data = $c->where('titulo', 'LIKE', $request->tituloCanal)
+                    ->select('uuid as uuid')
+                    ->first();
 
-        return ($c->exists)?[true, $c->uuid]:[false, ''];
+            if(empty($data)){
+               $data = $c->create([
+                    'titulo'                    => $request->tituloCanal,
+                    'descricao'                 => $request->descricaoCanal,
+                    'tecnicas'                  => $request->tecnicasCanal,
+                    'criado_por'                => auth()->user()->uuid,
+                    'infos'                     => ($request->has('infosCanal'))?$this->infosJson($request->infosCanal):null,
+                    'created_at'                => now()->toDateTimeString(),
+                    'updated_at'                => null,
+                    'deleted_at'                => null,
+                ]);
+            }
+        return ($data->exists)?[true, $data->uuid]:[false, ''];
     }
 
 
@@ -150,7 +167,26 @@ trait FichaCadastroTrait
     public function getFilhosResponsaveis(string $responsavelUuid)
     {
         $b = new Baixinho();
-        return $b->getIrmaos($responsavelUuid);
+        $filhos = $b->getIrmaos($responsavelUuid);
+        $data = [
+            'nomes' => [],
+            'uuids' => [],
+        ];
+        foreach($filhos as $key => $value){
+            $data['nomes'][] = $value['nome'];
+            $data['uuids'][] = $value['uuid'];
+        }
+        return $data;
+    }
+
+    public function getCanais(int $quant){
+        $c = new Canal();
+        $data = $c->selectRaw('titulo, uuid')
+                    ->offset(0)
+                    ->limit($quant)
+                    ->get();
+
+        return $data->toArray();
     }
 
 

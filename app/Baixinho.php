@@ -95,9 +95,10 @@ class Baixinho extends Model
     public function getIrmaos(string $responsavelUuid)
     {
         $data = $this->where('responsavel_uuid', $responsavelUuid)
-                        ->select('nome as nome, uuid as uuid')
+                        ->selectRaw('nome, uuid')
                         ->get();
-        dd($data->toArray());
+
+        return (!empty($data))?$data->toArray():[];
 
     }
 
