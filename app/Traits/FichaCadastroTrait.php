@@ -16,15 +16,21 @@ trait FichaCadastroTrait
 
     public function novaFichaCadastro(Request $request)
     {
-        $uuidCanal  = ($request->has('uuidCanal'))
-                        ?$request->uuidCanal
-                        :$this->inserirCanal($request)[1];
+        if(!empty($request->canalUuid)){
+            $uuidCanal = $request->canalUuid;
+        }else{
+            $canal = $this->inserirCanal($request);
+            $uuidCanal = ($canal[0])?$canal[1]:'';
+        }
 
-        $uuidR      = ($request->has('uuidR') && !empty($uuidCanal))
-                        ?$request->uuidR
-                        :$this->inserirResponsavel($request, $uuidCanal)[1];
+        if(!empty($request->responsavelUuid)){
+            $uuidR = $request->responsavelUuid;
+        }else{
+           $responsavel = (!empty($uuidCanal))?$this->inserirResponsavel($request, $uuidCanal):[false, ''];
+           $uuidR = ($responsavel[0])?$responsavel[1]:'';
+        }
 
-        return (!empty($uuidR))??$this->inserirBaixinho($request, $uuidR);
+        return (!empty($uuidR))?$this->inserirBaixinho($request, $uuidR):[false, ''];
     }
 
     public function inserirBaixinho(Request $request, string $uuidR = '')
@@ -32,12 +38,12 @@ trait FichaCadastroTrait
         $uuid = Str::uuid()->toString();
         $b = Baixinho::create([
             'uuid'                      => $uuid,
-            'responsavel_uuid'          => ($request->has('uuidR'))?$request->uuidR:$uuidR,
+            'responsavel_uuid'          => (!empty($request->responsavelUuid))?$request->responsavelUuid:$uuidR,
             'nome'                      => $request->nomeB,
             'nascimento'                => $request->nascimentoB,
             'primeiro_corte'            => $request->primeiroCorteB,
-            'autorizacao_audiovisual'   => $request->has('autorizacaoR')?true:false,
-            'ficha_cadastro'            =>($request->has('fichaCadastro'))?$this->imagensJson($request->fichaCadastro):null,
+            'autorizacao_audiovisual'   => $request->has('autorizacaoR'),
+            'ficha_cadastro'            => ($request->has('fichaCadastro'))?$this->imagensJson($request->fichaCadastro):null,
             'criado_por'                => auth()->user()->uuid,
             'imagens'                   => ($request->has('imagensB'))?$this->imagensJson($request->imagensB):null,
             'historico'                 => $request->historico,
@@ -47,17 +53,24 @@ trait FichaCadastroTrait
             'deleted_at'                => null,
         ]);
 
-        return ($b == 1 || $b == true)?[true, $uuid]:[false, ''];
+        $path = '$.familia.'.$b->nome;
+        return ($b->exists)
+                    ?[
+                        true, //$this->atualizarJsonTb('responsaveis', 'infos', ['uuid' => $b->responsavel_uuid], $path, [$b->uuid]),
+                        $b->uuid
+                    ]
+                    :[false, ''];
     }
 
     public function inserirResponsavel(Request $request, string $uuidCanal = '')
     {
         $uuid = Str::uuid()->toString();
+
         $r = Responsavel::create([
             'uuid'                      => $uuid,
             'nome'                      => $request->nomeR,
             'contatos'                  => $request->contatosR,
-            'canais_id'                 => ($request->has('UuidCanal'))?$request->UuidCanal:$uuidCanal,
+            'canal_id'                  => (!empty($request->canalUuid))?$request->canalUuid:$uuidCanal,
             'criado_por'                => auth()->user()->uuid,
             'imagens'                   => ($request->has('imagensR'))?$this->imagensJson($request->imagensR):null,
             'infos'                     => ($request->has('infosR'))?$this->infosJson($request->infosR):null,
@@ -66,13 +79,13 @@ trait FichaCadastroTrait
             'deleted_at'                => null,
         ]);
 
-        return ($r == 1 || $r == true)?[true, $uuid]:[false, ''];
+        return ($r->exists)?[true, $r->uuid]:[false, ''];
     }
 
     public function inserirCanal(Request $request, string $uuidCanal = '')
     {
-        if($request->has('uuidCanal')){
-            $uuid = $request->uuidCanal;
+        if(!empty($request->canalUuid)){
+            $uuid = $request->canalUuid;
         }elseif(!empty($uuidCanal)){
             $uuid = $uuidCanal;
         }else{
@@ -90,8 +103,9 @@ trait FichaCadastroTrait
             'updated_at'                => null,
             'deleted_at'                => null,
         ]);
+        dd($c);
 
-        return ($c == 1 || $c == true)?[true, $uuid]:[false, ''];
+        return ($c->exists)?[true, $c->uuid]:[false, ''];
     }
 
 
@@ -110,7 +124,7 @@ trait FichaCadastroTrait
                 'deleted_at'    => null,
                 ];
             }
-        return $imagem;
+        return json_encode($imagem);
     }
 
     protected function infosJson(array $info)
@@ -124,5 +138,26 @@ trait FichaCadastroTrait
                     ]
                 ]
             ];
+    }
+
+
+    public function getResponsaveis(int $quant, string $uuid = null)
+    {
+        $r = new Responsavel();
+        return $r->getDataResponsaveis($quant, $uuid);
+    }
+
+    public function getFilhosResponsaveis(string $responsavelUuid)
+    {
+        $b = new Baixinho();
+        return $b->getIrmaos($responsavelUuid);
+    }
+
+
+    public function searchResponsaveis(string $search, string $uuid = null)
+    {
+        $r = new Responsavel;
+        $where = ["nome LIKE %".$search."% OR contatos->>'$[0].cell' LIKE %".$search."% OR contatos->>'$[0].tell' LIKE %".$search."% OR contatos->>'$[0].email' LIKE %".$search."%"];
+        return $r->searchResponsaveis($where);
     }
 }

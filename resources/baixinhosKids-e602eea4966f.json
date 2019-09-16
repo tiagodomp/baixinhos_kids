@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "baixinhoskids",
+  "private_key_id": "e602eea4966f85b2b955ddbae38add48a3d9d92f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxEEFySf24oemb\nxxc3q/c7hqLuu+bHgp00/6SL4YM42uSFFdaQ7vcKTiZ0kSLZiBtgKSHKfxE2Hx2i\nu+vBf6IugZhOWiol64PhPRvHnCXz35qI9nhOciUjPf57Xv1y0+QyahfcBgqhm4Hm\nINUO9X4hSgsN0PnDZN9Nj8DsPKGzx8gZb7DXQXnnB665raV4Rr0b12REzzVZ3VjT\npip5yeVO9Sqw1zy4tTagq8WofXboUJL5i5HLCNUxWMR1u9GxErqBYNrGZ9ndezXU\nxWOOF6CvXIk6wFtZaWMnDODtMLABeVw9Dw/ofM4CGhAIbOkJYT143Z3iKX2IO2Rw\n6GGF5h0TAgMBAAECggEADHGSnk0AgMyx1aagEhbxN1GJ+wv6w92BEN8Ns5FaUh37\nRQMfSWyrfe6Ds1nnDUsMdkcA8fGmLJu/m6ObUpKWu+MttTjCKr7d5zyoZCN4/PLW\nmHbB4IZGTkjAE4mK3fQLeIn0oIKBySoo1Rrl/lKKCVFIn5fAX3DXMX5yorRlvnQK\njbRbQvtaIhtyvNlaKeFu1b/Gu/KhvSEY7J7Fy1Kvsdx9z8ky0tYDOCsKQksb+QxH\n3kanp5D8uC/jI+bQNbxwIYE95zMvgAvpOAa5AqKfcKrFHCdOkDFl12XqyeX98n5T\nEcNN/c39l39sF9MugKvgKuN352M4RYdLYCR6Ne1VgQKBgQDc6kzfX7DTehRsTNKG\nTDXMZ9w+U5F1zJ8zButZMJhHbOkFKEuvIWdY+Qe7CbkkMM/YbJRImxmoRpuQcNlP\noszqlOum35hYPcBLugPsIsoof/F02acQWWk5ya1o76w9L0uTlna9AyZtJOdWwlh9\nTbAVi6UA7HM8pnLic0Q7cw/20wKBgQDNLxXeln16n6Ri0CSOXisGKKLYiv6JFVx+\nFGzeTx1IqAVAGOnaZ1AE89RUZ08QPjVolKEjM4XGot79cv7ZRFFs1cgnK8WbbzqE\nJfEtFgP/M0OVkUPq/jljEf6q7MQZPXtM9vIoewsQmT4hMtJtOx7n/KvEvguOu62T\n+aAPfBnYwQKBgQChbuob9V5PO4+/EGhrUTejFmaAeSr7rTrM3AqRk4xD7ZdeeHLO\nGJfgEaMPj+xmQPExky7M2+Jk8KvvYje7FRmvdoG54Pz/xqhF7jm9jjKyY8R7gi2u\nKdhWLUV2QGZaE7yjrjk4qBuleGlBIiXt8x5wsCo0wZT4Rh3/0wGSe+O3lwKBgAfq\nKQ3NAEoanlyxareTKlWye5WexvLCwC6c2xY4Nwj2cj1muJ6UHaITRb17vrEBtU2z\nbgPNmPtwjOl55hq7Z+iq1m2sYpL8V2WBkSwMDVtqvtCmKdiGte/8YbZ2K5pNpNPz\nMqQdGvAo+RyOuU89WJPaS0XrjsaStr9ega4XO2gBAoGANycIQQkCAnDJKfEzEwby\nYXNiep0Jrv6FB5jp7M2lEkQUYRjwxZLEvGRKYkf2t5kOYzQIVeiRl+GsiQ1u+E6J\n2DH9OICi/6CLPbdmMb2caJcBVL6pewvhHQjKq8xIVk08ZwcGZvED3+WGJ17/Pxks\nufs13IQH/tpxlWNRX2+sXRw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "b-kids@baixinhoskids.iam.gserviceaccount.com",
+  "client_id": "101763333588491818710",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/b-kids%40baixinhoskids.iam.gserviceaccount.com"
+}

@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\DB;
 trait CrudJsonTrait
 {
     /**
-     * Verifica se o caminho Json existe na tabela notificacoes_apis.
+     * Verifica se o caminho Json existe na tabela
      * @return bool
      */
-    protected function validarPathJson(string $Tb, int $lojaId, int $apiId, string $collumn, string $pathjson)
+    protected function validarPathJson(string $Tb, string $collumn, array $where, string $pathjson)
     {
-        $pathValido = DB::table($Tb)->where('loja_id', $lojaId)
-                                    ->where('api_id',$apiId)
+        $whereString = $this->geradorWhereString($where);
+        $pathValido = DB::table($Tb)->whereRaw($whereString)
                                     ->selectRaw("JSON_CONTAINS_PATH(".$collumn.",'one','".$pathjson."') AS retorno")
                                     ->first();
         //Se existir
@@ -30,21 +30,56 @@ trait CrudJsonTrait
      * @param string $collumn
      * @param array $wheres
      * @param string $path
-     * @param array $data
+     * @param $data
      * @return bool true || false
      */
-    protected function atualizarJsonTb(string $Tb, string $collumn, array $where, string $path, array $data)
+    protected function atualizarJsonTb(string $Tb, string $collumn, array $where, string $path, $data)
     {
         $whereString = $this->geradorWhereString($where);
 
         if($this->salvarRotaJson($Tb, $collumn, $where, $path)){
-            $sql     = (string) "JSON_UNQUOTE(JSON_SET(".$collumn.", '".$path."', CAST('".$this->utf8_ansi(json_encode($data))."' AS JSON)))";
-            $data[0] = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.' where '.$whereString);
-            $data[1] = DB::table($Tb)->whereRaw($whereString)->update(["updated_at" => now()->toDateTimeString()]);
+
+			$data       = (is_string($data) || is_int($data))? $this->utf8_ansi($data): "CAST('".$this->utf8_ansi(json_encode($data))."' AS JSON)";
+            $sql        = "JSON_UNQUOTE(JSON_SET(".$collumn.", '".$path."', $data))";
+            $data[0]    = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.' where '.$whereString);
+            $data[1]    = DB::table($Tb)->whereRaw($whereString)->update(["updated_at" => now()->toDateTimeString()]);
 
             return ($data[0] == 1 && $data[1] == 1)?true:false;
         }
         return false;
+    }
+
+    /**
+	 * Método que busca dados dentro de uma coluna JSON
+	 *
+     * @param string $Tb            | Tabela de consulta
+     * @param string $column        | Coluna json consulta e extração
+     * @param string $pathResponse  | Caminho json da resposta
+     * @param string $pathSearch    | Caminho json da validação
+     * @param string $oneOrAll      | one OR all
+     * @param mixed  $query         | valor de busca
+     * @return object $query
+     */
+    public function searchJson(string $Tb, string $column, array $where, string $pathResponse, string $pathSearch, string $oneOrAll = 'one', $query)
+    {
+
+        $whereString = $this->geradorWhereString($where);
+        $response = DB::table($Tb)
+                    ->whereRaw($whereString)//$column."->'".$pathResponse."'"." is not null")
+                    ->selectRaw(
+                        "JSON_EXTRACT(
+                            ".$column."->'".$pathResponse."',
+                            JSON_UNQUOTE(
+                                JSON_SEARCH(
+                                    ".$column."->'".$pathSearch."',
+                                    '".$oneOrAll."',
+                                    '".$query."'
+                                )
+                            )
+                        ) AS data"
+                    )
+                    ->get();
+        return $response;
     }
 
     /**
@@ -126,8 +161,9 @@ trait CrudJsonTrait
         $substituir = str_replace($retirar, $retirar[0], $data);
         $explode = explode($retirar[0], $substituir);
 
-        return array_divide(array_filter($explode))[1];
+        return Arr::divide(array_filter($explode))[1];
     }
+
     /**
     * retorna a versão em string para executar um where
     * @param array $where - [campo => value]
@@ -136,12 +172,91 @@ trait CrudJsonTrait
     */
     public function geradorWhereString(array $where, bool $valueInArray = false)
     {
-        $where = array_divide($where);
+        $where = Arr::divide($where);
+        if(empty($where))
+            return ['', []];
+
+        $first = array_key_first($where[0]);
         $whereString = '';
         foreach($where[0] as $key=>$value){
-            $whereString = ($valueInArray)?$value. ' = ' .$where[1][$key]: $value. ' = ?';
+            if(is_int($value)){
+				$data = $where[1][$key];
+			}else{
+				$data = ($valueInArray)?$value." = '".$where[1][$key]. "'": $value. ' = ?';
+            }
+            $whereString = ($key != $first)?$whereString.", ".$data:$data;
         }
         return [$whereString, $where[1]];
     }
 
+    /**
+     * Converte os caracteres de latim/ansi para utf-8
+     * @param string $valor
+     * @return string
+     */
+    public function utf8_ansi(string $valor='') {
+
+        $model = array(
+        "\u00c0" =>"À",
+        "\u00c1" =>"Á",
+        "\u00c2" =>"Â",
+        "\u00c3" =>"Ã",
+        "\u00c4" =>"Ä",
+        "\u00c5" =>"Å",
+        "\u00c6" =>"Æ",
+        "\u00c7" =>"Ç",
+        "\u00c8" =>"È",
+        "\u00c9" =>"É",
+        "\u00ca" =>"Ê",
+        "\u00cb" =>"Ë",
+        "\u00cc" =>"Ì",
+        "\u00cd" =>"Í",
+        "\u00ce" =>"Î",
+        "\u00cf" =>"Ï",
+        "\u00d1" =>"Ñ",
+        "\u00d2" =>"Ò",
+        "\u00d3" =>"Ó",
+        "\u00d4" =>"Ô",
+        "\u00d5" =>"Õ",
+        "\u00d6" =>"Ö",
+        "\u00d8" =>"Ø",
+        "\u00d9" =>"Ù",
+        "\u00da" =>"Ú",
+        "\u00db" =>"Û",
+        "\u00dc" =>"Ü",
+        "\u00dd" =>"Ý",
+        "\u00df" =>"ß",
+        "\u00e0" =>"à",
+        "\u00e1" =>"á",
+        "\u00e2" =>"â",
+        "\u00e3" =>"ã",
+        "\u00e4" =>"ä",
+        "\u00e5" =>"å",
+        "\u00e6" =>"æ",
+        "\u00e7" =>"ç",
+        "\u00e8" =>"è",
+        "\u00e9" =>"é",
+        "\u00ea" =>"ê",
+        "\u00eb" =>"ë",
+        "\u00ec" =>"ì",
+        "\u00ed" =>"í",
+        "\u00ee" =>"î",
+        "\u00ef" =>"ï",
+        "\u00f0" =>"ð",
+        "\u00f1" =>"ñ",
+        "\u00f2" =>"ò",
+        "\u00f3" =>"ó",
+        "\u00f4" =>"ô",
+        "\u00f5" =>"õ",
+        "\u00f6" =>"ö",
+        "\u00f8" =>"ø",
+        "\u00f9" =>"ù",
+        "\u00fa" =>"ú",
+        "\u00fb" =>"û",
+        "\u00fc" =>"ü",
+        "\u00fd" =>"ý",
+        "\u00ff" =>"ÿ");
+
+        return strtr($valor, $model);
+    }
 }

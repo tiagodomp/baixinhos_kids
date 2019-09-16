@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Redis;
-
 Route::get('/', function () {
     return redirect()->route('home');
 });
@@ -20,13 +18,5 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/funcionarios','HomeController@index')   ->name('funcionarios');
     Route::get('/canais','HomeController@index')         ->name('canais');
 
-    Route::post('/ficha/cadastrar','HomeController@index')         ->name('ficha.cadastro');
+    Route::post('/ficha/cadastrar','HomeController@cadastrarFicha')->name('ficha.cadastro');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

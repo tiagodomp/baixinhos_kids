@@ -72,14 +72,6 @@
       gtag('js', new Date());
       gtag('config', 'UA-137918628-1');
    </script>
-    <script type="text/javascript">
-    //Esta função checa se existe imagem e corrige com imagem default se necessario.
-/*    function img_not_found(image){
-      image.onerror = "";
-      image.src = "{{ url('img/sem-foto.jpg') }}";
-      return true;
-    }*/
-    </script>
 </head>
 <body>
 <div id="app">
@@ -98,7 +90,7 @@
         $pedaco = explode('/',str_replace(url(''),'',$current_url));
         @endphp
       <ul>
-         <li class="d-flex justify-content-center"><img class="my-1 mx-1" src="{{ url('assets/img/logo-400px-145px-Baixinhos-kids.png') }}" width="30%" height="30%" alt="Logo" /></li>
+         <li class="d-flex justify-content-center"><img class="my-1 mx-1" src="{{ url('assets/img/logo-400px-145px-Baixinhos-kids.png') }}" width="30%" height="30%" margin="0" alt="Logo" /></li>
          <li @if($current_url == route("home")) class="active" @endif>          <a href="{{ route('home') }}">Início</a></li>
          <li @if($current_url == route('responsaveis')) class="active" @endif>  <a href="{{ route('responsaveis') }}">Responsáveis</a></li>
          <li @if($current_url == route('baixinhos')) class="active" @endif>     <a href="{{ route('baixinhos') }}">Baixinhos</a></li>
@@ -136,13 +128,13 @@
                                     <li>
                                         <label for="opcao2">Novo R</label>
                                         <button id="opcao2">
-                                            <i class="icofont-users-alt-4"></i>
+                                            <i class="icofont icofont-users-alt-4"></i>
                                         </button>
                                     </li>
                                     <li>
                                         <label for="opcao3">Novo C</label>
                                         <button id="opcao3">
-                                            <i class="icofont-map-pins"></i>
+                                            <i class="icofont icofont-map-pins"></i>
                                         </button>
                                     </li>
                                 </ul>
@@ -229,10 +221,6 @@
   </script>
   <!-- data-table js -->
   <script src="{{ url('assets/tema_1/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-{{--
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>  --}}
 
 </body>
 </html>

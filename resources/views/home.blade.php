@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div style="margin-top: 4.4rem">
 
     <div class="row px-5 my-2">
@@ -41,9 +42,6 @@
                 </div>
             </div>
         </div>
-
-
-
 
         <div class="col-md-6 col-xl-4">
             <div class="card">
@@ -127,13 +125,20 @@
                                                 data-width="auto">
                                             <option value="" >Selecione o Responsável...</option>
                                             @foreach($responsaveis as $responsavel)
-                                                <option value={{$responsavel['uuid']}}  data-tokens={{implode('-', $responsavel['data'])}} data-subtext={{implode(',', $responsavel['filhos'])}}>
+                                                <option value={{$responsavel['uuid']}}  data-tokens={{implode('-', $responsavel['contatos'])}} data-subtext={{implode(',', $responsavel['filhos'])}}>
                                                     {{$responsavel['nome']}}
                                                 </option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <button type="button" class="btn btn-success"> add </button>
+                                    <a class="btn btn-success"
+                                        data-toggle="collapse"
+                                        href="#collapseResponsaveis"
+                                        role="button"
+                                        aria-expanded="false"
+                                        aria-controls="collapseResponsaveis">
+                                        add
+                                    </a>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="canalUuid">Como nos conheceu?</label>
@@ -145,49 +150,89 @@
                                                 data-live-search="true"
                                                 data-size="5"
                                                 data-width="auto">
-                                                {{--  <option value="" >Escolha um Canal...</option>  --}}
+                                            <option value="">Escolha um Canal...</option>
                                             @foreach($canais as $canal)
                                                 <option value={{$canal['uuid']}}>{{$canal['titulo']}}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <button type="button"
-                                            class="btn btn-success"
-                                            data-toggle="modal"
-                                            data-target="#canalModal">
-                                            add
-                                    </button>
+                                    <a  class="btn btn-success"
+                                        type="button"
+                                        data-toggle="collapse"
+                                        data-target="#collapseCanais"
+                                        aria-expanded="false"
+                                        aria-controls="collapseCanais" >
+                                        add
+                                    </a>
                                 </div>
                             </div>
-                              <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                  <div class="collapse multi-collapse" id="collapseResponsaveis">
+                                    <div class="card card-body">
+                                        <div class="form-group">
+                                            <label for="nomeR">Nome</label>
+                                            <input type="text" name="nomeR" class="form-control" id="nomeR" placeholder="Nome completo do responsável">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="contatosR[0][email]">E-mail</label>
+                                            <input type="email" name="contatosR[0][email]" class="form-control" id="contatosR[0][email]" placeholder="E-mail principal do Responsável">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="contatosR[0][tell]">Telefone</label>
+                                                <input type="text" name="contatosR[0][tell]" class="form-control" id="contatosR[0][tell]" placeholder="Telefone principal do Responsável">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="contatosR[0][cell]">Celular</label>
+                                                <input type="text" name="contatosR[0][cell]" class="form-control" id="contatosR[0][cell]" placeholder="Celular principal do Responsável">
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="collapse multi-collapse" id="collapseCanais">
+                                    <div class="card card-body">
+                                        <div class="form-group">
+                                            <label for="tituloCanal">Titulo</label>
+                                            <input type="text" name="tituloCanal" class="form-control" id="tituloCanal" placeholder="Titulo do Canal">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="descricaoCanal">Descrição</label>
+                                            <input type="textarea" name="descricaoCanal" class="form-control" id="descricaoCanal" placeholder="Breve descrição...">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tecnicasCanal">Regras</label>
+                                            <input type="textarea" name="tecnicasCanal" class="form-control" id="tecnicasCanal" placeholder="Regras para lidar com os membros deste canal...">
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="nomeB">Nome completo do Baixinho</label>
-                                <input type="password" class="form-control" id="nomeB" placeholder="Senha">
-                              </div>
-                            <div class="form-row"
-                                <div class="form-group">
-                                    <label for="inputAddress">Data de Nascimento</label>
-                                    <input type="text" class="form-control" id="inputAddress" placeholder="Rua dos Bobos, nº 0">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputAddress2">Data da primeira visita</label>
-                                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartamento, hotel, casa, etc.">
-                                </div>
+                                <input type="text" name="nomeB" class="form-control" id="nomeB" placeholder="Nome">
                             </div>
                             <div class="form-row">
-                              <div class="form-group">
-                                <label for="inputCity">Autorizaçao audio-visual</label>
-                                <input type="text" class="form-control" id="inputCity">
-                              </div>
+                                <div class="form-group col-md-6">
+                                    <label for="nascimentoB">Data de Nascimento do baixinho</label>
+                                    <input type="date" name="nascimentoB" class="form-control" id="nascimentoB">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="primeiroCorteB">Data da primeira visita</label>
+                                    <input type="date" name="primeiroCorteB" class="form-control" id="primeiroCorteB">
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary col-md-12">Salvar</button>
                         </form>
 
                     </div>
                 </div>
             </div>
     </div>
-
 </div>
+
 <!-- aqui comeca o template -->
 <script>
     var menuSelecao = document.getElementById('contas');
@@ -195,7 +240,29 @@
       var urlSelecionada = menuSelecao.options[menuSelecao.selectedIndex].value;
       self.location = urlSelecionada;
     }
-    </script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(".btn-submit").click(function(e){
+        e.preventDefault();
+
+        var name = $("input[name=name]").val();
+        var password = $("input[name=password]").val();
+        var email = $("input[name=email]").val();
+
+        $.ajax({
+            type:'POST',
+            url:'/ajaxRequest',
+            data:{name:name, password:password, email:email},
+            success:function(data){
+                alert(data.success);
+            }
+        });
+    });
+</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>

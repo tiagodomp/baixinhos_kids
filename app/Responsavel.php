@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\CrudJsonTrait;
 
 class Responsavel extends Model
 {
+
+    use CrudJsonTrait;
      /**
      * @var string Table name
      */
@@ -29,7 +32,7 @@ class Responsavel extends Model
 
 
     protected $fillable = [
-        'uuid', 'nome', 'contatos', 'criado_por', 'imagens', 'ficha_cadastro', 'infos',
+        'uuid', 'nome', 'contatos', 'canal_id', 'criado_por', 'imagens', 'ficha_cadastro', 'infos',
     ];
 
     protected $casts = [
@@ -38,4 +41,24 @@ class Responsavel extends Model
         'ficha_cadastro' => 'array',
         'infos' => 'array',
     ];
+
+    public function getDataResponsaveis(int $quant, string $uuid = null){
+        $data = $this->join('baixinhos', 'responsaveis.uuid', '=', 'baixinhos.responsavel_uuid')
+                        ->selectRaw('responsaveis.uuid as uuid, responsaveis.nome as nome, responsaveis.contatos->>"$[0]" as contatos, baixinhos.nome as filhos, baixinhos.uuid as uuidfilhos')
+                        ->offset(0)
+                        ->limit($quant)
+                        ->get();
+
+        return $data->toArray();
+    }
+
+    public function searchResponsaveis(array $where){
+        $whereString = $this->geradorWhereString($where);
+        $data = $this->whereRaw($whereString)
+                        ->join('baixinhos', 'responsaveis.uuid', '=', 'baixinhos.responsavel_uuid')
+                        ->selectRaw('responsaveis.uuid as uuid, responsaveis.nome as nome, responsaveis.contatos->>"$[0]" as contatos, baixinhos.nome as filhos, baixinhos.uuid as uuidfilhos')
+                        ->get();
+
+        return $data->toArray();
+    }
 }

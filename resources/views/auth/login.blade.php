@@ -51,8 +51,8 @@
                         <hr/>
                         <div class="row">
                             <div class="col-12">
-                                <p class="text-inverse text-left m-b-0">Sistema interno de registro de clientes</p>
-                                <p class="text-inverse text-left"><b>Desenvolvido por Tiago Pereira</b></p>
+                                <p class="text-inverse text-left m-b-0">Gestão de clientes</p>
+                                <p class="text-inverse text-left"><b>Desenvolvido por <a href="https://www.linkedin.com/in/tiago-pereira1997/" target="_blank"> NitroEmpreenda </a></b></p>
                             </div>
                         </div>
                     </div>

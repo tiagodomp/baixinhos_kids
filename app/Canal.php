@@ -29,6 +29,10 @@ class Canal extends Model
 
 
     protected $fillable = [
-        'uuid', 'titulo', 'descricao', 'tecnicas', 'infos',
-    ]
+        'uuid', 'titulo', 'descricao', 'tecnicas', 'criado_por', 'infos',
+    ];
+
+    protected $casts = [
+        'infos' => 'array',
+    ];
 }
