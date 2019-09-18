@@ -13,14 +13,16 @@
                             <button class="btn btn-primary btn-icon"><i class="icofont icofont-baby"></i></button>
                             <div class="card-contain">
                                 <h6>{{$data['totalBaixinhosFrequentes']}}</h6>
-                                <p class="text-muted f-18 m-0">Baixinhos frequentes</p>
+                                <p class="text-muted f-18 m-0">
+                                    @if($data['totalBaixinhosFrequentes'] == 1)
+                                        Baixinho frequente
+                                    @else
+                                        Baixinhos frequentes
+                                    @endif
+                                </p>
                             </div>
                         </div>
-                        <div class="col-sm-4 text-center">
-                            <span class="visitor-chart"></span>
-                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -32,11 +34,14 @@
                             <button class="btn btn-warning btn-icon"><i class="icofont icofont-contact-add"></i></button>
                             <div class="card-contain">
                                 <h6>{{$data['totalFichasFaltando']}}</h6>
-                                <p class="text-muted f-18 m-12">Fichas faltando</p>
+                                <p class="text-muted f-18 m-12">
+                                        @if($data['totalFichasFaltando'] == 1)
+                                            Ficha faltando
+                                        @else
+                                            Fichas faltando
+                                        @endif
+                                </p>
                             </div>
-                        </div>
-                        <div class="col-sm-4 text-center">
-                            <span class="sale-chart"></span>
                         </div>
                     </div>
                 </div>
@@ -48,16 +53,11 @@
                 <div class="card-block-big card-visitor-block">
                     <div class="row">
                         <div class="col-sm-8  card-visitor-button">
-                            <button class="btn btn-info btn-icon"><i class="icofont icofont-ticket"></i></button>
+                            <button class="btn btn-info btn-icon"><i class="icofont icofont-map-pins"></i></button>
                             <div class="card-contain">
-                                {{--  @foreach($pendente as $pd)
-                                    <h6>R$ {{number_format($pd->total,2,'.','.') }}</h6>
-                                    <p class="text-muted f-18 m-0"> {{ $pd->quantidade}}   Pendentes</p>
-                                @endforeach  --}}
+                                <h6>{{$data['rankingCanais'][0]['totalMembros']}}</h6>
+                                <p class="text-muted f-18 m-12">Advindo do canal: {{$data['rankingCanais'][0]['titulo']}}</p>
                             </div>
-                        </div>
-                        <div class="col-sm-4 text-center">
-                            <span class="visitor-chart"><canvas width="100" height="65" style="display: inline-block; width: 100px; height: 65px; vertical-align: top; margin-bottom: -2px; margin-left: -2px;"></canvas></span>
                         </div>
                     </div>
                 </div>
@@ -66,36 +66,48 @@
 
         <div class="col-md-4">
                 <div class="card">
+                    <div class="card-body">
+                        <h4 class="header-title">Busca de Baixinhos</h4>
+                        <div class="data-tables datatable-dark">
+                            <table id="dataTable3" class="text-center">
+                                <thead class="text-capitalize">
+                                    <tr class="text-uppercase">
+                                        <th>Baixinho</th>
+                                        <th>Responsável</th>
+                                        <th>Último Corte</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    	<tr>
+                                            <td>Teste</td>
+                                            <td>pai</td>
+                                            <td>18/09/2019</td>
+                                    	</tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {{-- <div class="card">
                     <div class="card-block">
-                        <h5>Status dos Pedidos</h5>
+                        <h5>Busca de baixinhos</h5>
                     </div>
                     <div class="card-block reset-table p-t-0">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr class="text-uppercase">
-                                        <th>Quantidade</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
+                                        <th>Baixinho</th>
+                                        <th>Responsável</th>
+                                        <th>Último Corte</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{--foreach($status as $stts)
-                                            <tr>
-                                            <td>  $stts->quantidade   </td>
-                                                <td>  $stts->total  </td>
-                                                if ($stts->nome == "Cancelado")
-                                                <td><button type="button" class="btn btn-danger btn-round">  $stts->nome </button></td>
-                                                else
-                                                <td><button type="button" class="btn btn-primary btn-round">  $stts->nome </button></td>
-                                                endif
-                                            </tr>
-                                    endforeach--}}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div>
+                </div> --}}
         </div>
         <div class="col-md-12 col-lg-8">
                 <div class="card">
@@ -230,6 +242,30 @@
                     </div>
                 </div>
             </div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Launch demo modal
+              </button>
+              <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+
     </div>
 </div>
 
@@ -263,7 +299,4 @@
         });
     });
 </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 @endsection

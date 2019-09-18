@@ -64,8 +64,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $responsaveis = $this->getResponsaveis(50);
+        $frequencia = $this->getBaixinhosFrequentes();
+        $fichas     = $this->getFichasFaltando();
+        //dd($rankingCanais);
+        $data = [
+            'totalBaixinhosFrequentes'  => $frequencia['total'],
+            'baixinhosFrequentes'       => $frequencia['baixinhos'],
+            'totalFichasFaltando'       => $fichas['total'],
+            'fichasFaltando'            => $fichas['baixinhos'],
+            'rankingCanais'             => $this->getCanaisResponsaveis(),
+        ];
 
+        //Obtém os responsaveis e o nome dos filhos
+        $responsaveis = $this->getResponsaveis(50);
         foreach($responsaveis as $key => &$value){
             $responsaveis[$key]['contatos'] = [
                 $value['contatos']['cell'],
@@ -75,48 +86,8 @@ class HomeController extends Controller
             $responsaveis[$key]['filhos'] = $this->getFilhosResponsaveis($value['uuid'])['nomes'];
         }
 
-        $data = [
-            'totalBaixinhosFrequentes'  => 0,
-            'totalFichasFaltando'       => 0,
-        ];
-
-        // $responsaveis = [
-        //     [
-        //         'uuid'      => Str::uuid()->toString(),
-        //         'nome'      => 'teste',
-        //         'filhos'    => ['filho1', 'filho2', 'filho3'],
-        //         'contatos'      => ['numerotell1', 'email1', 'numeroCell1'],
-        //     ],
-        //     [
-        //         'uuid'      => Str::uuid()->toString(),
-        //         'nome'      => 'teste2',
-        //         'filhos'    => ['filho21', 'filho22', 'filho23'],
-        //         'contatos'      => ['numerotell2', 'email2', 'numeroCell2'],
-        //     ],
-        //     [
-        //         'uuid'      => Str::uuid()->toString(),
-        //         'nome'      => 'teste3',
-        //         'filhos'    => ['filho31', 'filho32', 'filho33'],
-        //         'contatos'      => ['numerotell3', 'email3', 'numeroCell3'],
-        //     ],
-        // ];
-
+        //obtém os canais
         $canais = $this->getCanais(50);
-
-        // $canais = [
-        //     [
-        //     'uuid'      => Str::uuid()->toString(),
-        //     'titulo'    => Str::random(10),
-        //     ],
-        //     [
-        //     'uuid'      => Str::uuid()->toString(),
-        //     'titulo'    => Str::random(10),
-        //     ],
-        //     [
-        //     'uuid'      => Str::uuid()->toString(),
-        //     'titulo'    => Str::random(10),
-        //     ],
-        // ];
 
         return view('home', compact('data', 'responsaveis', 'canais'));
     }

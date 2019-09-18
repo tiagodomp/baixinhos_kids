@@ -61,4 +61,16 @@ class Responsavel extends Model
 
         return $data->toArray();
     }
+
+    public function getRankingCanais()
+    {
+        $data = $this->join('canais', 'responsaveis.canal_id', '=', 'canais.uuid')
+                        ->selectRaw('responsaveis.canal_id as uuid, canais.titulo as titulo, COUNT(*) as totalMembros')
+                        ->groupBy('responsaveis.canal_id')
+                        ->orderBy('totalMembros','DESC')
+                        ->get();
+
+        $data->toArray();
+        return (!empty($data))?$data->toArray():[['totalMembros' => 0, 'titulo'=>'', 'uuid' => '']];
+    }
 }

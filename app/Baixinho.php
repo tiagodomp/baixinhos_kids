@@ -63,7 +63,7 @@ class Baixinho extends Model
         }
         $pathJson = "$.".$tipo;
 
-        return $this->atualizarJsonTb('baixinhos', 'historico', ['uuid' => $baixinhoUuid], $pathJson, $return);
+        return (!empty($return))?$this->atualizarJsonTb('baixinhos', 'historico', ['uuid' => $baixinhoUuid], $pathJson, $return):false;
     }
 
     /**
@@ -99,7 +99,30 @@ class Baixinho extends Model
                         ->get();
 
         return (!empty($data))?$data->toArray():[];
+    }
 
+    public function getFrequenciaHistorica(string $uuid = '')
+    {
+        $mesPassado = date('\TYm', strtotime('-1 Months'));
+
+        if(!empty($uuid)){
+            $data = $this->whereRaw("uuid = '".$uuid." AND 'JSON_SEARCH(JSON_KEYS(historico), 'all', '%".$mesPassado."%') IS NOT NULL")
+                            ->selectRaw('nome, uuid')
+                            ->get();
+        }else{
+            $data = $this->whereRaw("JSON_SEARCH(JSON_KEYS(historico), 'all', '%".$mesPassado."%') IS NOT NULL")
+                            ->selectRaw('nome, uuid')
+                            ->get();
+        }
+        return (!empty($data))?['total' => $data->count(), 'baixinhos' => $data->toArray()]:['total' => 0, 'baixinhos' => []];
+    }
+
+    public function getFichasEmBranco()
+    {
+        $data = $this->whereRaw("autorizacao_audiovisual = 0 AND ficha_cadastro IS NULL")
+                            ->selectRaw('nome, uuid')
+                            ->get();
+        return (!empty($data))?['total' => $data->count(), 'baixinhos' => $data->toArray()]:['total' => 0, 'baixinhos' => []];
     }
 
 }

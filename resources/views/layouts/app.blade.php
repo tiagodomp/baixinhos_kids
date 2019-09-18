@@ -4,10 +4,12 @@
    <title>{{ config('app.name', 'Baixinhos Kids') }}</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="#">
 	<meta name="keywords" content="Baixinhos Kids, Cabeleireiro infantil, Cabeleireiro Vila Matilde - SP, Nitroempreenda">
-	<meta name="author" content="Tiago Pereira - Nitroempreenda">
+    <meta name="author" content="Tiago Pereira - Nitroempreenda">
+
+
    <!--  Custom Style -->
    <link rel="stylesheet" href="{{ url('assets/css/estilo.css') }}">
    <!-- JQuery 3.3.1 last version -->
@@ -30,33 +32,34 @@
 	<!-- flag icon framework css -->
 	<link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/flag-icon/flag-icon.min.css') }}">
 	<!--SVG Icons Animated-->
-	<link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/icon/SVG-animated/svg-weather.css') }}">
+	{{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/icon/SVG-animated/svg-weather.css') }}"> --}}
 	<!-- Menu-Search css -->
    <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/menu-search/css/component.css') }}">
    <!-- Horizontal-Timeline css -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/dashboard/horizontal-timeline/css/style.css') }}">
+   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/dashboard/horizontal-timeline/css/style.css') }}"> --}}
    <!-- amchart css -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/dashboard/amchart/css/amchart.css') }}">
+   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/dashboard/amchart/css/amchart.css') }}"> --}}
    <!-- Syntax highlighter Prism css -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/prism/prism.css') }}">
+   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/prism/prism.css') }}"> --}}
    <!-- Calender css -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/widget/calender/pignose.calendar.min.css') }}">
+   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/widget/calender/pignose.calendar.min.css') }}"> --}}
    <!-- flag icon framework css -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/flag-icon/flag-icon.min.css') }}">
+   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/flag-icon/flag-icon.min.css') }}"> --}}
    <!-- Style.css -->
    <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/style.css?1') }}">
    <!--color css-->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/linearicons.css') }}">
+   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/linearicons.css') }}">
    <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/simple-line-icons.css') }}">
    <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/ionicons.css') }}">
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/jquery.mCustomScrollbar.css') }}">
+   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/jquery.mCustomScrollbar.css') }}"> --}}
    <!-- tema horizontal -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/pcoded-horizontal.min.css') }}">
+   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/pcoded-horizontal.min.css') }}"> --}}
 
    <!-- Data Tables -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/bower_components/datatables.net-bs/css/dataTables.bootstrap.css') }}">
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/bower_components/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/bower_components/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
 
    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
@@ -64,14 +67,6 @@
    <meta name="csrf-token" content="{{ csrf_token() }}">
    <script> let URL = "{{url('/')}}"; </script>
 
-   <!-- Global site tag (gtag.js) - Google Analytics -->
-   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-137918628-1"></script>
-   <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-137918628-1');
-   </script>
 </head>
 <body>
 <div id="app">
@@ -154,37 +149,37 @@
   <!-- jquery slimscroll js -->
   <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}"></script>
   <!-- modernizr js -->
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/modernizr/js/modernizr.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/modernizr/js/css-scrollbars.js') }}"></script>
+  {{-- <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/modernizr/js/modernizr.js') }}"></script>
+  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/modernizr/js/css-scrollbars.js') }}"></script> --}}
   <!-- Calender js -->
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/moment/js/moment.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/widget/calender/pignose.calendar.min.js') }}"></script>
+  {{-- <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/moment/js/moment.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/widget/calender/pignose.calendar.min.js') }}"></script> --}}
   <!-- classie js -->
   <!-- c3 chart js -->
-  <script src="{{ url('assets/tema_1/bower_components/c3/js/c3.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/classie/js/classie.js') }}"></script>
+  {{-- <script src="{{ url('assets/tema_1/bower_components/c3/js/c3.js') }}"></script>
+  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/classie/js/classie.js') }}"></script> --}}
   <!-- Axios -->
-  <script type="text/javascript" src="{{ url('assets/axios/axios.min.js') }}"></script>
+  {{-- <script type="text/javascript" src="{{ url('assets/axios/axios.min.js') }}"></script>
   <!-- knob js -->
   <script src="{{ url('assets/tema_1/assets/pages/chart/knob/jquery.knob.js') }}"></script>
   <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/widget/jquery.sparkline.js') }}"></script>
   <!-- Rickshow Chart js -->
   <script src="{{ url('assets/tema_1/bower_components/d3/js/d3.js') }}"></script>
-  <script src="{{ url('assets/tema_1/bower_components/rickshaw/js/rickshaw.js') }}"></script>
+  <script src="{{ url('assets/tema_1/bower_components/rickshaw/js/rickshaw.js') }}"></script> --}}
   <!-- Morris Chart js -->
-  <script src="{{ url('assets/tema_1/bower_components/raphael/js/raphael.min.js') }}"></script>
-  <script src="{{ url('assets/tema_1/bower_components/morris.js/js/morris.js') }}"></script>
+  {{-- <script src="{{ url('assets/tema_1/bower_components/raphael/js/raphael.min.js') }}"></script>
+  <script src="{{ url('assets/tema_1/bower_components/morris.js/js/morris.js') }}"></script> --}}
   <!-- Float Chart js -->
-  <script src="{{ url('assets/tema_1/assets/pages/chart/float/jquery.flot.js') }}"></script>
+  {{-- <script src="{{ url('assets/tema_1/assets/pages/chart/float/jquery.flot.js') }}"></script>
   <script src="{{ url('assets/tema_1/assets/pages/chart/float/jquery.flot.categories.js') }}"></script>
-  <script src="{{ url('assets/tema_1/assets/pages/chart/float/jquery.flot.pie.js') }}"></script>
-  <!-- Horizontal-Timeline js -->
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/horizontal-timeline/js/main.js') }}"></script>
+  <script src="{{ url('assets/tema_1/assets/pages/chart/float/jquery.flot.pie.js') }}"></script> --}}
+  {{-- <!-- Horizontal-Timeline js -->
+  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/horizontal-timeline/js/main.js') }}"></script> --}}
   <!-- amchart js -->
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/amcharts.js') }}"></script>
+  {{-- <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/amcharts.js') }}"></script>
   <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/serial.js') }}"></script>
   <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/light.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/custom-amchart.js') }}"></script>
+  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/custom-amchart.js') }}"></script> --}}
   <!-- i18next.min.js -->
   <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/i18next/js/i18next.min.js') }}"></script>
   <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
@@ -193,14 +188,20 @@
   <!-- Custom js -->
   <script type="text/javascript" src="{{ url('assets/tema_1/assets/js/script.js') }}"></script>
   <!-- pcmenu js -->
-  <script src="{{ url('assets/tema_1/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+  {{-- <script src="{{ url('assets/tema_1/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script> --}}
   <!-- script menu horizontal -->
-  <script src="{{ url('assets/tema_1/assets/js/jquery.mousewheel.min.js') }}"></script>
+  {{-- <script src="{{ url('assets/tema_1/assets/js/jquery.mousewheel.min.js') }}"></script> --}}
   <!-- notification js -->
-  <script type="text/javascript" src="{{ url('assets/plugins/notify.min.js') }}"></script>
+  {{-- <script type="text/javascript" src="{{ url('assets/plugins/notify.min.js') }}"></script> --}}
   <!-- scripts -->
-  <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script>
-  <script type="text/javascript">
+  {{-- <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script> --}}
+  <!-- Start datatable js -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
+  {{-- <script type="text/javascript">
     function toggleFAB(fab){
         if(document.querySelector(fab).classList.contains('show')){
             document.querySelector(fab).classList.remove('show');
@@ -218,9 +219,8 @@
             toggleFAB('.fab');
         });
     });
-  </script>
-  <!-- data-table js -->
-  <script src="{{ url('assets/tema_1/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-
+  </script> --}}
+    <!--Bootstrap select -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 </body>
 </html>

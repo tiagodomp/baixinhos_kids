@@ -196,4 +196,22 @@ trait FichaCadastroTrait
         $where = ["nome LIKE %".$search."% OR contatos->>'$[0].cell' LIKE %".$search."% OR contatos->>'$[0].tell' LIKE %".$search."% OR contatos->>'$[0].email' LIKE %".$search."%"];
         return $r->searchResponsaveis($where);
     }
+
+    public function getBaixinhosFrequentes()
+    {
+        $b = new Baixinho();
+        return $b->getFrequenciaHistorica();
+    }
+
+    public function getFichasFaltando()
+    {
+        $b = new Baixinho();
+        return $b->getFichasEmBranco();
+    }
+
+    public function getCanaisResponsaveis()
+    {
+        $r = new Responsavel();
+        return $r->getRankingCanais();
+    }
 }
