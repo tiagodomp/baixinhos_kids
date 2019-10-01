@@ -50,6 +50,40 @@ trait CrudJsonTrait
     }
 
     /**
+     * Apaga um array ou objeto Json
+     * @param string $Tb
+     * @param string $collumn
+     * @param array $wheres
+     * @param string $path
+     * @return bool true || false
+     */
+    protected function removerJsonTb(string $Tb, string $collumn, array $where, string $path)
+    {
+        $whereString = $this->geradorWhereString($where);
+
+        if($this->validarPathJson($Tb, $collumn, $where, $path)){
+
+            $sql        = "JSON_REMOVE(".$collumn.", '".$path."')";
+            $data[0]    = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.' where '.$whereString);
+            $data[1]    = DB::table($Tb)->whereRaw($whereString)->update(["updated_at" => now()->toDateTimeString()]);
+
+            return ($data[0] == 1 && $data[1] == 1)?true:false;
+        }
+        return false;
+    }
+
+    public function searchPath(string $Tb, string $column, array $where, string $pathSearch,  string $query,  string $oneOrAll = 'one', string $scape = '')
+    {
+        $whereString = $this->geradorWhereString($where);
+        $data = DB::table($Tb)
+                    ->whereRaw($whereString)
+                    ->selectRaw("JSON_SEARCH(".$column.", ".$oneOrAll.", ".$query.", ".$scape." , ".$pathSearch." ) as path")
+                    ->get();
+
+        return (!empty($data))?$data->path:'';
+    }
+
+    /**
 	 * Método que busca dados dentro de uma coluna JSON
 	 *
      * @param string $Tb            | Tabela de consulta

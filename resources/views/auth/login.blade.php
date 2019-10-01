@@ -1,64 +1,50 @@
-@extends('layouts.app_login')
+@extends('layouts.auth')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="login-card card-block auth-body m-auto">
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="auth-box">
-                        <div class="text-center">
-                            <img src="{{ url('assets/img/logo-400px-145px-Baixinhos-kids.png') }}" alt="Logo" width="80%">
-                        </div>
-                        <hr/>
-                        <div class="input-group">
-                            <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus  placeholder="E-mail">
-                            <span class="md-line"></span>
-                        </div>
-                        @if($errors->has('email'))
-                            <strong class="text-red">{{ $errors->first('email') }}</strong>
-                        @endif
-                        <div class="input-group">
-                            <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required  placeholder="Senha">
-                            <span class="md-line"></span>
-                        </div>
-                        @if ($errors->has('password'))
-                            <strong class="text-red">{{ $errors->first('password') }}</strong>
-                        @endif
-                        <div class="row m-t-25 text-left">
-                            <div class="col-sm-7 col-xs-12">
-                                <div class="checkbox-fade fade-in-primary">
-                                    <label>
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                        <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
-                                        <span class="text-inverse">Lembrar-me</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-sm-5 col-xs-12 forgot-phone text-right">
-                                <a href="{{ route('password.request') }}" class="text-right f-w-600 text-inverse"> Esqueceu sua senha?</a>
+
+<!-- login area start -->
+<div class="login-area login-bg">
+    <div class="container">
+        <div class="login-box ptb--100">
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="login-form-head">
+                    <img src="{{ url('assets/img/logo-400px-145px-Baixinhos-kids.png') }}" alt="Logo" style="margin:0px">
+                </div>
+                <div class="login-form-body">
+                    <div class="form-gp">
+                        <label for="email">Seu E-mail</label>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required>
+                        <i class="ti-email"></i>
+                    </div>
+                    <div class="form-gp">
+                        <label for="exampleInputPassword1">Sua senha</label>
+                        <input id="password" type="password"  name="password" required>
+                        <i class="ti-lock"></i>
+                    </div>
+                    <div class="row mb-4 rmber-area">
+                        <div class="col-6">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input type="checkbox" name="remember" id="customControlAutosizing" {{ old('remember') ? 'checked' : '' }}>
+                                <label class="custom-control-label" for="customControlAutosizing">
+                                Lembrar-se
+                                </label>
                             </div>
                         </div>
-                        <div class="row m-t-30">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Entrar</button>
-                            </div>
-                            <div class="col-12 text-center">
-                                <a href="{{ route('register') }}" class="text-right f-w-600 text-inverse">Não é cadastrado ? registre-se aqui</a>
-                            </div>
-                        </div>
-                        <hr/>
-                        <div class="row">
-                            <div class="col-12">
-                                <p class="text-inverse text-left m-b-0">Gestão de clientes</p>
-                                <p class="text-inverse text-left"><b>Desenvolvido por <a href="https://www.linkedin.com/in/tiago-pereira1997/" target="_blank"> NitroEmpreenda </a></b></p>
-                            </div>
+                        <div class="col-6 text-right">
+                            <a href="{{ route('password.request') }}">Esqueci a senha</a>
                         </div>
                     </div>
-                </form>
-            </div>
+                    <div class="submit-btn-area">
+                        <button id="form_submit" type="submit">Entrar <i class="ti-arrow-right"></i></button>
+                    </div>
+                    <div class="form-footer text-center mt-5">
+                        <p class="text-muted">Não tem uma conta? <a href="{{route('register')}}"> Cadastre-se</a></p>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<!-- login area end -->
 @endsection

@@ -1,88 +1,53 @@
-@extends('layouts.app_login')
+@extends('layouts.auth')
 
 @section('content')
-<div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="login-card card-block auth-body m-auto">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-                        <div class="auth-box">
-                            <div class="text-center">
-                                <img src="{{ url('assets/img/logo-400px-145px-Baixinhos-kids.png') }}" alt="Logo" width="80%">
-                            </div>
-                            <hr/>
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" placeholder="Nome completo" required autofocus>
-                                    @if ($errors->has('name'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('name') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" placeholder="Seu E-mail principal" required>
-                                    @if ($errors->has('email'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <input id="apelido" type="text" class="form-control{{ $errors->has('apelido') ? ' is-invalid' : '' }}" name="apelido" value="{{ old('apelido') }}" placeholder="Como as crianças te chamam?" required>
-                                    @if ($errors->has('apelido'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('apelido') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="Crie uma senha" required>
-
-                                    @if ($errors->has('password'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('password') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-12">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repita a senha" required>
-                                </div>
-                            </div>
-
-                            <div class="row m-t-30">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Registrar</button>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <a href="{{ route('login') }}" class="text-right f-w-600 text-inverse">Já é cadastrado ? clique aqui</a>
-                                </div>
-                            </div>
-                            <hr/>
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="text-inverse text-left m-b-0">Sistema interno de registro de clientes</p>
-                                    <p class="text-inverse text-left"><b>Desenvolvido por Tiago Pereira</b></p>
-                                </div>
-                            </div>
+<!-- login area start -->
+    <div class="login-area login-bg">
+        <div class="container">
+            <div class="login-box ptb--100">
+                <form>
+                    <div class="login-form-head">
+                        {{--  <h4>Sign up</h4>
+                        <p>Hello there, Sign up and Join with Us</p>  --}}
+                        <img src="{{ url('assets/img/logo-400px-145px-Baixinhos-kids.png') }}" alt="Logo">
+                    </div>
+                    <div class="login-form-body">
+                        <div class="form-gp">
+                            <label for="name">Nome Completo</label>
+                            <input id="name" type="text" name="name" value="{{ old('name') }}" required>
+                            <i class="ti-user"></i>
                         </div>
-                    </form>
-                </div>
+                        <div class="form-gp">
+                            <label for="email">Seu E-mail principal</label>
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" required>
+                            <i class="ti-email"></i>
+                        </div>
+                        <div class="form-gp">
+                            <label for="apelido">Como as crianças te chamam?</label>
+                            <input id="apelido" type="text" name="apelido" value="{{ old('apelido') }}" required>
+                            <i class="ti-user"></i>
+                        </div>
+                        <div class="form-gp">
+                            <label for="password">Crie uma Senha</label>
+                            <input id="password" type="password"  name="password" required>
+                            <i class="ti-lock"></i>
+                        </div>
+                        <div class="form-gp">
+                            <label for="password-confirm">Repita a senha</label>
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repita a senha" required>
+                            <i class="ti-lock"></i>
+                        </div>
+                        <div class="submit-btn-area">
+                            <button id="form_submit" type="submit">Registrar <i class="ti-arrow-right"></i></button>
+                        </div>
+                        <div class="form-footer text-center mt-5">
+                            <p class="text-muted">Ja tem uma conta ?<a href="{{ route('login') }}"> Faça Login</a></p>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
+    <!-- login area end -->
 @endsection

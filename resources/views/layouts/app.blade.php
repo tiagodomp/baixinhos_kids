@@ -1,226 +1,524 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!doctype html>
+<html class="no-js" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-   <title>{{ config('app.name', 'Baixinhos Kids') }}</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="#">
-	<meta name="keywords" content="Baixinhos Kids, Cabeleireiro infantil, Cabeleireiro Vila Matilde - SP, Nitroempreenda">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{{ config('app.name', 'Baixinhos Kids') }}</title>
+    <meta name="keywords" content="Baixinhos Kids, Cabeleireiro infantil, Cabeleireiro Vila Matilde - SP, Nitroempreenda">
     <meta name="author" content="Tiago Pereira - Nitroempreenda">
-
-
-   <!--  Custom Style -->
-   <link rel="stylesheet" href="{{ url('assets/css/estilo.css') }}">
-   <!-- JQuery 3.3.1 last version -->
-   <script src="{{ url('assets/jquery/jquery-3.3.1.min.js') }}"></script>
-   <!-- Menu Horizontal -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/menu/styles-menu.css') }}">
-   <script src="{{ url('assets/menu/script-menu.js') }}"></script>
-	<!-- Favicon icon -->
 	<link rel="icon" href="{{ url('favicon.ico') }}" type="image/x-icon">
-	<!-- Google font-->
-	<link href="https://fonts.googleapis.com/css?family=Mada:300,400,500,600,700" rel="stylesheet">
-	<!-- Required Fremwork -->
-	<link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/bower_components/bootstrap/css/bootstrap.min.css') }}">
-	<!-- themify icon -->
-	<link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/icon/themify-icons/themify-icons.css') }}">
-  <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/icon/font-awesome/css/font-awesome.min.css') }}">
-	<!-- ico font -->
-	<link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/icon/icofont/css/icofont.css') }}">
-	<!-- flag icon framework css -->
-	<link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/flag-icon/flag-icon.min.css') }}">
-	<!--SVG Icons Animated-->
-	{{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/icon/SVG-animated/svg-weather.css') }}"> --}}
-	<!-- Menu-Search css -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/menu-search/css/component.css') }}">
-   <!-- Horizontal-Timeline css -->
-   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/dashboard/horizontal-timeline/css/style.css') }}"> --}}
-   <!-- amchart css -->
-   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/dashboard/amchart/css/amchart.css') }}"> --}}
-   <!-- Syntax highlighter Prism css -->
-   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/prism/prism.css') }}"> --}}
-   <!-- Calender css -->
-   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/widget/calender/pignose.calendar.min.css') }}"> --}}
-   <!-- flag icon framework css -->
-   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/pages/flag-icon/flag-icon.min.css') }}"> --}}
-   <!-- Style.css -->
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/style.css?1') }}">
-   <!--color css-->
-   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/linearicons.css') }}">
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/simple-line-icons.css') }}">
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/ionicons.css') }}">
-   <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/jquery.mCustomScrollbar.css') }}"> --}}
-   <!-- tema horizontal -->
-   {{-- <link rel="stylesheet" type="text/css" href="{{ url('assets/tema_1/assets/css/pcoded-horizontal.min.css') }}"> --}}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-   <!-- Data Tables -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css">
+    <link rel="stylesheet" href="{{ url('css/layout/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/layout/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/layout/themify-icons.css') }}"><!-- ico font -->
+	<link rel="stylesheet" href="{{ url('css/layout/icofont.css') }}">
+    <link rel="stylesheet" href="{{ url('css/layout/metisMenu.css') }}">
+    <link rel="stylesheet" href="{{ url('css/layout/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url('css/layout/slicknav.min.css') }}">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 
-   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
-   <!-- CSRF Token -->
-   <meta name="csrf-token" content="{{ csrf_token() }}">
-   <script> let URL = "{{url('/')}}"; </script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
+    <!-- others css -->
+    <link rel="stylesheet" href="{{ url('css/layout/typography.css') }}">
+    <link rel="stylesheet" href="{{ url('css/layout/default-css.css') }}">
+    <link rel="stylesheet" href="{{ url('css/layout/styles.css') }}">
+    <link rel="stylesheet" href="{{ url('css/layout/responsive.css') }}">
+    <!-- modernizr css -->
+    <script src="{{ url('js/layout/vendor/modernizr-2.8.3.min.js') }}"></script>
 </head>
+
 <body>
-<div id="app">
-  <!-- Pre-loader start -->
-  <div class="theme-loader">
-      <div class="ball-scale">
-          <div></div>
-      </div>
-  </div>
-
-<!-- start menu -->
-  <div id='menu-fixed'>
-    <div id='cssmenu'>
-        @php
-        $current_url = url()->current();
-        $pedaco = explode('/',str_replace(url(''),'',$current_url));
-        @endphp
-      <ul>
-         <li class="d-flex justify-content-center"><img class="my-1 mx-1" src="{{ url('assets/img/logo-400px-145px-Baixinhos-kids.png') }}" width="30%" height="30%" margin="0" alt="Logo" /></li>
-         <li @if($current_url == route("home")) class="active" @endif>          <a href="{{ route('home') }}">Início</a></li>
-         <li @if($current_url == route('responsaveis')) class="active" @endif>  <a href="{{ route('responsaveis') }}">Responsáveis</a></li>
-         <li @if($current_url == route('baixinhos')) class="active" @endif>     <a href="{{ route('baixinhos') }}">Baixinhos</a></li>
-         <li @if($current_url == route('funcionarios')) class="active" @endif>  <a href="{{ route('funcionarios') }}">Funcionários</a></li>
-         <li @if($current_url == route('canais')) class="active" @endif>        <a href="{{ route('canais') }}">Canais</a></li>
-         <li><a href="{{ route('logout') }}"
-            onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sair</a>
-         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-             @csrf
-         </form></li>
-      </ul>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">O seu navegador está <strong>desatualisado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para obter uma experiência melhor.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
     </div>
-  </div>
-  <div class="menu-space"></div>
-<!-- End Menu -->
-  <div class="">
-      <div class="">
-          <div class="">
-              <div class="">
-                  <div class="">
-                      <div class="page-body">
-                          <!-- start conteudo -->
-                          @yield('content')
-                          <!-- end conteduo -->
+    <!-- preloader area end -->
+    <!-- page container area start -->
+    <div class="page-container">
+        <!-- sidebar menu area start -->
+        <div class="sidebar-menu">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <a href="{{route('home')}}"><img src="{{ url('img/logo_baixinhoskids.png')}}" alt="logo"></a>
+                </div>
+            </div>
+            <div class="main-menu">
+                <nav class="menu-inner">
+                    <ul class="metismenu" id="menu">
+                        <li class="active">
+                            <a href="javascript:void(0)" aria-expanded="true"><i class="icofont icofont-baby"></i><span>Baixinhos</span></a>
+                            <ul class="collapse">
+                                <li><a href="{{ route('baixinhos')}}">Listar baixinhos</a></li>
+                                <li><a href="{{ route('baixinhos.add')}}">Criar um novo</a></li>
+                                <li><a href="{{ route('baixinhos.galerias')}}">Galeria</a></li>
+                                <li><a href="{{ route('baixinhos.fichas')}}">Fichas de cadastro</a></li>
+                                <li><a href="{{ route('baixinhos.historicos')}}">Histórico de cortes</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" aria-expanded="true"><i class="icofont icofont-users-alt-4"></i><span>Responsáveis</span></a>
+                            <ul class="collapse">
+                                <li><a href="{{ route('responsaveis')}}">Listar responsáveis</a></li>
+                                <li><a href="{{ route('responsaveis.add')}}">Criar um novo</a></li>
+                                <li><a href="{{ route('responsaveis.associar')}}">Associar Responsável</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" aria-expanded="true"><i class="icofont icofont-map-pins"></i><span>Canais</span></a>
+                            <ul class="collapse">
+                                <li><a href="{{ route('canais')}}">Listar canais</a></li>
+                                <li><a href="{{ route('canais.add')}}">Criar um novo</a></li>
+                                <li><a href="{{ route('canais.analise')}}">Análise de clientes</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" aria-expanded="true"><i class="icofont icofont-address-book"></i><span>Agenda</span></a>
+                            <ul class="collapse">
+                                <li class="disabled"><a href="/#" disabled>Agendar corte</a></li>
+                                <li class="disabled"><a href="/#" disabled>Clientes de hoje</a></li>
+                                <li class="disabled"><a href="/#" disabled>Configurações agenda</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- sidebar menu area end -->
 
-                          <div class="fab">
-                                <button class="main"></button>
-                                <ul>
-                                    <li>
-                                        <label for="opcao1">Novo B</label>
-                                        <button id="opcao1">
-                                            <i class="icofont icofont-baby"></i>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <label for="opcao2">Novo R</label>
-                                        <button id="opcao2">
-                                            <i class="icofont icofont-users-alt-4"></i>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <label for="opcao3">Novo C</label>
-                                        <button id="opcao3">
-                                            <i class="icofont icofont-map-pins"></i>
-                                        </button>
-                                    </li>
-                                </ul>
+        <!-- main content area start -->
+        <div class="main-content">
+            <!-- header area start -->
+            <div class="header-area">
+                <div class="row align-items-center">
+                    <!-- nav and search button -->
+                    <div class="col-md-6 col-sm-8 clearfix">
+                        <div class="nav-btn pull-left">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="search-box pull-left">
+                            <form action="#">
+                                <input type="text" name="search" placeholder="Buscar..." required>
+                                <i class="ti-search"></i>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- profile info & task notification -->
+                    <div class="col-md-6 col-sm-4 clearfix">
+                        <ul class="notification-area pull-right">
+                            <li id="full-view"><i class="ti-fullscreen"></i></li>
+                            <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                            <li class="dropdown">
+                                <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
+                                    <span>2</span>
+                                </i>
+                                <div class="dropdown-menu bell-notify-box notify-box">
+                                    <span class="notify-title">You have 3 new notifications <a href="#">view all</a></span>
+                                    <div class="nofity-list">
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
+                                            <div class="notify-text">
+                                                <p>You have Changed Your Password</p>
+                                                <span>Just Now</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb"><i class="ti-comments-smiley btn-info"></i></div>
+                                            <div class="notify-text">
+                                                <p>New Commetns On Post</p>
+                                                <span>30 Seconds ago</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb"><i class="ti-key btn-primary"></i></div>
+                                            <div class="notify-text">
+                                                <p>Some special like you</p>
+                                                <span>Just Now</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb"><i class="ti-comments-smiley btn-info"></i></div>
+                                            <div class="notify-text">
+                                                <p>New Commetns On Post</p>
+                                                <span>30 Seconds ago</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb"><i class="ti-key btn-primary"></i></div>
+                                            <div class="notify-text">
+                                                <p>Some special like you</p>
+                                                <span>Just Now</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
+                                            <div class="notify-text">
+                                                <p>You have Changed Your Password</p>
+                                                <span>Just Now</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
+                                            <div class="notify-text">
+                                                <p>You have Changed Your Password</p>
+                                                <span>Just Now</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="dropdown">
+                                <i class="fa fa-envelope-o dropdown-toggle" data-toggle="dropdown"><span>3</span></i>
+                                <div class="dropdown-menu notify-box nt-enveloper-box">
+                                    <span class="notify-title">You have 3 new notifications <a href="#">view all</a></span>
+                                    <div class="nofity-list">
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb">
+                                                <img src="assets/images/author/author-img1.jpg" alt="image">
+                                            </div>
+                                            <div class="notify-text">
+                                                <p>Aglae Mayer</p>
+                                                <span class="msg">Hey I am waiting for you...</span>
+                                                <span>3:15 PM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb">
+                                                <img src="assets/images/author/author-img2.jpg" alt="image">
+                                            </div>
+                                            <div class="notify-text">
+                                                <p>Aglae Mayer</p>
+                                                <span class="msg">When you can connect with me...</span>
+                                                <span>3:15 PM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb">
+                                                <img src="assets/images/author/author-img3.jpg" alt="image">
+                                            </div>
+                                            <div class="notify-text">
+                                                <p>Aglae Mayer</p>
+                                                <span class="msg">I missed you so much...</span>
+                                                <span>3:15 PM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb">
+                                                <img src="assets/images/author/author-img4.jpg" alt="image">
+                                            </div>
+                                            <div class="notify-text">
+                                                <p>Aglae Mayer</p>
+                                                <span class="msg">Your product is completely Ready...</span>
+                                                <span>3:15 PM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb">
+                                                <img src="assets/images/author/author-img2.jpg" alt="image">
+                                            </div>
+                                            <div class="notify-text">
+                                                <p>Aglae Mayer</p>
+                                                <span class="msg">Hey I am waiting for you...</span>
+                                                <span>3:15 PM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb">
+                                                <img src="assets/images/author/author-img1.jpg" alt="image">
+                                            </div>
+                                            <div class="notify-text">
+                                                <p>Aglae Mayer</p>
+                                                <span class="msg">Hey I am waiting for you...</span>
+                                                <span>3:15 PM</span>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="notify-item">
+                                            <div class="notify-thumb">
+                                                <img src="assets/images/author/author-img3.jpg" alt="image">
+                                            </div>
+                                            <div class="notify-text">
+                                                <p>Aglae Mayer</p>
+                                                <span class="msg">Hey I am waiting for you...</span>
+                                                <span>3:15 PM</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="settings-btn">
+                                <i class="ti-settings"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- header area end -->
+            <!-- page title area start -->
+            <div class="page-title-area">
+                <div class="row align-items-center">
+                    <div class="col-sm-6">
+                        <div class="breadcrumbs-area clearfix">
+                            <h4 class="page-title pull-left">Dashboard</h4>
+                            <ul class="breadcrumbs pull-left">
+                                <li><a href="{{route('home')}}">Home</a></li>
+                                <li><span>Dashboard</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 clearfix">
+                        <div class="user-profile pull-right">
+                            <img class="avatar user-thumb" src="{{url('img/layout/author/avatar.png')}}" alt="avatar">
+                            <h4 class="user-name dropdown-toggle" data-toggle="dropdown">{{auth()->user()->apelido}}<i class="fa fa-angle-down"></i></h4>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Configurações</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sair</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- page title area end -->
 
-</div>
+            @yield('content')
+        </div>
+        <!-- main content area end -->
+        <!-- footer area start-->
+        <footer>
+            <div class="footer-area">
+                <p>© Copyright 2019. Todos os direitos reservados a <a href="https://www.linkedin.com/in/tiago-pereira1997/">Nitroempreenda</a>.</p>
+            </div>
+        </footer>
+        <!-- footer area end-->
+    </div>
+    <!-- page container area end -->
+    <!-- offset area start -->
+    <div class="offset-area">
+        <div class="offset-close"><i class="ti-close"></i></div>
+        <ul class="nav offset-menu-tab">
+            <li><a class="active" data-toggle="tab" href="#activity">Activity</a></li>
+            <li><a data-toggle="tab" href="#settings">Settings</a></li>
+        </ul>
+        <div class="offset-content tab-content">
+            <div id="activity" class="tab-pane fade in show active">
+                <div class="recent-activity">
+                    <div class="timeline-task">
+                        <div class="icon bg1">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg2">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Added</h4>
+                            <span class="time"><i class="ti-time"></i>7 Minutes Ago</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg2">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>You missed you Password!</h4>
+                            <span class="time"><i class="ti-time"></i>09:20 Am</span>
+                        </div>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg3">
+                            <i class="fa fa-bomb"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Member waiting for you Attention</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg3">
+                            <i class="ti-signal"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>You Added Kaji Patha few minutes ago</h4>
+                            <span class="time"><i class="ti-time"></i>01 minutes ago</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg1">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Ratul Hamba sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Hello sir , where are you, i am egerly waiting for you.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg2">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg2">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg3">
+                            <i class="fa fa-bomb"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                    <div class="timeline-task">
+                        <div class="icon bg3">
+                            <i class="ti-signal"></i>
+                        </div>
+                        <div class="tm-title">
+                            <h4>Rashed sent you an email</h4>
+                            <span class="time"><i class="ti-time"></i>09:35</span>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="settings" class="tab-pane fade">
+                <div class="offset-settings">
+                    <h4>General Settings</h4>
+                    <div class="settings-list">
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Notifications</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch1" />
+                                    <label for="switch1">Toggle</label>
+                                </div>
+                            </div>
+                            <p>Keep it 'On' When you want to get all the notification.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show recent activity</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch2" />
+                                    <label for="switch2">Toggle</label>
+                                </div>
+                            </div>
+                            <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show your emails</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch3" />
+                                    <label for="switch3">Toggle</label>
+                                </div>
+                            </div>
+                            <p>Show email so that easily find you.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Show Task statistics</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch4" />
+                                    <label for="switch4">Toggle</label>
+                                </div>
+                            </div>
+                            <p>The for attribute is necessary to bind our custom checkbox with the input.</p>
+                        </div>
+                        <div class="s-settings">
+                            <div class="s-sw-title">
+                                <h5>Notifications</h5>
+                                <div class="s-swtich">
+                                    <input type="checkbox" id="switch5" />
+                                    <label for="switch5">Toggle</label>
+                                </div>
+                            </div>
+                            <p>checkboxes when looking for yes or no answers.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- offset area end -->
+    <!-- jquery latest version -->
+    <script src="{{ url('js/layout/vendor/jquery-2.2.4.min.js') }}"></script>
+    <!-- bootstrap 4 js -->
+    <script src="{{ url('js/layout/popper.min.js') }}"></script>
+    <script src="{{ url('js/layout/bootstrap.min.js') }}"></script>
+    <script src="{{ url('js/layout/owl.carousel.min.js') }}"></script>
+    <script src="{{ url('js/layout/metisMenu.min.js') }}"></script>
+    <script src="{{ url('js/layout/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ url('js/layout/jquery.slicknav.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-  <script src="{{ url('assets/tema_1/bower_components/jquery-ui/js/jquery-ui.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/popper.js/js/popper.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/bootstrap/js/bootstrap.min.js') }}"></script>
-  <!-- jquery slimscroll js -->
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/jquery-slimscroll/js/jquery.slimscroll.js') }}"></script>
-  <!-- modernizr js -->
-  {{-- <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/modernizr/js/modernizr.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/modernizr/js/css-scrollbars.js') }}"></script> --}}
-  <!-- Calender js -->
-  {{-- <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/moment/js/moment.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/widget/calender/pignose.calendar.min.js') }}"></script> --}}
-  <!-- classie js -->
-  <!-- c3 chart js -->
-  {{-- <script src="{{ url('assets/tema_1/bower_components/c3/js/c3.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/classie/js/classie.js') }}"></script> --}}
-  <!-- Axios -->
-  {{-- <script type="text/javascript" src="{{ url('assets/axios/axios.min.js') }}"></script>
-  <!-- knob js -->
-  <script src="{{ url('assets/tema_1/assets/pages/chart/knob/jquery.knob.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/widget/jquery.sparkline.js') }}"></script>
-  <!-- Rickshow Chart js -->
-  <script src="{{ url('assets/tema_1/bower_components/d3/js/d3.js') }}"></script>
-  <script src="{{ url('assets/tema_1/bower_components/rickshaw/js/rickshaw.js') }}"></script> --}}
-  <!-- Morris Chart js -->
-  {{-- <script src="{{ url('assets/tema_1/bower_components/raphael/js/raphael.min.js') }}"></script>
-  <script src="{{ url('assets/tema_1/bower_components/morris.js/js/morris.js') }}"></script> --}}
-  <!-- Float Chart js -->
-  {{-- <script src="{{ url('assets/tema_1/assets/pages/chart/float/jquery.flot.js') }}"></script>
-  <script src="{{ url('assets/tema_1/assets/pages/chart/float/jquery.flot.categories.js') }}"></script>
-  <script src="{{ url('assets/tema_1/assets/pages/chart/float/jquery.flot.pie.js') }}"></script> --}}
-  {{-- <!-- Horizontal-Timeline js -->
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/horizontal-timeline/js/main.js') }}"></script> --}}
-  <!-- amchart js -->
-  {{-- <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/amcharts.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/serial.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/light.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/pages/dashboard/amchart/js/custom-amchart.js') }}"></script> --}}
-  <!-- i18next.min.js -->
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/i18next/js/i18next.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/i18next-xhr-backend/js/i18nextXHRBackend.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min.js') }}"></script>
-  <script type="text/javascript" src="{{ url('assets/tema_1/bower_components/jquery-i18next/js/jquery-i18next.min.js') }}"></script>
-  <!-- Custom js -->
-  <script type="text/javascript" src="{{ url('assets/tema_1/assets/js/script.js') }}"></script>
-  <!-- pcmenu js -->
-  {{-- <script src="{{ url('assets/tema_1/assets/js/jquery.mCustomScrollbar.concat.min.js') }}"></script> --}}
-  <!-- script menu horizontal -->
-  {{-- <script src="{{ url('assets/tema_1/assets/js/jquery.mousewheel.min.js') }}"></script> --}}
-  <!-- notification js -->
-  {{-- <script type="text/javascript" src="{{ url('assets/plugins/notify.min.js') }}"></script> --}}
-  <!-- scripts -->
-  {{-- <script type="text/javascript" src="{{ url('assets/js/script.js') }}"></script> --}}
-  <!-- Start datatable js -->
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
-  {{-- <script type="text/javascript">
-    function toggleFAB(fab){
-        if(document.querySelector(fab).classList.contains('show')){
-            document.querySelector(fab).classList.remove('show');
-        }else{
-            document.querySelector(fab).classList.add('show');
-        }
-    }
 
-    document.querySelector('.fab .main').addEventListener('click', function(){
-        toggleFAB('.fab');
-    });
+    <!-- start chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <!-- start highcharts js -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <!-- start amcharts -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/ammap.js"></script>
+    <script src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <!-- all line chart activation -->
+    <script src="{{ url('js/layout/line-chart.js') }}"></script>
+    <!-- all pie chart -->
+    <script src="{{ url('js/layout/pie-chart.js') }}"></script>
+    <!-- all bar chart -->
+    <script src="{{ url('js/layout/bar-chart.js') }}"></script>
+    <!-- all map chart -->
+    <script src="{{ url('js/layout/maps.js') }}"></script>
+    <!-- others plugins -->
+    <script src="{{ url('js/layout/plugins.js') }}"></script>
+    <script src="{{ url('js/layout/scripts.js') }}"></script>
 
-    document.querySelectorAll('.fab ul li button').forEach((item)=>{
-        item.addEventListener('click', function(){
-            toggleFAB('.fab');
-        });
-    });
-  </script> --}}
-    <!--Bootstrap select -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 </body>
+
 </html>

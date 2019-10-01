@@ -47,7 +47,7 @@ class HomeController extends Controller
         return redirect()->route('home');
     }
 
-    public function searchResponsaveis(Request $request)
+    public function searchBaixinhos(Request $request)
     {
         $responsaveis = [];
         if($request->ajax()){
@@ -75,7 +75,7 @@ class HomeController extends Controller
             'rankingCanais'             => $this->getCanaisResponsaveis(),
         ];
 
-        //Obtém os responsaveis e o nome dos filhos
+        //Obtém os responsaveis e os nomes dos filhos
         $responsaveis = $this->getResponsaveis(50);
         foreach($responsaveis as $key => &$value){
             $responsaveis[$key]['contatos'] = [

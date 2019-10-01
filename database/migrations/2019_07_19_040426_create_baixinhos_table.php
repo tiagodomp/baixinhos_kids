@@ -25,6 +25,7 @@ class CreateBaixinhosTable extends Migration
 
             $table->string('nome', 120);                // Nome do(a) Baixinho(a)
             $table->date('nascimento');                 // Data de nascimento da criança
+            $table->boolean('sexo')->comment('true = menina e false = menino');  // Sexo da criança // true = menina, false = menino
             $table->date('primeiro_corte');             // Data do primeiro corte
             $table->boolean('autorizacao_audiovisual'); // o responsável autorizou o compartilhamento publico de imagens e/ou audio
             $table->json('ficha_cadastro')->nullable(); // scaneamento da ficha de cadastro, para certificar a autorização do responsável
