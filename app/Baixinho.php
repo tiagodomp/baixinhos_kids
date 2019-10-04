@@ -199,7 +199,9 @@ class Baixinho extends Model
         if(!empty($data)){
             $data = $data->toArray();
             $data['historicoB'] = json_decode($data['historicoB'], true);
-            $data['contatosR'] = json_decode($data['contatosR'], true);
+            $data['contatosR']  = json_decode($data['contatosR'], true);
+            $data['imagensB']   = json_decode($data['imagensB'], true);
+            $data['fichaB']     = json_decode($data['fichaB'], true);
         }
         return $data;
     }
@@ -223,7 +225,35 @@ class Baixinho extends Model
 
     public function getImgGaleria()
     {
-        // $data = $this->selectRaw('imagens')
+        $imgs = $this->selectRaw("  uuid,
+                                    nome as nomeB,
+                                    imagens->>'$[*].path' as paths,
+                                    imagens->>'$[*].deleted_at' as deleteds,
+                                    imagens->>'$[*].criado_por' as criado_por,
+                                    imagens->>'$[*].created_at' as createds")
+                        ->get();
+
+        $data = [];
+        foreach($imgs as $key => $img){
+            $deletados  = json_decode($img->deleteds, true);
+            $paths      = json_decode($img->paths, true);
+            $criado_por = json_decode($img->criado_por, true);
+            $createds   = json_decode($img->createds, true);
+
+            foreach($deletados as $count => $del){
+                if(empty($del)){
+                    $data[$key]['imagens'][] =[
+                        'path'         => $paths[$count],           //string
+                        'criado_por'    => $criado_por[$count],     //array [nomeUser, uuidUser]
+                        'created_at'   => $createds[$count],        //string datetime
+                    ];
+                }
+            }
+            $data[$key]['uuidB']        = $img->uuid;
+            $data[$key]['nomeB']        = $img->nomeB;
+        }
+
+        return $data;
     }
 
     public function delBaixinhos(string $uuid)

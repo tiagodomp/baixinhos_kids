@@ -47,6 +47,13 @@ class BaixinhoController extends Controller
         return view('baixinhos.perfil', compact('data'));
     }
 
+    public function addFichaCadastro(Request $request, string $uuid)
+    {
+        $retorno = $this->addFicha($request, $uuid);
+
+        return redirect(route('baixinho.view', $uuid), 302, $request->header());
+    }
+
     public function addHistorico(Request $request, string $uuid)
     {
 
@@ -115,18 +122,24 @@ class BaixinhoController extends Controller
     {
         $b = new Baixinho();
         $baix = $b->where('uuid', $uuid)->select('ficha_cadastro')->first();
-        $data = ($request->hasfile('fichaCadastro'))?$this->imagensJson($request->fichaCadastro, $uuid):[];
-
-        if(empty($data) || empty($baix))
+        if(empty($baix))
             return false;
 
-        $baix->ficha_cadastro = $data;
+        if($request->hasfile('fichaCadastro')){
+            $data = $this->imagensJson($request->fichaCadastro, $uuid);
+            $baix->ficha_cadastro = $data;
+        }
+
+        $baix->autorizacao_audiovisual = $request->has('autorizacaoAudiovisual');
+
         return $baix->save();
     }
 
     public function galeria()
     {
-        return view('baixinhos.galeria');
+        $b = new Baixinho();
+        $data = $b->getImgGaleria();
+        return view('baixinhos.galeria', compact('data'));
     }
 
     public function apagar(Request $request, string $uuid)

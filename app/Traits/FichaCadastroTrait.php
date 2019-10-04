@@ -136,10 +136,9 @@ trait FichaCadastroTrait
                 $img->store($path);
                 $imagem[] = [
                     'path'          => $path.'/'.$img->hashName(),
-                    'path_cliente'  => $img->path(),
                     'size'          => $img->getClientSize(),
                     'mime_type'     => $img->getMimeType(),
-                    'criado_por'    => auth()->user()->uuid,
+                    'criado_por'    => [auth()->user()->nome, auth()->user()->uuid],
                     'created_at'    => now()->toDateTimeString(),
                     'updated_at'    => null,
                     'deleted_at'    => null,

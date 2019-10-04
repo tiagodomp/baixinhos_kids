@@ -11,16 +11,13 @@
                         @if(!empty($data['imagensB']))
                             <div id="FotosCarousel" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
-                                    @foreach($data['imagensB'] as $key => $historico)
-                                        @if(!empty($historico['obs']))
-                                        <div class="carousel-item">
-                                            <img src="..." alt="...">
+                                    @foreach($data['imagensB'] as $key => $img)
+                                        @if($key == 0)<div class="carousel-item active"> @else <div class="carousel-item"> @endif
+                                                <img src="{{url('storage/'.$img['path'])}}"  alt="foto de {{$data['nomeB']}}">
                                             <div class="carousel-caption d-none d-md-block">
-                                                <h5>cortado por {{$data['imagensB']['cabeleleiro']}} em {{date('d/m/Y', strtotime($data['imagensB']['created_at']))}}</h5>
-                                                <p>...</p>
+                                                <h5>cortado por <a href="{{route('user.view', $img['criado_por'][1])}}">{{$img['criado_por'][0]}}</a> em {{date('d/m/Y \á\s H:i\h', strtotime($img['created_at']))}}</h5>
                                             </div>
                                         </div>
-                                        @endif
                                     @endforeach
                                 </div>
                                 <a class="carousel-control-prev" href="#FotosCarousel" role="button" data-slide="prev">
@@ -32,10 +29,10 @@
                                     <span class="sr-only">Próximo</span>
                                 </a>
                             </div>
-                            @else
-                                <img class="w-100 rounded border" src="https://cdn.bootstrapsnippet.net/assets/image/dummy-avatar.jpg" />
-                            @endif
-                            <button type="button" data-toggle="modal" data-target="#uploadModal" class="btn btn-flat btn-secondary btn-lg btn-block">Adicionar imagens</button>
+                        @else
+                            <img class="w-100 rounded border" src="{{url('img/avatar/user2.png')}}" />
+                        @endif
+                        <button type="button" data-toggle="modal" data-target="#uploadModal" class="btn btn-flat btn-secondary btn-lg btn-block">Adicionar imagens</button>
                         <div class="pt-4 mt-2">
                             <section class="mb-4 pb-1">
                                 <h3 class="h6 font-weight-light text-secondary text-uppercase">Permissões</h3>
@@ -62,10 +59,52 @@
                                         @endif
                                         <p class="text-secondary">a compartilhar publicamente suas fotos</p>
                                     </div>
-                                    @if($data['autorizacaoB'] == 1)
+                                    @if(!empty($data['fichaB']))
                                         <div class="work mb-4">
                                             <strong class="h5 d-block text-secondary font-weight-bold mb-1">Assinatura do Responsável</strong>
-                                            <img class="w-100 rounded border" src="{{$data['fichaB']}}" />
+                                            <div class="tz-gallery">
+                                                <div class="thumbnail">
+                                                    <a class="lightbox" href="{{ url('storage/'.$data['fichaB'][0]['path']) }}">
+                                                        <img class="w-100 rounded border" src="{{url('storage/'.$data['fichaB'][0]['path'])}}" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="according accordion-s3">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <a class="btn btn-flat btn-outline-info mr-3 mb-3" data-toggle="collapse" href="#autorizacao">
+                                                        Autorizar ou inserir ficha de cadastro
+                                                    </a>
+                                                </div>
+                                                <div id="autorizacao" class="collapse show" data-parent="#autorizacao">
+                                                    <div class="card-body">
+                                                        <form action={{route('baixinho.ficha.add', $data['uuidB'])}} class="col-md-12" method="post" enctype="multipart/form-data">
+                                                            @csrf
+                                                            <div class="form-row col-md-12">
+                                                                <div class="form-group">
+                                                                    <div class="custom-control custom-checkbox custom-control-inline">
+                                                                        <input type="checkbox" name="autorizacaoAudiovisual" class="custom-control-input" id="permissao" @if($data['autorizacaoB'] == 1) checked @endif>
+                                                                        <label class="custom-control-label" for="permissao">O responsável autorizou a publicação das imagens deste Baixinho ?</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-row col-md-12">
+                                                                <div class="form-group">
+                                                                    <div class="input-group">
+                                                                        <div class="custom-file">
+                                                                            <input type="file" name="fichaCadastro[]" class="custom-file-input" id="fichaCadastro">
+                                                                            <label class="custom-file-label" for="fichaCadastro">Ficha de cadastro</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success align-center">Salvar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     @endif
                                 </div>
