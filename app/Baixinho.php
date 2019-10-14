@@ -81,22 +81,35 @@ class Baixinho extends Model
             $stamp = date('\TYmdHis');
             $data = [ $stamp => $data];
         }
-        $historico = [
-            $stamp => [
-                'cabeleleiro'       => [], // 0=> nome, 1 => uuid
-                'responsavel'       => [], // 0=> nome, 1 => uuid
-                'metodo_pagamento'  => [],
-                'tipo_corte'        => '',
-                'obs'               => '',
-                'agendado_para'     => '',
-                'tag'                   => false,
-                'author'            => auth()->user()->uuid,
-                'created_at'        => now()->toDateTimeString(),
-            ]
-        ];
-
-        if(!empty($data))
-            $historico = array_merge($historico, $data);
+        if(!empty($data)){
+            $historico = [
+                $stamp => [
+                    'cabeleireiro'      => $data[$stamp]['cabeleireiro'], // 0=> nome, 1 => uuid
+                    'responsavel'       => $data[$stamp]['responsavel'], // 0=> nome, 1 => uuid
+                    'metodo_pagamento'  => $data[$stamp]['metodo_pagamento'],
+                    'tipo_corte'        => $data[$stamp]['tipo_corte'],
+                    'obs'               => $data[$stamp]['obs'],
+                    'agendado_para'     => $data[$stamp]['agendado_para'],
+                    'tag'               => $data[$stamp]['tag'],
+                    'author'            => auth()->user()->uuid,
+                    'created_at'        => now()->toDateTimeString(),
+                ]
+            ];
+        }else{
+            $historico = [
+                $stamp => [
+                    'cabeleireiro'      => [], // 0=> nome, 1 => uuid
+                    'responsavel'       => [], // 0=> nome, 1 => uuid
+                    'metodo_pagamento'  => [],
+                    'tipo_corte'        => '',
+                    'obs'               => '',
+                    'agendado_para'     => '',
+                    'tag'               => false,
+                    'author'            => auth()->user()->uuid,
+                    'created_at'        => now()->toDateTimeString(),
+                ]
+            ];
+        }
 
         return $historico;
     }
@@ -164,7 +177,13 @@ class Baixinho extends Model
 
     public function getListHistoricaBaixinhos()
     {
-
+        $data = $this->selectRaw('historico as historicoB, uuid as uuidB, nome as nomeB, sexo as sexoB')
+                        ->get();
+        $data = $data->toArray();
+        foreach($data as $key => &$h){
+            $data[$key]['historicoB'] = json_decode($h['historicoB'], true);
+        }
+        return $data;
     }
 
     public function viewBaixinho(string $uuid)
@@ -243,9 +262,9 @@ class Baixinho extends Model
             foreach($deletados as $count => $del){
                 if(empty($del)){
                     $data[$key]['imagens'][] =[
-                        'path'         => $paths[$count],           //string
-                        'criado_por'    => $criado_por[$count],     //array [nomeUser, uuidUser]
-                        'created_at'   => $createds[$count],        //string datetime
+                        'path'         => $paths[$count],          //string
+                        'criado_por'   => $criado_por[$count],     //array [nomeUser, uuidUser]
+                        'created_at'   => $createds[$count],       //string datetime
                     ];
                 }
             }
@@ -256,9 +275,45 @@ class Baixinho extends Model
         return $data;
     }
 
-    public function delBaixinhos(string $uuid)
+    public function getImgFichaCadastro()
     {
+        $imgs = $this->selectRaw("  uuid,
+                                    nome as nomeB,
+                                    ficha_cadastro->>'$[0].path' as path,
+                                    ficha_cadastro->>'$[0].deleted_at' as deleted,
+                                    ficha_cadastro->>'$[0].criado_por' as criado_por,
+                                    ficha_cadastro->>'$[0].created_at' as created")
+                        ->get();
 
+        $data = [];
+        foreach($imgs as $key => $img){
+            if(is_null($img->deleted) || $img->deleted == 'null'){
+                $data[$key]['ficha'] =[
+                    'path'         => $img->path,          //string
+                    'criado_por'   => $img->criado_por,    //array [nomeUser, uuidUser]
+                    'created_at'   => $img->created,       //string datetime
+                ];
+
+                $data[$key]['uuidB']        = $img->uuid;
+                $data[$key]['nomeB']        = $img->nomeB;
+            }
+        }
+        return $data;
     }
 
+    public function delBaixinhos(string $uuid)
+    {
+        $b = $this->find($uuid);
+        $b->deleted_at = now();
+        return $b->save();
+    }
+
+    public function getDataBaixinhos()
+    {
+        $data = $this->join('responsaveis', 'baixinhos.responsavel_uuid', '=', 'responsaveis.uuid')
+                        ->selectRaw('baixinhos.nome as nomeB, baixinhos.uuid as uuidB, responsaveis.uuid as uuidR, responsaveis.nome as nomeR')
+                        ->get();
+
+        return $data->toArray();
+    }
 }

@@ -4,7 +4,7 @@
 @section('content')
 
 <main class="main-content-inner">
-        <div class="card mt-5">
+        <div class="card mt-5 mb-5">
             <div class="card-body py-4 my-2">
                 <div class="row">
                     <div class="col-md-4 pr-md-5">
@@ -32,7 +32,7 @@
                         @else
                             <img class="w-100 rounded border" src="{{url('img/avatar/user2.png')}}" />
                         @endif
-                        <button type="button" data-toggle="modal" data-target="#uploadModal" class="btn btn-flat btn-secondary btn-lg btn-block">Adicionar imagens</button>
+                        <button type="button" data-toggle="modal" data-target="#addImgModal" class="btn btn-flat btn-outline-secondary btn-lg btn-block"> <i class="ti-image"></i> Adicionar imagem</button>
                         <div class="pt-4 mt-2">
                             <section class="mb-4 pb-1">
                                 <h3 class="h6 font-weight-light text-secondary text-uppercase">Permissões</h3>
@@ -146,19 +146,25 @@
                                 </div>
                             </div>
                         </section>
-                        <section class="d-flex mt-5">
-                            <button class="btn btn-flat btn-outline-info mr-3 mb-3"  data-toggle="modal" data-target="#editarModal">
-                                <i class="fa fa-pencil"></i>
-                                Editar
-                            </button>
-                            <button class="btn btn-flat btn-outline-danger mr-3 mb-3" data-toggle="modal" data-target="#apagarModal">
-                                <i class="fa fa-trash"></i>
-                                Apagar
-                            </button>
-                            <button class="btn btn-flat btn-outline-success mb-3" data-toggle="modal" data-target="#historicoPerfilModal">
-                                <i class="fa fa-check"></i>
-                                Cortou hoje?
-                            </button>
+                        <section class="d-flex mt-5 row">
+                            <div class="col-md-2">
+                                <button class="btn btn-flat btn-outline-info mr-3 mb-3"  data-toggle="modal" data-target="#editarModal">
+                                    <i class="fa fa-pencil"></i>
+                                    Editar
+                                </button>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-flat btn-outline-danger mr-3 mb-3" data-toggle="modal" data-target="#apagarModal">
+                                    <i class="fa fa-trash"></i>
+                                    Apagar
+                                </button>
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-flat btn-outline-success mb-3" data-toggle="modal" data-target="#historicoPerfilModal">
+                                    <i class="fa fa-check"></i>
+                                    Cortou hoje?
+                                </button>
+                            </div>
                         </section>
                         <section class="mt-4">
                             <ul class="nav nav-tabs" id="tabPerfil" role="tablist">
@@ -230,7 +236,7 @@
                                             <thead class="text-capitalize">
                                                 <tr>
                                                     <th>Cortou em</th>
-                                                    <th>Cabeleleiro</th>
+                                                    <th>Cabeleireiro</th>
                                                     <th>Responsável</th>
                                                     <th>Tipo de Corte</th>
                                                     <th>ver</th>
@@ -244,7 +250,7 @@
                                                                 {{date('d/m/Y', strtotime($hist['created_at']))}}
                                                             </td>
                                                             <td>
-                                                                <a href="{{route('user.view', $hist['cabeleleiro'][1])}}">{{$hist['cabeleleiro'][0]}}</a>
+                                                                <a href="{{route('user.view', $hist['cabeleireiro'][1])}}">{{$hist['cabeleireiro'][0]}}</a>
                                                             </td>
                                                             <td>
                                                                 <a href="{{route('responsavel.view', $hist['responsavel'][1])}}">{{$hist['responsavel'][0]}}</a>
@@ -311,8 +317,8 @@
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="cabeleleiroHistoricoModal">Quem foi o cabeleleiro</label>
-                            <input type="text" class="form-control" id="cabeleleiroHistoricoModal" name="cabeleleiroHistorico" placeholder="Nome completo do cabeleleiro" value="{{auth()->user()->nome}}" required="">
+                            <label for="cabeleireiroHistoricoModal">Quem foi o cabeleireiro</label>
+                            <input type="text" class="form-control" id="cabeleireiroHistoricoModal" name="cabeleireiroHistorico" placeholder="Nome completo do cabeleireiro" value="{{auth()->user()->nome}}" required="">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="responsavelHistoricoModal">Quem veio como responsável</label>
@@ -391,4 +397,32 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="addImgModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title">Inserir imagens</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <form action={{route('baixinhos.addImg', $data['uuidB'])}} class="col-md-12" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" name="imagensB[]" placeholder="teste" class="custom-file-input" id="imagensB">
+                                    <label class="custom-file-label" for="imagensB">Fotos do baixinho</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-outline-success">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

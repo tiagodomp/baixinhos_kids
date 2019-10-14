@@ -36,17 +36,33 @@ trait CrudJsonTrait
     protected function atualizarJsonTb(string $Tb, string $collumn, array $where, string $path, $data)
     {
         $whereString = $this->geradorWhereString($where);
-
         if($this->salvarRotaJson($Tb, $collumn, $where, $path)){
-
 			$data       = (is_string($data) || is_int($data))? $this->utf8_ansi($data): "CAST('".$this->utf8_ansi(json_encode($data))."' AS JSON)";
             $sql        = "JSON_UNQUOTE(JSON_SET(".$collumn.", '".$path."', $data))";
-            $data[0]    = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.' where '.$whereString);
-            $data[1]    = DB::table($Tb)->whereRaw($whereString)->update(["updated_at" => now()->toDateTimeString()]);
+            $data[0]    = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.', updated_at = "'.now()->toDateTimeString().'" where '.$whereString);
 
             return ($data[0] == 1 && $data[1] == 1)?true:false;
         }
         return false;
+    }
+
+    /**
+     * insere um dado em um array json
+     * @param string $Tb
+     * @param string $collumn
+     * @param array $wheres
+     * @param string $path
+     * @param $data
+     * @return bool true || false
+     */
+    public function arrayInsertJsonTb(string $Tb, string $collumn, array $where, $data, string $path = '$')
+    {
+        $whereString    = $this->geradorWhereString($where);
+        $data           = (is_string($data) || is_int($data))?$this->utf8_ansi($data):"CAST('".$this->utf8_ansi(json_encode($data))."' AS JSON)";
+        $sql            = "JSON_ARRAY_APPEND(".$collumn.", '".$path."', $data)";
+        $data[0]        = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.', updated_at = "'.now()->toDateTimeString().'" where '.$whereString);
+
+        return ($data[0] == 1)?true:false;
     }
 
     /**
@@ -142,6 +158,7 @@ trait CrudJsonTrait
         $pathLocal = (string) ($pathJson != '')?$pathJson:'$';
         $pathQuery = (string) ($countLocal == 0)?$path:$pathLocal;
 
+        //dd(0,$Tb, $collumn, $where, $path, $pathLocal);
         //Verifico se este caminho json existe no BD
         $pathValido = DB::table($Tb)->whereRaw($whereString)
                                     ->selectRaw("JSON_CONTAINS_PATH(".$collumn.",'one','".$pathQuery."') AS retorno")
@@ -153,24 +170,25 @@ trait CrudJsonTrait
                return true;
            }else{
                 $pathLocal .= '.'.$vetorOrigem[$countLocal];
-                //dd(2,$Tb, $lojaId, $apiId, $collumn, $path, $pathLocal);
+                //dd(5,$Tb, $lojaId, $apiId, $collumn, $path, $pathLocal);
                 return $this->salvarRotaJson($Tb,  $collumn, $where, $path, $pathLocal);
            }
-        //Se for o primeiro campo e ele não existir no banco
-        }elseif($countLocal == 1){
-            //dd(2,$Tb, $lojaId, $apiId, $collumn, $path, $pathLocal);
-            $sql = (string) "JSON_UNQUOTE(JSON_SET(".$collumn.", '".$pathLocal."', CAST('{}' AS JSON)))";
-            DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.' where  '.$whereString);
+        //Se a coluna estiver sem nenhum registro
+        }elseif($countLocal == 1 && is_null($pathValido->retorno)){
+            //dd(2,$Tb, $collumn, $where, $path, $pathLocal);
+            $sql = (string) "CAST('{\"".$vetorOrigem[0]."\":{}}' AS JSON)";
+            DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.' where '.$whereString);
             return $this->salvarRotaJson($Tb, $collumn, $where, $path, $pathLocal);
 
         //Em quanto o $path tiver campos.
         }else{
             if($countLocal == 0){
                 $pathLocal .= '.'.$vetorOrigem[$countLocal];
-                //dd(1,$Tb, $lojaId, $apiId, $collumn, $path, $pathLocal);
+                //dd(1,$Tb, $collumn, $where, $path, $pathLocal);
                 return $this->salvarRotaJson($Tb, $collumn, $where, $path, $pathLocal);
             }
 
+            //dd(3,$Tb, $collumn, $where, $path, $pathLocal);
             $sql = (string) "JSON_UNQUOTE(JSON_SET(".$collumn.", '".$pathLocal."', CAST('{}' AS JSON)))";
             DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.' where '.$whereString);
 
@@ -178,7 +196,7 @@ trait CrudJsonTrait
             if($countLocal < $countOrigem){
                 $pathLocal .= '.'. $vetorOrigem[$countLocal];
             }
-            //dd(4,$Tb, $lojaId, $apiId, $collumn, $path, $pathLocal);
+            //dd(4,$Tb, $collumn, $where, $path, $pathLocal);
             return $this->salvarRotaJson($Tb,  $collumn, $where, $path, $pathLocal);
         }
     }
@@ -216,11 +234,11 @@ trait CrudJsonTrait
             if(is_int($value)){
 				$data = $where[1][$key];
 			}else{
-				$data = ($valueInArray)?$value." = '".$where[1][$key]. "'": $value. ' = ?';
+				$data = ($valueInArray)?$value. ' = ?':$value." = '".$where[1][$key]. "'";
             }
             $whereString = ($key != $first)?$whereString.", ".$data:$data;
         }
-        return [$whereString, $where[1]];
+        return ($valueInArray)?[$whereString, $where[1]]:$whereString;
     }
 
     /**

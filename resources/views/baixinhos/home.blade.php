@@ -1,16 +1,15 @@
 @extends('layouts.pages')
 
 @section('content')
-
 <div class="row">
     <!-- sales area start -->
-    <div class="col-xl-12 col-ml-9 col-lg-9 mt-5">
+    <div class="col-xl-12 col-ml-9 col-lg-9 mt-5 mb-5">
         <!-- Primary table start -->
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title">Todos os baixinhos</h4>
                 <div class="data-tables datatable-primary">
-                    <table id="dataTable2" class="text-center">
+                    <table id="dataTable" class="text-center">
                         <thead class="text-capitalize">
                             <tr>
                                 <th>Nome</th>
@@ -55,29 +54,7 @@
         </div>
         <!-- Primary table end -->
     </div>
-    {{--  <!-- sales area end -->
-    <!-- timeline area start -->
-    <div class="col-xl-3 col-ml-4 col-lg-4 mt-5">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="header-title">Timeline</h4>
-                <div class="timeline-area">
-                    <div class="timeline-task">
-                        <div class="icon bg1">
-                            <i class="fa fa-envelope"></i>
-                        </div>
-                        <div class="tm-title">
-                            <h4>Rashed sent you an email</h4>
-                            <span class="time"><i class="ti-time"></i>09:35</span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse distinctio itaque at.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- timeline area end -->  --}}
+    {{--  <!-- sales area end --> --}}
 </div>
 
 <div class="modal fade bd-example-modal-lg" id="historicoModal" aria-labelledby="addHistoricoModal">
@@ -93,8 +70,8 @@
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="cabeleleiroHistoricoModal">Quem Cortou</label>
-                            <input type="text" class="form-control" id="cabeleleiroHistoricoModal" name="cabeleleiroHistorico" placeholder="Nome completo do cabeleleiro" value="{{auth()->user()->nome}}" required="">
+                            <label for="cabeleireiroHistoricoModal">Quem Cortou</label>
+                            <input type="text" class="form-control" id="cabeleireiroHistoricoModal" name="cabeleireiroHistorico" placeholder="Nome completo do cabeleireiro" value="{{auth()->user()->nome}}" required="">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="responsavelHistoricoModal">Quem veio como responsável</label>
@@ -173,5 +150,4 @@
         </div>
     </div>
 </div>
-
 @endsection

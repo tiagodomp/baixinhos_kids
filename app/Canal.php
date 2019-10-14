@@ -35,4 +35,13 @@ class Canal extends Model
     protected $casts = [
         'infos' => 'array',
     ];
+
+    public function getListCanais()
+    {
+        $c = $this->join('users', 'canais.criado_por', '=', 'users.uuid')
+                    ->selectRaw('canais.uuid as uuidC, canais.titulo as tituloC, canais.descricao as descricaoC, canais.tecnicas as tecnicasC, canais.created_at as created_at, users.uuid as uuidU, users.nome as nomeU')
+                    ->get();
+
+        return (!empty($c))?$c->toArray():[];
+    }
 }

@@ -47,7 +47,6 @@
                                                         data-target="#collapseResponsaveis"
                                                         aria-expanded="false"
                                                         aria-controls="collapseResponsaveis">
-                                                        <i class="fa fa-user-plus"></i>
                                                         add
                                                     </a>
                                                     <select class="selectpicker show-tick col-md-8"

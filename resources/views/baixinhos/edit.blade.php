@@ -30,6 +30,9 @@
                                         data-live-search="true"
                                         data-size="5"
                                         data-width="auto">
+                                        <option value={{$data['uuid']}}  data-tokens={{implode('-', $data['contatos'])}} data-subtext={{implode(',', $data['filhos'])}}>
+                                            {{$data['nome']}}
+                                        </option>
                                     @foreach($responsaveis as $responsavel)
                                         <option value={{$responsavel['uuid']}}  data-tokens={{implode('-', $responsavel['contatos'])}} data-subtext={{implode(',', $responsavel['filhos'])}}>
                                             {{$responsavel['nome']}}

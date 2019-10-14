@@ -128,7 +128,7 @@ trait FichaCadastroTrait
     }
 
 
-    protected function imagensJson(array $imagens, string $path)
+    public function imagensJson(array $imagens, string $path)
     {
         $imagem = [];
         if(!empty($imagens))
@@ -148,6 +148,14 @@ trait FichaCadastroTrait
         return $imagem;
     }
 
+    public function inserirImagens(string $Tb, string $uuid, $data, string $collumn = 'imagens',  string $path = '$')
+    {
+        $where = ['uuid' => $uuid];
+        $return = $this->arrayInsertJsonTb($Tb, $collumn, $where, $data, $path);
+
+        return $return;
+    }
+
     protected function infosJson(array $info)
     {
         $datetime = (isset($info['created_at']))?$info['created_at']:now()->toDateTimeString();
@@ -161,10 +169,16 @@ trait FichaCadastroTrait
             ];
     }
 
-    public function getResponsaveis(int $quant, string $uuid = null)
+    public function getResponsaveis()
     {
         $r = new Responsavel();
-        return $r->getDataResponsaveis($quant, $uuid);
+        return $r->getDataResponsaveis();
+    }
+
+    public function getBaixinhos()
+    {
+        $r = new Baixinho();
+        return $r->getDataBaixinhos();
     }
 
     public function getFilhosResponsaveis(string $responsavelUuid)
@@ -182,11 +196,9 @@ trait FichaCadastroTrait
         return $data;
     }
 
-    public function getCanais(int $quant){
+    public function getCanais(int $quant = 0){
         $c = new Canal();
         $data = $c->selectRaw('titulo, uuid')
-                    ->offset(0)
-                    ->limit($quant)
                     ->get();
 
         return $data->toArray();

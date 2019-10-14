@@ -2,12 +2,12 @@
 
 @section('content')
 
-<div class="row mt-5">
+<div class="row mt-5 mb-5">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title">Galeria de fotos</h4>
-                @if(empty($data))
+                @if(!empty($data))
                 <div class="tz-gallery">
                     <div class="row mt-2 mb-2">
                         @foreach($data as $key => $baixinho)

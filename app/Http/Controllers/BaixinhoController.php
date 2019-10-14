@@ -47,53 +47,10 @@ class BaixinhoController extends Controller
         return view('baixinhos.perfil', compact('data'));
     }
 
-    public function addFichaCadastro(Request $request, string $uuid)
-    {
-        $retorno = $this->addFicha($request, $uuid);
-
-        return redirect(route('baixinho.view', $uuid), 302, $request->header());
-    }
-
-    public function addHistorico(Request $request, string $uuid)
-    {
-
-        $cabeleleiro = [auth()->user()->nome, auth()->user()->uuid] ;
-        if($request->cabeleleiroHistorico == $cabeleleiro[0]){
-            $nome = $request->cabeleleiroHistorico;
-            $search = DB::table('users')->whereRaw("nome LIKE '%".$nome."%' OR apelido LIKE '%".$nome."%'")->selectRaw('nome, uuid')->get();
-            if(!empty($search) && $search->count() === 1){
-                $cabeleleiro = [$search[0]->nome, $search[0]->uuid];
-            }else{
-                $cabeleleiro = [$nome,''];
-            }
-        }
-
-        $responsavel = $request->responsavelHistorico;
-        $search = DB::table('responsaveis')->whereRaw("nome LIKE '%".$responsavel."%'")->selectRaw('nome, uuid')->get();
-        if(!empty($search) && $search->count() === 1){
-            $responsavel = [$search[0]->nome, $search[0]->uuid];
-        }else{
-            $responsavel = [$nome,''];
-        }
-
-        $data = [
-            'cabeleleiro'       => $cabeleleiro,
-            'responsavel'       => $responsavel,
-            'metodo_pagamento'  => [$request->tipoPagamentoHistorico, $request->modeloPagamentoHistorico],
-            'tipo_corte'        => $request->corteCabeloHistorico,
-            'obs'               => $request->obsHistorico,
-            'agendado_para'     => $request->agendadoParaHistorico,
-        ];
-        $b = new Baixinho;
-        $save = $b->historicoCorte($data);
-        $b->addHistorico($save, ['uuid' => $uuid]);
-        return $this->index();
-    }
-
     public function add()
     {
         //Obtém os responsaveis e os nomes dos filhos
-        $responsaveis = $this->getResponsaveis(50);
+        $responsaveis = $this->getResponsaveis();
         foreach($responsaveis as $key => &$value){
             $responsaveis[$key]['contatos'] = [
                 $value['contatos']['cell'],
@@ -109,30 +66,73 @@ class BaixinhoController extends Controller
         return view('baixinhos.add', compact('responsaveis', 'canais'));
     }
 
+    public function addFichaCadastro(Request $request, string $uuid)
+    {
+        $retorno = $this->addFicha($request, $uuid);
+
+        return redirect(route('baixinho.view', $uuid), 302, $request->header());
+    }
+
+    public function addHistorico(Request $request, string $uuid)
+    {
+        $cabeleireiro = [auth()->user()->nome, auth()->user()->uuid] ;
+        if($request->cabeleireiroHistorico == $cabeleireiro[0]){
+            $nome = $request->cabeleireiroHistorico;
+            $search = DB::table('users')->whereRaw("nome LIKE '%".$nome."%' OR apelido LIKE '%".$nome."%'")->selectRaw('nome, uuid')->get();
+            if(!empty($search) && $search->count() === 1){
+                $cabeleireiro = [$search[0]->nome, $search[0]->uuid];
+            }else{
+                $cabeleireiro = [$nome,''];
+            }
+        }
+
+        $responsavel = $request->responsavelHistorico;
+        $search = DB::table('responsaveis')->whereRaw("nome LIKE '%".$responsavel."%'")->selectRaw('nome, uuid')->get();
+        if(!empty($search) && $search->count() === 1){
+            $responsavel = [$search[0]->nome, $search[0]->uuid];
+        }else{
+            $responsavel = [$nome,''];
+        }
+
+        $data = [
+            'cabeleireiro'       => $cabeleireiro,
+            'responsavel'       => $responsavel,
+            'metodo_pagamento'  => [$request->tipoPagamentoHistorico, $request->modeloPagamentoHistorico],
+            'tipo_corte'        => $request->corteCabeloHistorico,
+            'obs'               => $request->obsHistorico,
+            'agendado_para'     => $request->agendadoParaHistorico,
+            'tag'               => $request->has('tagHistorico')
+        ];
+
+        $b = new Baixinho();
+        $save = $b->historicoCorte($data);
+        $b->addHistorico($save, ['uuid' => $uuid]);
+        return redirect(route('baixinho.view', $uuid), 302, $request->header());
+    }
+
     public function addImg(Request $request, string $uuid)
     {
         $data = ($request->hasfile('imagensB'))?$this->imagensJson($request->imagensB, $uuid):[];
         if(empty($data))
-            return false;
+            return redirect()->back()->with('danger', 'Erro em inserir imagens');
 
-        return $this->atualizarJsonTb('baixinhos', 'imagens', ['uuid' => $uuid], '$[*]', $data);
+        return ($this->arrayInsertJsonTb('baixinhos', 'imagens', ['uuid' => $uuid], $data[0]))
+            ?redirect()->back()->with('success', 'As imagens foram inseridas com sucesso')
+            :redirect()->back()->with('danger', 'Erro em inserir imagens');
     }
 
     public function addFicha(Request $request, string $uuid)
     {
-        $b = new Baixinho();
-        $baix = $b->where('uuid', $uuid)->select('ficha_cadastro')->first();
-        if(empty($baix))
+        $b = Baixinho::find($uuid);
+        if(empty($b))
             return false;
 
         if($request->hasfile('fichaCadastro')){
-            $data = $this->imagensJson($request->fichaCadastro, $uuid);
-            $baix->ficha_cadastro = $data;
+            $b->ficha_cadastro = $this->imagensJson($request->fichaCadastro, $uuid);
         }
 
-        $baix->autorizacao_audiovisual = $request->has('autorizacaoAudiovisual');
-
-        return $baix->save();
+        $b->autorizacao_audiovisual = $request->has('autorizacaoAudiovisual');
+        return $b->save();
     }
 
     public function galeria()
@@ -140,6 +140,20 @@ class BaixinhoController extends Controller
         $b = new Baixinho();
         $data = $b->getImgGaleria();
         return view('baixinhos.galeria', compact('data'));
+    }
+
+    public function fichascadastro()
+    {
+        $b = new Baixinho();
+        $data = $b->getImgFichaCadastro();
+        return view('baixinhos.fichascadastro', compact('data'));
+    }
+
+    public function historico()
+    {
+        $b = new Baixinho();
+        $data = $b->getListHistoricaBaixinhos();
+        return view('baixinhos.historico', compact('data'));
     }
 
     public function apagar(Request $request, string $uuid)

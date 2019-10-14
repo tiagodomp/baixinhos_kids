@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title">Criar novo Responsável</h4>
+                <h4 class="header-title">Editar Responsável</h4>
                 <form action={{route('responsaveis.inserir')}} class="col-md-12" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-row col-md-12">
@@ -28,6 +28,7 @@
                                         data-live-search="true"
                                         data-size="5"
                                         data-width="auto">
+                                        <option value={{$canal['uuidC']}} selected>{{$canal['tituloC']}}</option>
                                     @foreach($canais as $canal)
                                         <option value={{$canal['uuid']}}>{{$canal['titulo']}}</option>
                                     @endforeach
@@ -57,26 +58,28 @@
                     </div>
                     <div class="form-group">
                         <label for="nomeR">Nome</label>
-                        <input type="text" name="nomeR" class="form-control" id="nomeR" placeholder="Nome completo do responsável">
+                        <input type="text" value="{{$data['nomeR']}}" name="nomeR" class="form-control" id="nomeR" placeholder="Nome completo do responsável">
                     </div>
-                    <div class="form-group">
-                        <label for="contatosR[0][email]">E-mail</label>
-                        <input type="email" name="contatosR[0][email]" class="form-control" id="email" placeholder="E-mail principal do Responsável">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="contatosR[0][tell]">Telefone</label>
-                            <input type="text" name="contatosR[0][tell]" class="form-control" id="tell" placeholder="Telefone principal do Responsável">
+                    @foreach($data[contatosR] as $key => $contato)
+                        <div class="form-group">
+                            <label for="contatosR[0][email]">E-mail</label>
+                            <input type="email" value="{{$contato[email]}}" name="contatosR[{{$key}}][email]" class="form-control" id="email" placeholder="E-mail do Responsável">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="contatosR[0][cell]">Celular</label>
-                            <input type="text" name="contatosR[0][cell]" class="form-control" id="cell" placeholder="Celular principal do Responsável">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="contatosR[0][tell]">Telefone</label>
+                                <input type="text" value="{{$contato[tell]}}" name="contatosR[{{$key}}][tell]" class="form-control" id="tell" placeholder="Telefone do Responsável">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="contatosR[0][cell]">Celular</label>
+                                <input type="text" value="{{$contato[cell]}}" name="contatosR[{{$key}}][cell]" class="form-control" id="cell" placeholder="Celular do Responsável">
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                     <div class="form-group">
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" name="imagensR[]" placeholder="clique e selecione uma imagem" class="custom-file-input" id="imagensR" multiple>
+                                <input type="file" name="imagensR[]" placeholder="clique e selecione uma imagem" class="custom-file-input" id="imagensR">
                                 <label class="custom-file-label" for="imagensB">Adicione fotos associada a este responsável</label>
                             </div>
                         </div>

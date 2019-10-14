@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\CrudJsonTrait;
+use Illuminate\Support\Facades\DB;
 
 class Responsavel extends Model
 {
@@ -42,11 +43,9 @@ class Responsavel extends Model
         'infos' => 'array',
     ];
 
-    public function getDataResponsaveis(int $quant, string $uuid = null){
+    public function getDataResponsaveis(){
         $data = $this->join('baixinhos', 'responsaveis.uuid', '=', 'baixinhos.responsavel_uuid')
                         ->selectRaw('responsaveis.uuid as uuid, responsaveis.nome as nome, responsaveis.contatos->>"$[0]" as contatos, baixinhos.nome as filhos, baixinhos.uuid as uuidfilhos')
-                        ->offset(0)
-                        ->limit($quant)
                         ->get();
 
         return $data->toArray();
@@ -72,5 +71,15 @@ class Responsavel extends Model
 
         $data->toArray();
         return (!empty($data))?$data->toArray():[['totalMembros' => 0, 'titulo'=>'', 'uuid' => '']];
+    }
+
+    public function getListResponsaveis()
+    {
+        $data = $this->join('canais', 'responsaveis.canal_id', '=', 'canais.uuid')
+                        ->join('users', 'responsaveis.criado_por', '=', 'users.uuid')
+                        ->selectRaw('responsaveis.uuid as uuidR, responsaveis.nome as nomeR, responsaveis.contatos as contatosR, responsaveis.created_at as created_at, canais.uuid as uuidC, canais.titulo as tituloC, users.uuid as uuidU, users.nome as nomeU')
+                        ->get();
+
+        return $data->toArray();
     }
 }
