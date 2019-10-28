@@ -24,6 +24,7 @@
 
 <body class="fix-menu">
     <section class="login p-fixed d-flex text-center bg-primary common-img-bg">
+        @include('erros')
         @yield('content')
     </section>
 </body>

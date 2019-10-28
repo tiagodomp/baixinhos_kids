@@ -43,7 +43,6 @@ class BaixinhoController extends Controller
         $data['createdB'] = $date->createFromFormat('Y-m-d H:i:s', $data['createdB'])->format('d/m/Y');
         $data['sexoB'] = $data['sexoB']?'Menina' : 'Menino';
 
-        //dd($data);
         return view('baixinhos.perfil', compact('data'));
     }
 
@@ -64,6 +63,34 @@ class BaixinhoController extends Controller
         $canais = $this->getCanais(50);
 
         return view('baixinhos.add', compact('responsaveis', 'canais'));
+    }
+
+    public function editPermissao(Request $request, string $uuidB = null)
+    {
+        $b = new Baixinho();
+        $d = true; $f = true; $a = true;
+        if(empty($uuidB))
+            $uuidB = $request->uuidB;
+
+        if($request->has('delFichaCadastroInput') && $request->delFichaCadastroInput == 1)
+            $d =  $b->delSoftPermissao($uuidB);
+
+        if($request->hasfile('fichaCadastro')){
+            $data = $this->imagensJson($request->fichaCadastro, $uuidB);
+            $f =  $b->arrayInsertJsonTb('baixinhos', 'ficha_cadastro', ['uuid' => $uuidB], $data, '$[0]');
+        }
+
+        if($request->has('autorizacaoAudiovisual')){
+            $a = $b->where('uuid', $uuidB)
+                    ->update(['autorizacao_audiovisual' => 1]);
+        }else{
+            $a = $b->where('uuid', $uuidB)
+                    ->update(['autorizacao_audiovisual' => 0]);
+        }
+
+        return ($d && $f && $a)
+                ?redirect()->back()->with('success', 'Permissões alteradas com sucesso')
+                :redirect()->back()->with('danger', 'Erros em alterar permissões');
     }
 
     public function addFichaCadastro(Request $request, string $uuid)
@@ -140,6 +167,23 @@ class BaixinhoController extends Controller
         $b = new Baixinho();
         $data = $b->getImgGaleria();
         return view('baixinhos.galeria', compact('data'));
+    }
+
+    public function getPermissoesAjax(Request $request, string $uuid = null)
+    {
+        if(empty($uuid))
+            $uuid = $request->has('uuidB')?$request->uuidB:$request->input('uuid', '');
+
+        $b = new Baixinho();
+        $data = $b->getPermissoes($uuid);
+
+        if(empty($data))
+            return response()->json([])->with('warning', 'Baixinho não encontrado');
+
+        if(!empty($data['fichaCadastro']['path']))
+            $data['fichaCadastro']['path'] = (string) route('base').'/storage/'.$data['fichaCadastro']['path'];
+
+        return response()->json($data);
     }
 
     public function fichascadastro()

@@ -121,9 +121,11 @@
                                 {{$data['tituloC']}}
                             </address>
                         </div>
-                        <p class="h5 text-primary mt-2 d-block font-weight-light">
-                            {{$data['nomeR']}}
-                        </p>
+                        <a href="{{route('responsavel.view', $data['uuidR'])}}">
+                            <p class="h5 text-primary mt-2 d-block font-weight-light">
+                                {{$data['nomeR']}}
+                            </p>
+                        </a>
                         @if(!empty($data['historicoB']))
                             <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">

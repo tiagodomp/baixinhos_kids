@@ -44,6 +44,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -53,7 +54,7 @@ class UserController extends Controller
 
 
         $input = $request->all();
-        
+
         $input['password'] = Hash::make($input['password']);
 
 

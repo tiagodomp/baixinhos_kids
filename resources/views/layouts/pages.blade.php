@@ -296,8 +296,8 @@
                     </div>
                 </div>
             </div>
+            @include('erros')
             <!-- page title area end -->
-
             @yield('content')
         </div>
         <!-- main content area end -->

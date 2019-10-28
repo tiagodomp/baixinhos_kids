@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\CrudJsonTrait;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 
 class Baixinho extends Model
@@ -143,12 +144,13 @@ class Baixinho extends Model
                             ->selectRaw('nome, uuid')
                             ->get();
         }
+
         return (!empty($data))?['total' => $data->count(), 'baixinhos' => $data->toArray()]:['total' => 0, 'baixinhos' => []];
     }
 
     public function getFichasEmBranco()
     {
-        $data = $this->whereRaw("autorizacao_audiovisual = 0 AND ficha_cadastro IS NULL")
+        $data = $this->whereRaw("autorizacao_audiovisual = 0 OR ficha_cadastro IS NULL OR ficha_cadastro->>'$[0].deleted_at' IS NOT NULL")
                             ->selectRaw('nome, uuid')
                             ->get();
         return (!empty($data))?['total' => $data->count(), 'baixinhos' => $data->toArray()]:['total' => 0, 'baixinhos' => []];
@@ -159,9 +161,34 @@ class Baixinho extends Model
 
     }
 
+    public function getPermissoes(string $uuid)
+    {
+        $data = $this->where('uuid', $uuid)
+                    ->selectRaw('autorizacao_audiovisual as autorizacaoAudiovisual, ficha_cadastro->>"$[0]" as fichaCadastro')
+                    ->first();
+        if(empty($data) || empty($data->toArray()))
+            return [];
+
+        $d = $data->toArray();
+        $d['fichaCadastro'] = json_decode($d['fichaCadastro'], true);
+
+        if(!empty($d['fichaCadastro']['deleted_at']))
+            $d['fichaCadastro'] = [];
+
+        return $d;
+    }
+
+    public function delSoftPermissao(string $uuid, int $fichaId = 0)
+    {
+        $date = now()->toDateTimeString();
+        $data = DB::update('update baixinhos set ficha_cadastro = JSON_UNQUOTE(JSON_SET(ficha_cadastro, "$['.$fichaId.'].deleted_at", "'.$date.'")), updated_at = "'.$date.'" where uuid = "'.$uuid.'"', []);
+        //$data = DB::update('update baixinhos set ficha_cadastro = JSON_UNQUOTE(JSON_SET(ficha_cadastro, "$[?].deleted_at", "?")), updated_at = "?" where uuid = "?"', [$fichaId, $date, $date, $uuid]);
+        return ($data ==1)?true:false;
+    }
+
     public function getListBaixinhos()
     {
-        $data = $this->join('responsaveis', 'baixinhos.responsavel_uuid', '=', 'responsaveis.uuid')
+        $data = $this->leftJoin('responsaveis', 'baixinhos.responsavel_uuid', '=', 'responsaveis.uuid')
                             ->selectRaw('baixinhos.uuid as uuidB, baixinhos.nome as nomeB, responsaveis.uuid as uuidR, responsaveis.nome as nomeR, baixinhos.primeiro_corte as primeiro_corte, JSON_KEYS(baixinhos.historico) as ultimo_corte')
                             ->get();
         $date = new Carbon();
@@ -189,16 +216,16 @@ class Baixinho extends Model
     public function viewBaixinho(string $uuid)
     {
         $data = $this->where('baixinhos.uuid', $uuid)
-                        ->join('responsaveis', 'baixinhos.responsavel_uuid', '=', 'responsaveis.uuid')
-                        ->join('canais', 'responsaveis.canal_id', '=', 'canais.uuid')
-                        ->join('users', 'baixinhos.criado_por', '=', 'users.uuid')
+                        ->leftJoin('responsaveis', 'baixinhos.responsavel_uuid', '=', 'responsaveis.uuid')
+                        ->leftJoin('canais', 'responsaveis.canal_id', '=', 'canais.uuid')
+                        ->leftJoin('users', 'baixinhos.criado_por', '=', 'users.uuid')
                         ->selectRaw('baixinhos.nome as nomeB,
                                     baixinhos.uuid as uuidB,
                                     baixinhos.nascimento as nascimentoB,
                                     baixinhos.sexo as sexoB,
                                     baixinhos.primeiro_corte as primeiro_corteB,
                                     baixinhos.autorizacao_audiovisual as autorizacaoB,
-                                    baixinhos.ficha_cadastro as fichaB,
+                                    baixinhos.ficha_cadastro->>"$[0]" as fichaB,
                                     baixinhos.imagens as imagensB,
                                     baixinhos.historico as historicoB,
                                     baixinhos.created_at as createdB,
@@ -227,19 +254,19 @@ class Baixinho extends Model
 
     public function editBaixinhos(array $data, string $uuid)
     {
-        $b = new Baixinho();
-        $b->find($uuid);
-        $b->responsavel_uuid          = $data['uuidR'];
-        $b->nome                      = $data['nomeB'];
-        $b->nascimento                = $data['nascimentoB'];
-        $b->sexo                      = ($data['sexoB'] == 'menina')?true:false;
-        $b->primeiro_corte            = $data['primeiroCorteB'];
-        $b->autorizacao_audiovisual   = $data['autorizacao_audiovisual'];
-        $b->ficha_cadastro            = $data['ficha_cadastro'];
-        $b->infos                     = $data['infos'];
-        $b->updated_at                = now()->toDateTimeString();
 
-        return $b->save();
+        $this->find($uuid);
+        $this->responsavel_uuid          = $data['uuidR'];
+        $this->nome                      = $data['nomeB'];
+        $this->nascimento                = $data['nascimentoB'];
+        $this->sexo                      = ($data['sexoB'] == 'menina')?true:false;
+        $this->primeiro_corte            = $data['primeiroCorteB'];
+        $this->autorizacao_audiovisual   = $data['autorizacao_audiovisual'];
+        $this->ficha_cadastro            = $data['ficha_cadastro'];
+        $this->infos                     = $data['infos'];
+        $this->updated_at                = now()->toDateTimeString();
+
+        return $this->save();
     }
 
     public function getImgGaleria()
@@ -310,7 +337,7 @@ class Baixinho extends Model
 
     public function getDataBaixinhos()
     {
-        $data = $this->join('responsaveis', 'baixinhos.responsavel_uuid', '=', 'responsaveis.uuid')
+        $data = $this->leftJoin('responsaveis', 'baixinhos.responsavel_uuid', '=', 'responsaveis.uuid')
                         ->selectRaw('baixinhos.nome as nomeB, baixinhos.uuid as uuidB, responsaveis.uuid as uuidR, responsaveis.nome as nomeR')
                         ->get();
 

@@ -2,7 +2,7 @@
 
 Route::get('/', function () {
     return redirect()->route('home');
-});
+})->name('base');
 Route::get('home', function () {
     return redirect()->route('home');
 });
@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/responsavel/editar/{uuid}','ResponsavelController@edit')           ->name('responsavel.edit');
     Route::view('/responsaveis/associar','responsaveis.associar')                   ->name('responsaveis.associar');
     Route::post('/responsaveis/apagar/{uuid}','ResponsavelController@deletar')      ->name('responsavel.del');
+    Route::post('/responsaveis/inserir/img/{uuid}','ResponsavelController@addImg')  ->name('responsavel.addImg');
+    Route::post('/responsavel/ficha-de-cadastro/{uuidB?}','ResponsavelController@addFichaCadastro')  ->name('responsavel.ficha.add');
 
     Route::get('/baixinhos','BaixinhoController@index')                                 ->name('baixinhos');
     Route::get('/baixinho/novo','BaixinhoController@add')                               ->name('baixinhos.add');
@@ -38,10 +40,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/baixinho/editar/{uuid}','BaixinhoController@index')                    ->name('baixinho.edit');
     Route::post('/baixinho/apagar/{uuid}','BaixinhoController@apagar')                  ->name('baixinho.del');
     Route::get('/baixinhos/galeria','BaixinhoController@galeria')                       ->name('baixinhos.galerias');
-    Route::post('/baixinhos/inserir/img/{uuid}','BaixinhoController@addImg')                    ->name('baixinhos.addImg');
+    Route::post('/baixinhos/inserir/img/{uuid}','BaixinhoController@addImg')            ->name('baixinhos.addImg');
     Route::get('/baixinhos/fichas-de-cadastro','BaixinhoController@fichascadastro')     ->name('baixinhos.fichas');
     Route::post('/baixinho/ficha-de-cadastro/{uuid}','BaixinhoController@addFichaCadastro')  ->name('baixinho.ficha.add');
     Route::get('/baixinhos/historico-cortes','BaixinhoController@historico')            ->name('baixinhos.historicos');
+    Route::get('/baixinhos/permissoes/{uuid?}','BaixinhoController@getPermissoesAjax')   ->name('baixinhos.get.permissoes.ajax');
+    Route::post('/baixinho/edit/permissao/{uuidB?}','BaixinhoController@editPermissao')  ->name('baixinho.permissao.edit');
 
     Route::get('/canais','CanalController@index')                            ->name('canais');
     Route::get('/canais/view/{uuid}','CanalController@index')                ->name('canais.view');

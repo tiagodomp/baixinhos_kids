@@ -39,9 +39,9 @@ trait CrudJsonTrait
         if($this->salvarRotaJson($Tb, $collumn, $where, $path)){
 			$data       = (is_string($data) || is_int($data))? $this->utf8_ansi($data): "CAST('".$this->utf8_ansi(json_encode($data))."' AS JSON)";
             $sql        = "JSON_UNQUOTE(JSON_SET(".$collumn.", '".$path."', $data))";
-            $data[0]    = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.', updated_at = "'.now()->toDateTimeString().'" where '.$whereString);
+            $dat        = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.', updated_at = "'.now()->toDateTimeString().'" where '.$whereString);
 
-            return ($data[0] == 1 && $data[1] == 1)?true:false;
+            return ($dat == 1)?true:false;
         }
         return false;
     }
@@ -59,7 +59,7 @@ trait CrudJsonTrait
     {
         $whereString    = $this->geradorWhereString($where);
         $data           = (is_string($data) || is_int($data))?$this->utf8_ansi($data):"CAST('".$this->utf8_ansi(json_encode($data))."' AS JSON)";
-        $sql            = "JSON_ARRAY_APPEND(".$collumn.", '".$path."', $data)";
+        $sql            = ($path != '$')?"JSON_ARRAY_INSERT(".$collumn.", '".$path."', $data)":"JSON_ARRAY_APPEND(".$collumn.", '".$path."', $data)";
         $data[0]        = DB::update('update '.$Tb.' set '.$collumn.' = '.$sql.', updated_at = "'.now()->toDateTimeString().'" where '.$whereString);
 
         return ($data[0] == 1)?true:false;

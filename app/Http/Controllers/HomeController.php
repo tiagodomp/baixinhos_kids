@@ -66,7 +66,6 @@ class HomeController extends Controller
     {
         $frequencia = $this->getBaixinhosFrequentes();
         $fichas     = $this->getFichasFaltando();
-        //dd($rankingCanais);
         $data = [
             'totalBaixinhosFrequentes'  => $frequencia['total'],
             'baixinhosFrequentes'       => $frequencia['baixinhos'],

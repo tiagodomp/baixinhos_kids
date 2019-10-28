@@ -233,9 +233,71 @@
         modal.find('.modal-content form').attr('action', url);
     });
 
+    // $(document).ready(function(){
+    //     $('#tell').mask('(00) 0000-0000');
+    //     $('#cell').mask('(00) 0.0000-0000');
+    //     $('#rg').mask('00.000.000-0');
+    //     $('#cpf').mask('000.000.000-00', {reverse: true});
+    // });
+
+    // $("#uuidBSelectAjax option:selected").on(function() {
+    //     var uuidB = $(this).val();
+    //     var url = $(this).data('url');
+    //     console.log(url);
+    //     $.getJSON(url+'/'+uuidB, function (dados){
+    //         if (dados.length > 0){
+    //             console.log(uuidB);
+    //         }else{
+    //             console.log(url);
+    //         }
+    //      })
+    //  });
+
     $(document).ready(function(){
-        $('#email').mask('00/00/0000');
-        $('#cpf').mask('000.000.000-00', {reverse: true});
+        $('#uuidBSelectAjax').change(function () {
+          if($(this).val()){
+            $("#autorizacaoAudiovisualDiv").removeClass('d-none');
+            $.ajax({
+              url: $(this).find(':selected').data('url'),
+              type: 'GET',
+              success: function(result){
+                  if(result){
+                    if(result.autorizacaoAudiovisual = 1){
+                        $("#autorizacaoAudiovisual").attr('checked', 'checked');
+                    }
+                    if($.isEmptyObject(result.fichaCadastro)){
+                        $("#fichaCadastroInput").removeClass('d-none');
+                    }else{
+                        $("a[id='fichaCadastroUrl']").attr('href', result.fichaCadastro.path);
+                        $("img[id='fichaCadastroUrl']").attr('src', result.fichaCadastro.path);
+                        $("#fichaCadastroImg").removeClass('d-none');
+                    }
+                  }
+              },
+              error: function(){
+                $("#fichaCadastroInput").removeClass('d-none');
+              }
+            });
+          }else{
+            $("#fichaCadastroImg").addClass('d-none');
+          }
+        })
+    });
+
+    $('#delFichaCadastro').click(function(){
+        $("#fichaCadastroImg").addClass('d-none');
+        $(this).addClass('d-none');
+        $("#fichaCadastroInput").removeClass('d-none');
+        $("#restFichaCadastro").removeClass('d-none');
+        $("#delFichaCadastroInput").val('1');
+    });
+
+    $('#restFichaCadastro').click(function(){
+        $("#fichaCadastroInput").addClass('d-none');
+        $(this).addClass('d-none');
+        $("#fichaCadastroImg").removeClass('d-none');
+        $("#delFichaCadastro").removeClass('d-none');
+        $("#delFichaCadastroInput").val('0');
     });
 
 })(jQuery);

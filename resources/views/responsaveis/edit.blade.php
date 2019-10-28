@@ -60,7 +60,7 @@
                         <label for="nomeR">Nome</label>
                         <input type="text" value="{{$data['nomeR']}}" name="nomeR" class="form-control" id="nomeR" placeholder="Nome completo do responsável">
                     </div>
-                    @foreach($data[contatosR] as $key => $contato)
+                    @foreach($data['contatosR'] as $key => $contato)
                         <div class="form-group">
                             <label for="contatosR[0][email]">E-mail</label>
                             <input type="email" value="{{$contato[email]}}" name="contatosR[{{$key}}][email]" class="form-control" id="email" placeholder="E-mail do Responsável">
