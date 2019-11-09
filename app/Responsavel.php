@@ -48,17 +48,36 @@ class Responsavel extends Model
                         ->selectRaw('responsaveis.uuid as uuid, responsaveis.nome as nome, responsaveis.contatos->>"$[0]" as contatos, baixinhos.nome as filhos, baixinhos.uuid as uuidfilhos')
                         ->get();
 
-        return $data->toArray();
+        return (!empty($data))?$data->toArray():[];
     }
 
-    public function searchResponsaveis(array $where){
-        $whereString = $this->geradorWhereString($where);
-        $data = $this->whereRaw($whereString)
-                        ->leftJoin('baixinhos', 'responsaveis.uuid', '=', 'baixinhos.responsavel_uuid')
-                        ->selectRaw('responsaveis.uuid as uuid, responsaveis.nome as nome, responsaveis.contatos->>"$[0]" as contatos, baixinhos.nome as filhos, baixinhos.uuid as uuidfilhos')
-                        ->get();
 
-        return $data->toArray();
+    public function searchResponsaveis(string $search){
+        //->whereRaw("responsaveis.nome LIKE '%?%' OR responsaveis.contatos->>'$[0].cell' LIKE '%?%' OR responsaveis.contatos->>'$[0].tell' LIKE '%?%' OR responsaveis.contatos->>'$[0].email' LIKE '%?%'", [$search, $search, $search, $search])
+        $r = $this->leftJoin('baixinhos', 'responsaveis.uuid', '=', 'baixinhos.responsavel_uuid')
+                    ->selectRaw('responsaveis.uuid as uuidR, responsaveis.nome as nomeR, responsaveis.contatos->>"$[0]" as contatosR, baixinhos.nome as nomeB, baixinhos.uuid as uuidB')
+                    ->where('responsaveis.nome', 'LIKE', '%'.$search.'%')
+                    ->orWhere("responsaveis.contatos->>'$[0].cell'", '%'.$search.'%')
+                    ->orWhere("responsaveis.contatos->>'$[0].tell'", '%'.$search.'%')
+                    ->orWhere("responsaveis.contatos->>'$[0].email'", '%'.$search.'%')
+                    ->limit(30)
+                    ->get();
+        
+        if(!empty($r) && !empty($r->toArray())){
+            $retornos = (array) $r->toArray();
+            if(empty($retornos))
+                return [];
+
+            foreach($retornos as $key => $resp){
+                $data[$key] = [
+                    'uuidR'         => $resp['uuidR'],
+                    'nomeR'         => $resp['nomeR'],
+                    'contatosR'     => json_decode($resp['contatosR'], true),
+                    'filhos'        => ['uuidB' => $resp['uuidB'], 'nomeB' => $resp['nomeB']]
+                ];
+            }
+        }
+        return (!empty($data))?$data:[];
     }
 
     public function getRankingCanais()

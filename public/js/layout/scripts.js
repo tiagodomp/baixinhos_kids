@@ -299,6 +299,5 @@
         $("#delFichaCadastro").removeClass('d-none');
         $("#delFichaCadastroInput").val('0');
     });
-
 })(jQuery);
 

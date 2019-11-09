@@ -48,6 +48,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        dd(2);
         $msg = [
             'required'      => 'Este campo é de preenchimento obrigatório',
             'password.min'  => 'A senha tem que conter no minimo 8 caracteres',
@@ -72,6 +73,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        dd(1);
         return User::create([
             'nome' => $data['name'],
             'email' => $data['email'],

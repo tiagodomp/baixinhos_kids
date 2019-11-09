@@ -44,26 +44,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
-        ]);
-
+        $msg = [
+            'required'      => 'Este campo é de preenchimento obrigatório',
+            'password.min'  => 'A senha tem que conter no minimo 8 caracteres',
+            'nome.min'      => 'Coloque o nome completo do usuário',
+            'email.email'   => 'E-mail inválido',
+            'email.unique'  => 'Este E-mail já esta cadastrado',
+            'apelido.unique'=> 'Este apelido já foi cadastrado',
+            'confirmed'     => 'As senhas não conferem'
+        ];
+        $request->validate([
+            'nome' => 'required|string|max:255|min:3',
+            'email' => 'required|string|email|max:255|unique:users',
+            'apelido' => 'string|max:16|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ], $msg);
 
         $input = $request->all();
-
+        $input['nome']  = ucwords($input['nome']);
         $input['password'] = Hash::make($input['password']);
 
-
         $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        //$user->assignRole($request->input('roles'));
 
-
-        return redirect()->route('users.index')
-                        ->with('success','User created successfully');
+        return redirect()->route('login')
+                        ->with('success','usuário cadastrado com sucesso');
     }
 
 

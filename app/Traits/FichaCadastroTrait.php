@@ -205,11 +205,28 @@ trait FichaCadastroTrait
     }
 
 
-    public function searchResponsaveis(string $search, string $uuid = null)
+    public function searchResponsaveis(string $search)
     {
-        $r = new Responsavel;
-        $where = ["nome LIKE %".$search."% OR contatos->>'$[0].cell' LIKE %".$search."% OR contatos->>'$[0].tell' LIKE %".$search."% OR contatos->>'$[0].email' LIKE %".$search."%"];
-        return $r->searchResponsaveis($where);
+        $r = new Responsavel();
+        return $r->searchResponsaveis($search);
+    }
+
+    public function searchBaixinhos(string $search)
+    {
+        $b = new Baixinho();
+        return $b->searchBaixinhos($search);
+    }
+
+    public function searchCanais(string $search)
+    {
+        $c = new Canal();
+        return $c->searchCanais($search);
+    }
+
+    public function searchUsers(string $search)
+    {
+        $u = new User();
+        return $u->searchUsers($search);
     }
 
     public function getBaixinhosFrequentes()

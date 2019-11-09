@@ -23,4 +23,6 @@ class CanalController extends Controller
         $c = $this->inserirCanal($request);
         return redirect()->route('canais');
     }
+
+
 }

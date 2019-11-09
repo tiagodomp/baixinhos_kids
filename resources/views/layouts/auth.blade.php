@@ -37,7 +37,6 @@
         <div class="loader"></div>
     </div>
     <!-- preloader area end -->
-
     {{--  <section class="login p-fixed d-flex text-center bg-primary common-img-bg">  --}}
         @yield('content')
     {{--  </section>  --}}

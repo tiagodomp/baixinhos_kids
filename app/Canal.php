@@ -44,4 +44,17 @@ class Canal extends Model
 
         return (!empty($c))?$c->toArray():[];
     }
+
+    public function searchCanais(string $search){
+        $search = '%'.$search.'%';
+        $c = $this->where('titulo', 'LIKE', $search)
+                        ->orWhere('descricao', $search)
+                        ->orWhere('tecnicas', $search)
+                        ->selectRaw('canais.titulo as tituloC, canais.descricao as descricaoC, canais.tecnicas as tecnicasC, canais.uuid as uuidC')
+                        ->limit(30)
+                        ->get();
+
+        return (!empty($c))?(array) $c->toArray():[];
+    }
 }
+

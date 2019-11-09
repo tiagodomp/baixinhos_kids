@@ -64,8 +64,8 @@
                                             <strong class="h5 d-block text-secondary font-weight-bold mb-1">Assinatura do Responsável</strong>
                                             <div class="tz-gallery">
                                                 <div class="thumbnail">
-                                                    <a class="lightbox" href="{{ url('storage/'.$data['fichaB'][0]['path']) }}">
-                                                        <img class="w-100 rounded border" src="{{url('storage/'.$data['fichaB'][0]['path'])}}" />
+                                                    <a class="lightbox" href="{{ url('storage/'.$data['fichaB']['path']) }}">
+                                                        <img class="w-100 rounded border" src="{{url('storage/'.$data['fichaB']['path'])}}" />
                                                     </a>
                                                 </div>
                                             </div>

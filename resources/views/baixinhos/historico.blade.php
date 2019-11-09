@@ -21,32 +21,40 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($data as $d)
-                                @foreach($d['historicoB'] as $key => $hist)
-                                    <tr>
-                                        <td>
-                                            {{date('d/m/Y H:i', strtotime($hist['created_at']))}}
-                                        </td>
-                                        <td>
-                                            <a href="{{route('baixinho.view', $d['uuidB'])}}">{{$d['nomeB']}}</a>
-                                        </td>
-                                        <td>
-                                            <a href="{{route('user.view', $hist['cabeleireiro'][1])}}">{{$hist['cabeleireiro'][0]}}</a>
-                                        </td>
-                                        <td>
-                                            <a href="{{route('responsavel.view', $hist['responsavel'][1])}}">{{$hist['responsavel'][0]}}</a>
-                                        </td>
-                                        <td>
-                                            {{$hist['tipo_corte']}}
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-outline-primary btn-xs mb-3" type="button">
-                                                Histórico Completo
-                                            </button>
-                                        </td>
-                                    </tr>
+                            @if(empty($data))
+                                @foreach($data as $d)
+                                    @foreach($d['historicoB'] as $key => $hist)
+                                        @if(!empty($hist))
+                                            <tr>
+                                                <td>
+                                                    {{date('d/m/Y H:i', strtotime($hist['created_at']))}}
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('baixinho.view', $d['uuidB'])}}">{{$d['nomeB']}}</a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('user.view', $hist['cabeleireiro'][1])}}">{{$hist['cabeleireiro'][0]}}</a>
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('responsavel.view', $hist['responsavel'][1])}}">{{$hist['responsavel'][0]}}</a>
+                                                </td>
+                                                <td>
+                                                    {{$hist['tipo_corte']}}
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-outline-primary btn-xs mb-3" type="button">
+                                                        Histórico Completo
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
                                 @endforeach
-                            @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="6">Nenhum corte de cabelo registrado</td>
+                                </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>

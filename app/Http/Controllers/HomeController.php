@@ -47,14 +47,21 @@ class HomeController extends Controller
         return redirect()->route('home');
     }
 
-    public function searchBaixinhos(Request $request)
+    public function search(Request $request)
     {
-        $responsaveis = [];
-        if($request->ajax()){
-            $responsaveis = $this->searchResponsaveis($request->search);
-        }
+        $responsaveisSearch   = [];
+        $baixinhosSearch      = [];
+        $canaisSearch         = [];
+        $funcionariosSearch   = [];
+        if(!$request->has('search'))
+            return redirect()->back()->with('warning', ':( não achamos');
 
-        dd($responsaveis);
+        $responsaveisSearch   = $this->searchResponsaveis($request->search);
+        $baixinhosSearch      = $this->searchBaixinhos($request->search);
+        $canaisSearch         = $this->searchCanais($request->search);
+        $funcionariosSearch   = $this->searchUsers($request->search);
+        
+        return redirect()->back()->with(compact('baixinhosSearch', 'responsaveisSearch', 'canaisSearch', 'funcionariosSearch'));
     }
 
     /**

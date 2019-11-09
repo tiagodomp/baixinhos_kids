@@ -343,4 +343,14 @@ class Baixinho extends Model
 
         return $data->toArray();
     }
+
+    public function searchBaixinhos(string $search){
+        $b = $this->where("baixinhos.nome", 'LIKE','%'.$search.'%')
+                        ->leftJoin('responsaveis', 'baixinhos.responsavel_uuid', '=', 'responsaveis.uuid')
+                        ->selectRaw('baixinhos.uuid as uuidB, baixinhos.nome as nomeB, responsaveis.uuid as uuidR, responsaveis.nome as nomeR')
+                        ->limit(30)
+                        ->get();
+
+        return (!empty($b))?(array) $b->toArray():[];
+    }
 }

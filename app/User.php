@@ -44,4 +44,15 @@ class User extends Authenticatable
     protected $casts = [
         'imagens' => 'array',
     ];
+
+    public function searchUsers(string $search){
+        $search = '%'.$search.'%';
+        $r = $this->where('nome', 'LIKE', $search)
+                        ->orWhere('email', $search) 
+                        ->orWhere('apelido', $search)
+                        ->selectRaw('users.uuid as uuidU, users.nome as nomeU, users.email as emailU, users.apelido as apelidoU')
+                        ->get();
+
+        return (!empty($r))?(array) $r->toArray():[];
+    }
 }

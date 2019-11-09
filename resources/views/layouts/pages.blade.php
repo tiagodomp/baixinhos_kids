@@ -113,8 +113,9 @@
                             <span></span>
                         </div>
                         <div class="search-box pull-left">
-                            <form action="#">
+                            <form id="camposSearch" action="{{route('search')}}">
                                 <input type="text" name="search" placeholder="Buscar..." required>
+                                <input type="submit" class="d-none">
                                 <i class="ti-search"></i>
                             </form>
                         </div>
@@ -296,6 +297,7 @@
                     </div>
                 </div>
             </div>
+            @include('search')
             @include('erros')
             <!-- page title area end -->
             @yield('content')

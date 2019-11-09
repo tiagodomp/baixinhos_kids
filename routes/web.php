@@ -3,18 +3,19 @@
 Route::get('/', function () {
     return redirect()->route('home');
 })->name('base');
-Route::get('home', function () {
+
+Route::get('/home', function () {
     return redirect()->route('home');
 });
-Route::get('teste',	'HomeController@teste');
-Route::get('teste1',	'TesteController@teste');
-Route::get('teste3',	'HomeController@teste3');
+
+Route::post('/cadastrar','UserController@store')->name('cadastrar.store');
+Route::view('/cadastre-se', 'auth.register')->name('cadastrar.view');
 
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
     // Funções da área home
     Route::get('/dashboard','HomeController@index')                         ->name('home');
-
+    Route::get('/search/all/{search?}','HomeController@search')             ->name('search');
 
     Route::get('/funcionarios','UserController@index')                         ->name('user.home');
     Route::get('/funcionarios/visualizar/{uuid}','UserController@index')       ->name('user.view');
