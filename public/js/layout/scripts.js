@@ -262,7 +262,7 @@
               type: 'GET',
               success: function(result){
                   if(result){
-                    if(result.autorizacaoAudiovisual = 1){
+                    if(result.autorizacaoAudiovisual == 1){
                         $("#autorizacaoAudiovisual").attr('checked', 'checked');
                     }
                     if($.isEmptyObject(result.fichaCadastro)){

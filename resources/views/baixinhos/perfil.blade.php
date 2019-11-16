@@ -2,7 +2,6 @@
 
 
 @section('content')
-
 <main class="main-content-inner">
         <div class="card mt-5 mb-5">
             <div class="card-body py-4 my-2">
@@ -150,10 +149,10 @@
                         </section>
                         <section class="d-flex mt-5 row">
                             <div class="col-md-2">
-                                <button class="btn btn-flat btn-outline-info mr-3 mb-3"  data-toggle="modal" data-target="#editarModal">
+                                <a class="btn btn-flat btn-outline-info mr-3 mb-3"  href="{{route('baixinho.edit', $data['uuidB'])}}">
                                     <i class="fa fa-pencil"></i>
                                     Editar
-                                </button>
+                                </a>
                             </div>
                             <div class="col-md-2">
                                 <button class="btn btn-flat btn-outline-danger mr-3 mb-3" data-toggle="modal" data-target="#apagarModal">

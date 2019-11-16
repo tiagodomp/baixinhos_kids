@@ -38,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/baixinho/novo','BaixinhoController@add')                               ->name('baixinhos.add');
     Route::post('/baixinho/historico/salvar/{uuid}','BaixinhoController@addHistorico')  ->name('baixinho.historico.add');
     Route::get('/baixinho/visualizar/{uuid}','BaixinhoController@view')                 ->name('baixinho.view');
-    Route::get('/baixinho/editar/{uuid}','BaixinhoController@index')                    ->name('baixinho.edit');
+    Route::get('/baixinho/editar/{uuid}','BaixinhoController@edit')                     ->name('baixinho.edit');
     Route::post('/baixinho/apagar/{uuid}','BaixinhoController@apagar')                  ->name('baixinho.del');
     Route::get('/baixinhos/galeria','BaixinhoController@galeria')                       ->name('baixinhos.galerias');
     Route::post('/baixinhos/inserir/img/{uuid}','BaixinhoController@addImg')            ->name('baixinhos.addImg');

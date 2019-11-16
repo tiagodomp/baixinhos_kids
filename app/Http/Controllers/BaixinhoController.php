@@ -50,19 +50,35 @@ class BaixinhoController extends Controller
     {
         //Obtém os responsaveis e os nomes dos filhos
         $responsaveis = $this->getResponsaveis();
-        foreach($responsaveis as $key => &$value){
-            $responsaveis[$key]['contatos'] = [
-                $value['contatos']['cell'],
-                $value['contatos']['tell'],
-                $value['contatos']['email']
-            ];
-            $responsaveis[$key]['filhos'] = $this->getFilhosResponsaveis($value['uuid'])['nomes'];
-        }
 
         //obtém os canais
-        $canais = $this->getCanais(50);
+        $canais = $this->getCanais();
 
         return view('baixinhos.add', compact('responsaveis', 'canais'));
+    }
+    public function edit(Request $request, string $uuid)
+    {
+        if($request->isMethod('get')) {
+            $b = new Baixinho();
+            $data = $b->viewBaixinho($uuid);
+            $responsaveis = $this->getResponsaveis();
+            $canais = $this->getCanais();
+
+            $data['primeiro_corteB'] = date('d/m/Y', strtotime($data['primeiro_corteB']));
+            $data['createdB'] = date('Y-m-d', strtotime($data['createdB']));
+
+            return view('baixinhos.edit', compact('data', 'responsaveis', 'canais'));
+        }
+
+        if($request->isMethod('post')) {
+            $data = $request->all();
+            $b = new Baixinho();
+
+            if($b->editBaixinhos($data, $uuid))
+                return redirect()->route('baixinho.view', $uuid);
+        }
+
+        return redirect()->back()->with('danger', 'Erro em editar este baixinho, tente novamente!');
     }
 
     public function editPermissao(Request $request, string $uuidB = null)

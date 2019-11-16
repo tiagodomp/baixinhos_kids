@@ -60,7 +60,7 @@ class HomeController extends Controller
         $baixinhosSearch      = $this->searchBaixinhos($request->search);
         $canaisSearch         = $this->searchCanais($request->search);
         $funcionariosSearch   = $this->searchUsers($request->search);
-        
+
         return redirect()->back()->with(compact('baixinhosSearch', 'responsaveisSearch', 'canaisSearch', 'funcionariosSearch'));
     }
 
@@ -82,18 +82,10 @@ class HomeController extends Controller
         ];
 
         //Obtém os responsaveis e os nomes dos filhos
-        $responsaveis = $this->getResponsaveis(50);
-        foreach($responsaveis as $key => &$value){
-            $responsaveis[$key]['contatos'] = [
-                $value['contatos']['cell'],
-                $value['contatos']['tell'],
-                $value['contatos']['email']
-            ];
-            $responsaveis[$key]['filhos'] = $this->getFilhosResponsaveis($value['uuid'])['nomes'];
-        }
+        $responsaveis = $this->getResponsaveis();
 
         //obtém os canais
-        $canais = $this->getCanais(50);
+        $canais = $this->getCanais();
 
         return view('home', compact('data', 'responsaveis', 'canais'));
     }

@@ -172,7 +172,16 @@ trait FichaCadastroTrait
     public function getResponsaveis()
     {
         $r = new Responsavel();
-        return $r->getDataResponsaveis();
+        $responsaveis = $r->getDataResponsaveis();
+        foreach($responsaveis as $key => &$value){
+            $responsaveis[$key]['contatos'] = [
+                $value['contatos']['cell'],
+                $value['contatos']['tell'],
+                $value['contatos']['email']
+            ];
+            $responsaveis[$key]['filhos'] = $this->getFilhosResponsaveis($value['uuid'])['nomes'];
+        }
+        return $responsaveis;
     }
 
     public function getBaixinhos()
