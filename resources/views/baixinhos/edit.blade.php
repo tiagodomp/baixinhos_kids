@@ -33,15 +33,20 @@
                                             <input type="text" name="contatosR[0][cell]" class="form-control" value="{{$data['contatosR'][0]['cell']}}" id="cell" placeholder="Celular principal do Responsável" readonly>
                                         </div>
                                     </div>
-                                    <div class="form-row justify-content-center">
-                                        <a class="btn btn-outline-success col-md-6"
-                                            role="button"
-                                            data-toggle="collapse"
-                                            data-target="#collapseResponsaveis"
-                                            aria-expanded="false"
-                                            aria-controls="collapseResponsaveis">
-                                            Alterar
-                                        </a>
+                                    <div class="form-row">
+                                        <div class="form-group col align-self-start">
+                                            <a class="btn btn-outline-info col-12" href="{{route('responsavel.edit', $data['uuidR'])}}">Editar</a>
+                                        </div>
+                                        <div class="form-group col align-self-end">
+                                            <a class="btn btn-outline-warning col-12"
+                                                role="button"
+                                                data-toggle="collapse"
+                                                data-target="#collapseResponsaveis"
+                                                aria-expanded="false"
+                                                aria-controls="collapseResponsaveis">
+                                                Alterar
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -63,15 +68,20 @@
                                         <label for="tecnicasCanal">Regras</label>
                                         <input type="textarea" name="tecnicasCanal" value="{{$data['tecnicasC']}}" class="form-control" id="tecnicasCanal" placeholder="Regras para lidar com os membros deste canal..." readonly>
                                     </div>
-                                    <div class="form-row justify-content-center">
-                                        <a class="btn btn-outline-success col-md-6"
-                                            role="button"
-                                            data-toggle="collapse"
-                                            data-target="#collapseCanais"
-                                            aria-expanded="false"
-                                            aria-controls="collapseCanais" >
-                                            Alterar
-                                        </a>
+                                    <div class="form-row">
+                                        <div class="form-group col align-self-start">
+                                            <a class="btn btn-outline-info col-12" href="{{route('canal.edit', $data['uuidR'])}}">Editar</a>
+                                        </div>
+                                        <div class="form-group col align-self-end">
+                                            <a class="btn btn-outline-warning col-12"
+                                                role="button"
+                                                data-toggle="collapse"
+                                                data-target="#collapseCanais"
+                                                aria-expanded="false"
+                                                aria-controls="collapseCanais" >
+                                                Alterar
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -79,37 +89,39 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                        <div class="collapse multi-collapse justify-content-center" id="collapseResponsaveis">
-                            <select class="selectpicker show-tick col-md-12"
-                                    name="responsavelUuid"
-                                    title="Selecione outro Responsável..."
-                                    id="responsavelUuid"
-                                    data-show-subtext="true"
-                                    data-live-search="true"
-                                    data-size="5"
-                                    data-width="auto">
-                                @foreach($responsaveis as $responsavel)
-                                    <option value={{$responsavel['uuid']}} @if(!empty($data['uuidR']) && $data['uuidR'] == $responsavel['uuid']) selected @endif data-tokens={{implode('-', $responsavel['contatos'])}} data-subtext={{implode(',', $responsavel['filhos'])}}>
-                                        {{$responsavel['nome']}}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="collapse multi-collapse justify-content-center mb-4" id="collapseResponsaveis">
+                                <select class="selectpicker show-tick col-12"
+                                        name="responsavelUuid"
+                                        title="Selecione outro Responsável..."
+                                        id="responsavelUuid"
+                                        data-show-subtext="true"
+                                        data-live-search="true"
+                                        data-size="5"
+                                        data-width="auto">
+                                    @foreach($responsaveis as $responsavel)
+                                        <option value={{$responsavel['uuid']}} @if(!empty($data['uuidR']) && $data['uuidR'] == $responsavel['uuid']) selected @endif data-tokens={{implode('-', $responsavel['contatos'])}} data-subtext={{implode(',', $responsavel['filhos'])}}>
+                                            {{$responsavel['nome']}}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <hr />
+                            </div>
                         </div>
                         <div class="col">
-                        <div class="collapse multi-collapse justify-content-center" id="collapseCanais">
-                            <select class="selectpicker show-tick col-md-12"
-                                    name="canalUuid"
-                                    title="Escolha um Canal..."
-                                    id="canalUuid"
-                                    data-live-search="true"
-                                    data-size="5"
-                                    data-width="auto">
-                                @foreach($canais as $canal)
-                                    <option value={{$canal['uuid']}} @if(!empty($data['uuidC']) && $data['uuidC'] == $canal['uuid']) selected @endif  >{{$canal['titulo']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                            <div class="collapse multi-collapse justify-content-center mb-4" id="collapseCanais">
+                                <select class="selectpicker show-tick col-12"
+                                        name="canalUuid"
+                                        title="Escolha outro canal"
+                                        id="canalUuid"
+                                        data-live-search="true"
+                                        data-size="5"
+                                        data-width="auto">
+                                    @foreach($canais as $canal)
+                                        <option value={{$canal['uuid']}} @if(!empty($data['uuidC']) && $data['uuidC'] == $canal['uuid']) selected @endif >{{$canal['titulo']}}</option>
+                                    @endforeach
+                                </select>
+                                <hr />
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -153,6 +165,30 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="form-row">
+                        @if(!empty($data['imagensB']))
+                            <div class="tz-gallery">
+                                <div class="row mt-2 mb-2">
+                                    @foreach($data['imagensB'] as $key => $img)
+                                        <div class="col-sm-6 col-md-4 ">
+                                            <div class="thumbnail">
+                                                <a class="lightbox" href="{{ url('storage/'.$img['path']) }}">
+                                                    <img src="{{url('storage/'.$img['path'])}}" style="height: 300px" alt="foto de {{$data['nomeB']}}">
+                                                </a>
+                                                <div class="caption">
+                                                    <h3><a class="header-title" href="{{route('baixinho.view', $data['uuidB'])}}"> {{$data['nomeB']}}</a></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-danger mb-3">Apagar <span class="badge badge-light">9</span>
+                                <span class="sr-only">você realmente quer apagar todas essas imagens ?</span>
+                            </button>
+                        @endif
                     </div>
                     <button type="submit" class="btn btn-primary col-md-12">Salvar</button>
                 </form>
