@@ -8,7 +8,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title">Editar Baixinho</h4>
-                <form action={{route('baixinho.edit', $data['uuidB'])}} class="col-md-12" method="post" enctype="multipart/form-data">
+                <form action={{route('baixinho.edit.save', $data['uuidB'])}} class="col-md-12" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-row col-md-12">
                         <div class="form-group col-md-6">
@@ -174,20 +174,19 @@
                                         <div class="col-sm-6 col-md-4 ">
                                             <div class="thumbnail">
                                                 <a class="lightbox" href="{{ url('storage/'.$img['path']) }}">
-                                                    <img src="{{url('storage/'.$img['path'])}}" style="height: 300px" alt="foto de {{$data['nomeB']}}">
+                                                    <img class="excluir d-none" id="iconExcluir-{{$key}}" src="{{url('img/layout/icon/excluir.png')}}">
+                                                    <img class="img-relative"  id="{{$img['path']}}" src="{{url('storage/'.$img['path'])}}" alt="foto de {{$data['nomeB']}}">
                                                 </a>
-                                                <div class="caption">
-                                                    <h3><a class="header-title" href="{{route('baixinho.view', $data['uuidB'])}}"> {{$data['nomeB']}}</a></h3>
+                                                <div class="d-flex btn-group-toggle justify-content-center" data-toggle="buttons">
+                                                    <label id="buttonCheckBox" class="btn btn-outline-danger">
+                                                        <input type="checkbox" id="delImg" data-idimg="{{$key}}" name="delImg[]" value="{{$img['path']}}" autocomplete="off"> apagar
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
-
-                            <button type="button" class="btn btn-danger mb-3">Apagar <span class="badge badge-light">9</span>
-                                <span class="sr-only">você realmente quer apagar todas essas imagens ?</span>
-                            </button>
                         @endif
                     </div>
                     <button type="submit" class="btn btn-primary col-md-12">Salvar</button>

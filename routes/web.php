@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/baixinho/historico/salvar/{uuid}','BaixinhoController@addHistorico')  ->name('baixinho.historico.add');
     Route::get('/baixinho/visualizar/{uuid}','BaixinhoController@view')                 ->name('baixinho.view');
     Route::get('/baixinho/editar/{uuid}','BaixinhoController@edit')                     ->name('baixinho.edit');
+    Route::post('/baixinho/editar/save/{uuid}','BaixinhoController@editSave')                 ->name('baixinho.edit.save');
     Route::post('/baixinho/apagar/{uuid}','BaixinhoController@apagar')                  ->name('baixinho.del');
     Route::get('/baixinhos/galeria','BaixinhoController@galeria')                       ->name('baixinhos.galerias');
     Route::post('/baixinhos/inserir/img/{uuid}','BaixinhoController@addImg')            ->name('baixinhos.addImg');
@@ -53,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/canais/novo','canais.add')                                 ->name('canais.add');
     Route::post('/canais/inserir','CanalController@inserir')                 ->name('canais.inserir');
     Route::get('/canais/editar/{uuid}','CanalController@index')              ->name('canal.edit');
+    Route::post('/canais/editar/{uuid}','CanalController@index')              ->name('canal.edit');
     Route::get('/canais/apagar/{uuid}','CanalController@index')              ->name('canal.del');
     Route::view('/canais/analise','canais.analise')                          ->name('canais.analise');
 

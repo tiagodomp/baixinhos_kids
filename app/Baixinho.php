@@ -353,4 +353,14 @@ class Baixinho extends Model
 
         return (!empty($b))?(array) $b->toArray():[];
     }
+
+    public function delImg(string $uuidB, array $paths)
+    {
+        $data = $this->whereRaw('imagens->[*].path', 'LIKE', $paths[0])->select('*')->first();
+        dd($data);
+        foreach($paths as $path)
+        {
+
+        }
+    }
 }

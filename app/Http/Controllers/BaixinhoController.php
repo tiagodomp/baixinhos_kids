@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Traits\FichaCadastroTrait;
+use Illuminate\Support\Facades\Storage;
 
 class BaixinhoController extends Controller
 {
@@ -58,7 +59,6 @@ class BaixinhoController extends Controller
     }
     public function edit(Request $request, string $uuid)
     {
-        if($request->isMethod('get')) {
             $b = new Baixinho();
             $data = $b->viewBaixinho($uuid);
             $responsaveis = $this->getResponsaveis();
@@ -68,17 +68,28 @@ class BaixinhoController extends Controller
             $data['createdB'] = date('Y-m-d', strtotime($data['createdB']));
 
             return view('baixinhos.edit', compact('data', 'responsaveis', 'canais'));
-        }
+    }
 
-        if($request->isMethod('post')) {
+    public function editSave(Request $request, string $uuid)
+    {
             $data = $request->all();
             $b = new Baixinho();
 
+            if(!empty($data['delImg'])){
+                if($this->delImg($uuid, $data['delImg'])){
+                    dd(1);
+                    $request->flash('success', count($data['delImg']) . ' imagens foram deletadas');
+                }else{
+                    $request->flash('danger', 'Erro em apagar estas imagens');
+                }
+            }
+            dd(2);
             if($b->editBaixinhos($data, $uuid))
                 return redirect()->route('baixinho.view', $uuid);
-        }
+
 
         return redirect()->back()->with('danger', 'Erro em editar este baixinho, tente novamente!');
+
     }
 
     public function editPermissao(Request $request, string $uuidB = null)
@@ -162,6 +173,14 @@ class BaixinhoController extends Controller
         return ($this->arrayInsertJsonTb('baixinhos', 'imagens', ['uuid' => $uuid], $data[0]))
             ?redirect()->back()->with('success', 'As imagens foram inseridas com sucesso')
             :redirect()->back()->with('danger', 'Erro em inserir imagens');
+    }
+
+    public function delImg(string $uuidB, array $paths):bool
+    {
+        $b = new Baixinho();
+        $data = $b->delImg($uuidB, $paths);
+        dd($data);
+        return Storage::delete($paths);
     }
 
     public function addFicha(Request $request, string $uuid)
