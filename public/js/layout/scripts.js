@@ -299,19 +299,5 @@
         $("#delFichaCadastro").removeClass('d-none');
         $("#delFichaCadastroInput").val('0');
     });
-
-    $(document).ready(function(){
-
-        if($('#delImg').prop('checked')){
-            $('#delImg').data('idimg');
-            console.log(1);
-            console.log( $('#delImg').find(':checked').data('idimg'));
-            $("#iconExcluir-"+$('#delImg').data('idimg')).removeClass('d-none');
-        }else{
-            // idchecked = $('#delImg').data('idimg').tostring();
-            console.log( $('#delImg').data('idimg'));
-            $("#iconExcluir-" + $('#delImg').data('idimg')).addClass('d-none');
-        }
-    });
 })(jQuery);
 

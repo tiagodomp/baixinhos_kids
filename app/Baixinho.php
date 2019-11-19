@@ -356,11 +356,26 @@ class Baixinho extends Model
 
     public function delImg(string $uuidB, array $paths)
     {
-        $data = $this->whereRaw('imagens->[*].path', 'LIKE', $paths[0])->select('*')->first();
-        dd($data);
+        $data = $this->where('uuid', $uuidB)
+                        ->select('imagens as img')
+                        ->first();
+
+        if(empty($data) || empty($data->img))
+            return null;
+
+        $imgs = json_decode($data->img, true);
+
         foreach($paths as $path)
         {
+            $id = array_search($path, array_column($imgs, 'path'));
 
+            if(is_int($id) && isset($imgs[$id])){
+                $imgs[$id]['deleted_at'] = now()->toDateTimeString();
+            }
         }
+
+        return $this->update(['imagens' => $imgs, 'updated_at' => now()->toDateTimeString()])
+                        ->where('uuid', $uuidB)
+                        ->exec();
     }
 }

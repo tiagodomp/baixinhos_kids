@@ -77,13 +77,12 @@ class BaixinhoController extends Controller
 
             if(!empty($data['delImg'])){
                 if($this->delImg($uuid, $data['delImg'])){
-                    dd(1);
                     $request->flash('success', count($data['delImg']) . ' imagens foram deletadas');
                 }else{
-                    $request->flash('danger', 'Erro em apagar estas imagens');
+                    $request->flash('danger', 'Erro em apagar imagens');
                 }
             }
-            dd(2);
+            
             if($b->editBaixinhos($data, $uuid))
                 return redirect()->route('baixinho.view', $uuid);
 
@@ -179,7 +178,6 @@ class BaixinhoController extends Controller
     {
         $b = new Baixinho();
         $data = $b->delImg($uuidB, $paths);
-        dd($data);
         return Storage::delete($paths);
     }
 

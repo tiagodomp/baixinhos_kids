@@ -2870,13 +2870,14 @@ table.dataTable thead td {
 }
 
 /* Seleção de imagens na galeria */
-.img-relative{
-    position: relative;
+.img-galeria{
     height: 300px;
     z-index: 1;
 }
+
 .excluir{
     margin-top: 2%;
+    margin-left: 2%;
     position:absolute;
     z-index: 2;
 }

@@ -82,25 +82,25 @@
                         <div class="col-md-4 mb-3">
                             <p>Como será pago ? </p>
                             <div class="custom-control custom-radio">
-                                <input type="radio" checked id="customRadio1" value="dinheiro" name="tipoPagamentoHistorico" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio3">Dinheiro</label>
+                                <input type="radio" checked id="dinheiroRadio" value="dinheiro" name="tipoPagamentoHistorico" class="custom-control-input">
+                                <label class="custom-control-label" for="dinheiroRadio">Dinheiro</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio2" value="débito" name="tipoPagamentoHistorico" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio1">Débito</label>
+                                <input type="radio" id="debitoRadio" value="débito" name="tipoPagamentoHistorico" class="custom-control-input">
+                                <label class="custom-control-label" for="debitoRadio">Débito</label>
                             </div>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="customRadio3" value="crédito" name="tipoPagamentoHistorico" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio2">Crédito</label>
+                                <input type="radio" id="creditoRadio" value="crédito" name="tipoPagamentoHistorico" class="custom-control-input">
+                                <label class="custom-control-label" for="creditoRadio">Crédito</label>
                             </div>
                             <p>Em quantas vezes será pago ? </p>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" checked id="customRadio4" value="a vista" name="modeloPagamentoHistorico" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio4">A vista</label>
+                                <input type="radio" checked id="vistaRadio" value="a vista" name="modeloPagamentoHistorico" class="custom-control-input">
+                                <label class="custom-control-label" for="vistaRadio">A vista</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadio5" value="parcelado" name="modeloPagamentoHistorico" class="custom-control-input">
-                                <label class="custom-control-label" for="customRadio5">Parcelado</label>
+                                <input type="radio" id="parceladoRadio" value="parcelado" name="modeloPagamentoHistorico" class="custom-control-input">
+                                <label class="custom-control-label" for="parceladoRadio">Parcelado</label>
                             </div>
                         </div>
                         <div class="col-md-8 mb-3">

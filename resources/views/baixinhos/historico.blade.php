@@ -21,10 +21,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if(empty($data))
+                            @if(!empty($data))
                                 @foreach($data as $d)
-                                    @foreach($d['historicoB'] as $key => $hist)
-                                        @if(!empty($hist))
+                                    @if(!empty($d['historicoB']))
+                                        @foreach($d['historicoB'] as $key => $hist)
                                             <tr>
                                                 <td>
                                                     {{date('d/m/Y H:i', strtotime($hist['created_at']))}}
@@ -47,8 +47,8 @@
                                                     </button>
                                                 </td>
                                             </tr>
-                                        @endif
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 @endforeach
                             @else
                                 <tr>
